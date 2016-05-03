@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+	<!-- Configurando navegação das telas -->
+
+	<!-- Login -->
+	<navigation-rule>
+		<from-view-id>/paginas/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>pag_principal</from-outcome>
+			<to-view-id>/templates/home.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Cadastro Profissional -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadastro_profissional</from-outcome>
+			<to-view-id>/paginas/Profissional.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Tela de teste -->
+	<navigation-rule>
+		<from-view-id>/*</from-view-id>
+		<navigation-case>
+			<from-outcome>novoTeste</from-outcome>
+			<to-view-id>/paginas/novoTeste.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Configurando leitura do arquivo properties -->
+	<application>
+		<resource-bundle>
+			<base-name>mensagens</base-name>
+			<var>msg</var>
+		</resource-bundle>
+	</application>
+	
+	<factory>
+		<exception-handler-factory>br.com.sysagrega.util.jsf.JsfExceptionHandlerFactory</exception-handler-factory>
+	</factory>
+</faces-config>

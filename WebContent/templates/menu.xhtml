@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form>
+		<p:blockUI block="layoutCentro" trigger="idCadProfissional">
+			<p:graphicImage name="images/ajaxloadingbar.gif" />
+		</p:blockUI>
+		<p:megaMenu>
+			<p:submenu label="Cadastros" style="width:160px; height:160px;">
+
+				<p:column>
+					<p:submenu label="Usuários" icon="ui-icon-plus">
+						<p:menuitem value="desenvolvimento"></p:menuitem>
+					</p:submenu>
+				</p:column>
+
+				<p:column>
+					<p:submenu label="Profissionais" icon="ui-icon-plus">
+						<p:menuitem id="idCadProfissional" value="Cadastrar"
+							icon="ui-icon-disk" url="/paginas/newEditProfissional.xhtml"
+							ajax="false" />
+
+						<p:menuitem value="Consultar" icon="ui-icon-search"
+							url="/paginas/listAjax.xhtml" ajax="false" />
+					</p:submenu>
+				</p:column>
+
+				<p:submenu label="Fornecedores" icon="ui-icon-plus">
+					<p:menuitem value="Em desenvolvimento"></p:menuitem>
+				</p:submenu>
+
+				<p:submenu label="Clientes" icon="ui-icon-plus">
+					<p:menuitem value="Em desenvolvimento"></p:menuitem>
+				</p:submenu>
+			</p:submenu>
+			<p:separator />
+			<p:submenu label="Sair">
+				<p:menuitem value="Desconectar" icon="ui-icon-extlink" />
+			</p:submenu>
+		</p:megaMenu>>
+	</h:form>
+</ui:composition>

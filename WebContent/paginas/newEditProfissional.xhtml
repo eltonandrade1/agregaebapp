@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/templates/master.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<!-- 	<f:metadata> -->
+	<!-- 		<f:event listener="#{profissionalBean.inicializar()}" type="preRenderView" /> -->
+	<!-- 		<o:viewParam name="id" value="#{profissionalBean.profissional}" /> -->
+	<!-- 	</f:metadata> -->
+
+	<ui:define name="corpo">
+		<h:form>
+			<p:panel id="idPanelProfissional" style="border: none;">
+
+				<h4 style="margin-top: 0" align="left">Dados Pessoais</h4>
+				<p:separator />
+
+				<p:panelGrid columns="4" style="margin-bottom:10px" cellspacing="5">
+					<p:outputLabel value="Nome:" />
+					<p:inputText id="nome" style="width:400px;"
+						value="#{profissionalBean.profissional.nome}" />
+
+					<p:outputLabel value="CPF:" />
+					<p:inputMask mask="999.999.999-99" style="width:160px;"
+						value="#{profissionalBean.profissional.cpf}" />
+
+					<p:outputLabel value="Data de Nascimento:" />
+					<p:calendar pattern="dd/MM/yyyy" mask="true" style="width:50px;"
+						value="#{profissionalBean.profissional.dataNascimento}" />
+
+					<p:outputLabel value="RG:" />
+					<p:inputMask mask="99999999-99" style="width:160px;"
+						value="#{profissionalBean.profissional.rg}" />
+
+					<p:outputLabel value="Profissão:" />
+					<p:inputText style="width:300px;"
+						value="#{profissionalBean.profissional.profissao}" />
+
+					<p:outputLabel value="Especialização:" />
+					<p:inputText style="width:300px;"
+						value="#{profissionalBean.profissional.atuacaoEspecializacao}" />
+
+					<p:outputLabel value="Contrato Temporario:" />
+					<p:selectOneButton id="idSelectContratoTemp"
+						value="#{profissionalBean.profissional.contratoTemporario}">
+						<f:selectItem itemLabel="Sim" itemValue="S" />
+						<f:selectItem itemLabel="Não" itemValue="N" />
+					</p:selectOneButton>
+
+					<p:outputLabel value="PIS:" />
+					<p:inputText value="#{profissionalBean.profissional.pisPasep}" />
+
+					<p:outputLabel value="Carteira de Trabalho:" />
+					<p:inputText
+						value="#{profissionalBean.profissional.carteiraTrabalho}" />
+
+					<p:outputLabel value="Cons. Classe:" />
+					<p:inputText
+						value="#{profissionalBean.profissional.numeroConsClasse}" />
+
+
+					<p:outputLabel value="Camisa:" />
+					<p:selectOneButton id="idSelectCamisa"
+						value="#{profissionalBean.profissional.tamanhoCamisa}">
+						<f:selectItem itemLabel="P" itemValue="P" />
+						<f:selectItem itemLabel="M" itemValue="M" />
+						<f:selectItem itemLabel="G" itemValue="G" />
+						<f:selectItem itemLabel="GG" itemValue="GG" />
+					</p:selectOneButton>
+
+					<p:outputLabel value="Calça:" />
+					<p:inputMask mask="99"
+						value="#{profissionalBean.profissional.tamanhoCalca}" />
+
+					<p:outputLabel value="Calçado:" />
+					<p:inputMask mask="99/99"
+						value="#{profissionalBean.profissional.numeroSapato}" />
+
+					<p:outputLabel value="Telefone:" />
+					<p:inputMask mask="(99) 9999-9999"
+						value="#{profissionalBean.profissional.telefone}" />
+
+					<p:outputLabel value="Celular:" />
+					<p:inputMask mask="(99) 99999-9999"
+						value="#{profissionalBean.profissional.celular}" />
+
+					<p:outputLabel value="Email:" />
+					<p:inputText style="width:300px;"
+						value="#{profissionalBean.profissional.email}" />
+
+				</p:panelGrid>
+
+				<br />
+
+				<h4 style="margin-top: 0" align="right">Endereço</h4>
+				<p:separator />
+
+				<h:panelGrid id="idPanelGridEndereco" columns="4"
+					style="margin-bottom:10px" cellspacing="5">
+
+					<p:outputLabel for="idEstados" value="Estado:" />
+					<p:selectOneMenu id="idEstados" style="width:160px;"
+						panelStyle="width:180px;" value="#{profissionalBean.estado}"
+						effect="fade" filter="true" filterMatchMode="startsWith">
+
+						<f:selectItems value="#{profissionalBean.estados}" var="estado"
+							itemLabel="#{estado.uf}" itemValue="#{estado}" />
+						<p:ajax update="idCidades" event="change" immediate="true"
+							listener="#{profissionalBean.carregarCidadesPorEstado()}" />
+
+					</p:selectOneMenu>
+
+					<p:outputLabel for="idCidades" value="Cidade:" />
+					<p:selectOneMenu id="idCidades" style="width:120px;"
+						disabled="#{profissionalBean.habilitarCidades}"
+						panelStyle="width:180px;" effect="fade" filter="true"
+						filterMatchMode="startsWith" value="#{profissionalBean.cidade}">
+
+						<f:selectItems value="#{profissionalBean.cidades}" var="cidade"
+							itemLabel="#{cidade.nome}" itemValue="#{cidade}" />
+
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Rua:" />
+					<p:inputText style="width:200px;" />
+
+					<p:outputLabel value="Bairro:" />
+					<p:inputText style="width:200px;" />
+
+					<p:outputLabel value="CEP:" />
+					<p:inputMask mask="99999-999" />
+
+					<p:outputLabel value="Número:" />
+					<p:inputText style="width:40px;" />
+
+					<p:outputLabel value="Complemento:" />
+					<p:inputText style="width:200px;" />
+
+				</h:panelGrid>
+
+				<p:blockUI block="idPanelGridEndereco" trigger="cadProfissional">
+					<p:graphicImage name="images/ajaxloadingbar.gif" />
+				</p:blockUI>
+
+				<br />
+
+				<h4 style="margin-top: 0" align="right">Dados Bancarios</h4>
+				<p:separator />
+
+				<h:panelGrid columns="4" cellspacing="5">
+
+					<p:outputLabel value="Banco:" />
+					<p:selectOneMenu style="width:120px;">
+
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Agência:" />
+					<p:inputText style="width:80px;" />
+
+					<p:outputLabel value="Conta:" />
+					<p:inputText style="width:80px;" />
+
+					<p:outputLabel value="Tipo:" />
+					<p:selectOneMenu style="width:120px;">
+
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<p:commandButton ajax="false"></p:commandButton>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

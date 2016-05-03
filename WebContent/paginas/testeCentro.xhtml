@@ -1,0 +1,20 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/templates/master.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h:form>
+			<p:panel id="idPanel" header="Cadastro de Profissional" >
+				<h:panelGrid id="idPanelGrid" columns="4" cellpadding="7">
+					<p:outputLabel id="idLabelNome" value="Nome: " />
+					<p:inputText id="idInputNome"/>
+					
+					<p:outputLabel id="idLabelCpf" value="CPF: " />
+					<p:inputText id="idInputCpf"/>
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
