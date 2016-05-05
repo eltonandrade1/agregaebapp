@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.sysagrega.controller.Qualificadores.QualificadorProfissional;
+import br.com.sysagrega.model.IProfissional;
+import br.com.sysagrega.model.Enums.TiposContaBancaria;
 import br.com.sysagrega.model.imp.Banco;
 import br.com.sysagrega.model.imp.Cidade;
 import br.com.sysagrega.model.imp.DadosBancarios;
@@ -49,7 +51,7 @@ public class ProfissionalBean implements Serializable {
 
 	@Produces
 	@QualificadorProfissional
-	private Profissional profissional;
+	private IProfissional profissional;
 
 	private Estado estado;
 
@@ -59,16 +61,19 @@ public class ProfissionalBean implements Serializable {
 	
 	private List<Banco> bancos;
 	
+	private List<String> tiposConta;
+	
 	@PostConstruct
 	public void inicializar() {
 		
-		this.profissional = new Profissional();
-		this.profissional.setEndereco(new Endereco());
-		this.profissional.setDadosBancarios(new DadosBancarios());
+		//this.profissional = new Profissional();
+		//this.profissional.setEndereco(new Endereco());
+		//this.profissional.setDadosBancarios(new DadosBancarios());
 		
 		estados = new ArrayList<>();
 		cidades = new ArrayList<>();
 		bancos = new ArrayList<>();
+		tiposConta = new ArrayList<>();
 
 		// Carregando lista de estados
 		estados = estadoService.getAllEstados();
@@ -76,15 +81,24 @@ public class ProfissionalBean implements Serializable {
 		//Carrega lista de bancos
 		bancos = bancoService.getAllBancos();
 		
-		isDisableCidades();
+		//Carrega Tipos de conta (Enum)
+		for (TiposContaBancaria tipos : TiposContaBancaria.values()) {
+			
+			tiposConta.add(tipos.getDescricao());
+			
+		}
+		//Controle de renderização de cidades (exibe conforme escolha do estado)
+		//isDisableCidades();
 
-		// limparObjeto();
+		limparObjeto();
 
 	}
 
 	private void limparObjeto() {
 
-		profissional = new Profissional();
+		this.profissional = new Profissional();
+		this.profissional.setEndereco(new Endereco());
+		this.profissional.setDadosBancarios(new DadosBancarios());
 
 	}
 
@@ -102,11 +116,11 @@ public class ProfissionalBean implements Serializable {
 	 * @param profissional
 	 * @author Elton
 	 */
-	public void salvarProfissional(Profissional profissional) {
+	public void salvarProfissional() {
 
 		try {
 
-			this.profissionalService.salvar(profissional);
+			this.profissionalService.salvar(this.profissional);
 			limparObjeto();
 			FacesUtil.addInfoMessage("Profissional salvo com sucesso.");
 
@@ -179,7 +193,7 @@ public class ProfissionalBean implements Serializable {
 	/**
 	 * @return the profissional
 	 */
-	public Profissional getProfissional() {
+	public IProfissional getProfissional() {
 		return profissional;
 	}
 
@@ -187,7 +201,7 @@ public class ProfissionalBean implements Serializable {
 	 * @param profissional
 	 *            the profissional to set
 	 */
-	public void setProfissional(Profissional profissional) {
+	public void setProfissional(IProfissional profissional) {
 		this.profissional = profissional;
 	}
 	
@@ -205,8 +219,17 @@ public class ProfissionalBean implements Serializable {
 		this.bancos = bancos;
 	}
 
-	public void testarBotao() {
-		System.out.println(profissional.getNome());
-		
+	/**
+	 * @return the tiposConta
+	 */
+	public List<String> getTiposConta() {
+		return tiposConta;
+	}
+
+	/**
+	 * @param tiposConta the tiposConta to set
+	 */
+	public void setTiposConta(List<String> tiposConta) {
+		this.tiposConta = tiposConta;
 	}
 }

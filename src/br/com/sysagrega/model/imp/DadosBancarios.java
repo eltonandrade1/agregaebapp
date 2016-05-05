@@ -33,14 +33,8 @@ public class DadosBancarios implements IDadosBancarios {
 	@Column(name = "NR_AGENGIA")
 	private Long nrAgencia;
 	
-	@Column(name = "DIG_AGENCIA")
-	private Integer digAgencia;
-	
 	@Column(name = "NR_CONTA")
 	private Long nrConta;
-	
-	@Column(name = "DIG_CONTA")
-	private Integer digConta;
 	
 	@Column(name = "TP_CONTA")
 	private String tipoConta;
@@ -60,20 +54,6 @@ public class DadosBancarios implements IDadosBancarios {
 		this.nrAgencia = nrAgencia;
 	}
 	/* (non-Javadoc)
-	 * @see br.com.sysagrega.model.embedded.imp.IDadosBancarios#getDigAgencia()
-	 */
-	@Override
-	public Integer getDigAgencia() {
-		return digAgencia;
-	}
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.model.embedded.imp.IDadosBancarios#setDigAgencia(java.lang.Long)
-	 */
-	@Override
-	public void setDigAgencia(Integer digAgencia) {
-		this.digAgencia = digAgencia;
-	}
-	/* (non-Javadoc)
 	 * @see br.com.sysagrega.model.embedded.imp.IDadosBancarios#getNrConta()
 	 */
 	@Override
@@ -86,20 +66,6 @@ public class DadosBancarios implements IDadosBancarios {
 	@Override
 	public void setNrConta(Long nrConta) {
 		this.nrConta = nrConta;
-	}
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.model.embedded.imp.IDadosBancarios#getDigConta()
-	 */
-	@Override
-	public Integer getDigConta() {
-		return digConta;
-	}
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.model.embedded.imp.IDadosBancarios#setDigConta(java.lang.Long)
-	 */
-	@Override
-	public void setDigConta(Integer digConta) {
-		this.digConta = digConta;
 	}
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.model.embedded.imp.IDadosBancarios#getTipoConta()
@@ -138,8 +104,6 @@ public class DadosBancarios implements IDadosBancarios {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((digAgencia == null) ? 0 : digAgencia.hashCode());
-		result = prime * result + ((digConta == null) ? 0 : digConta.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((idBanco == null) ? 0 : idBanco.hashCode());
 		result = prime * result + ((nrAgencia == null) ? 0 : nrAgencia.hashCode());
@@ -159,16 +123,6 @@ public class DadosBancarios implements IDadosBancarios {
 		if (!(obj instanceof DadosBancarios))
 			return false;
 		DadosBancarios other = (DadosBancarios) obj;
-		if (digAgencia == null) {
-			if (other.digAgencia != null)
-				return false;
-		} else if (!digAgencia.equals(other.digAgencia))
-			return false;
-		if (digConta == null) {
-			if (other.digConta != null)
-				return false;
-		} else if (!digConta.equals(other.digConta))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;

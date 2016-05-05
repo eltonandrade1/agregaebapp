@@ -5,11 +5,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import br.com.sysagrega.model.IBanco;
 import br.com.sysagrega.model.imp.Banco;
 import br.com.sysagrega.repository.imp.BancoRepository;
 import br.com.sysagrega.util.cdi.CDIServiceLocator;
 
-@FacesConverter(forClass = Banco.class)
+@FacesConverter(forClass = IBanco.class)
 public class BancoConverter implements Converter {
 
 	//@Inject
@@ -33,8 +34,8 @@ public class BancoConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (value != null) {
-			return ((Banco) value).getId().toString();
+		if (value != null && value instanceof IBanco) {
+			return String.valueOf(((Banco) value).getId());
 		}
 		
 		return "";

@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import br.com.sysagrega.model.IProfissional;
 import br.com.sysagrega.model.imp.Profissional;
 import br.com.sysagrega.repository.IProfissionalRepository;
 
@@ -63,7 +64,7 @@ public class ProfissionalRepository implements IProfissionalRepository {
 	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#salvar(br.com.sysagrega.model.imp.Profissional)
 	 */
 	@Override
-	public void salvar(Profissional profissional) {
+	public void salvar(IProfissional profissional) {
 
 		this.manager.persist(profissional);
 

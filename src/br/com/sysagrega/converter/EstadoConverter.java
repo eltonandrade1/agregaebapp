@@ -5,11 +5,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import br.com.sysagrega.model.IEstado;
 import br.com.sysagrega.model.imp.Estado;
 import br.com.sysagrega.repository.imp.EstadoRepository;
 import br.com.sysagrega.util.cdi.CDIServiceLocator;
 
-@FacesConverter(forClass = Estado.class)
+@FacesConverter(forClass = IEstado.class)
 public class EstadoConverter implements Converter {
 
 	//@Inject
@@ -33,8 +34,8 @@ public class EstadoConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (value != null) {
-			return ((Estado) value).getId().toString();
+		if (value != null && value instanceof IEstado) {
+			return String.valueOf(((IEstado) value).getId());
 		}
 		
 		return "";

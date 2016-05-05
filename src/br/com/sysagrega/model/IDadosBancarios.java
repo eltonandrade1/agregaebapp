@@ -8,17 +8,9 @@ public interface IDadosBancarios extends Serializable{
 
 	void setNrAgencia(Long nrAgencia);
 
-	Integer getDigAgencia();
-
-	void setDigAgencia(Integer digAgencia);
-
 	Long getNrConta();
 
 	void setNrConta(Long nrConta);
-
-	Integer getDigConta();
-
-	void setDigConta(Integer digConta);
 
 	String getTipoConta();
 

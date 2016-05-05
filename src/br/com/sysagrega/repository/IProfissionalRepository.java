@@ -3,6 +3,7 @@ package br.com.sysagrega.repository;
 import java.io.Serializable;
 import java.util.List;
 
+import br.com.sysagrega.model.IProfissional;
 import br.com.sysagrega.model.imp.Profissional;
 
 public interface IProfissionalRepository extends Serializable {
@@ -15,7 +16,7 @@ public interface IProfissionalRepository extends Serializable {
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#salvar(br.com.sysagrega.model.imp.Profissional)
 	 */
-	void salvar(Profissional profissional);
+	void salvar(IProfissional profissional);
 
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#atualizar(br.com.sysagrega.model.imp.Profissional)

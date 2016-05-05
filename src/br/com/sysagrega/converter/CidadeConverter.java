@@ -5,11 +5,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+import br.com.sysagrega.model.ICidade;
 import br.com.sysagrega.model.imp.Cidade;
 import br.com.sysagrega.repository.imp.CidadeRepository;
 import br.com.sysagrega.util.cdi.CDIServiceLocator;
 
-@FacesConverter(forClass = Cidade.class)
+@FacesConverter(forClass = ICidade.class)
 public class CidadeConverter implements Converter {
 
 	//@Inject
@@ -33,8 +34,8 @@ public class CidadeConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (value != null) {
-			return ((Cidade) value).getId().toString();
+		if (value != null && value instanceof ICidade) {
+			return String.valueOf(((Cidade) value).getId());
 		}
 		
 		return "";

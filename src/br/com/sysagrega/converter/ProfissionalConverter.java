@@ -11,35 +11,35 @@ import br.com.sysagrega.repository.imp.EstadoRepository;
 import br.com.sysagrega.repository.imp.ProfissionalRepository;
 import br.com.sysagrega.util.cdi.CDIServiceLocator;
 
-//@FacesConverter(forClass = Profissional.class)
-//public class ProfissionalConverter implements Converter {
-//
-//	//@Inject
-//	private ProfissionalRepository profissionalRepository;
-//	
-//	public ProfissionalConverter() {
-//		profissionalRepository = CDIServiceLocator.getBean(ProfissionalRepository.class);
-//	}
-//	
-//	@Override
-//	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-//		Profissional retorno = null;
-//		
-//		if (value != null) {
-//			Long id = new Long(value);
-//			retorno = profissionalRepository.getProfissionalById(id);
-//		}
-//		
-//		return retorno;
-//	}
-//
-//	@Override
-//	public String getAsString(FacesContext context, UIComponent component, Object value) {
-//		if (value != null) {
-//			return ((Profissional) value).getId().toString();
-//		}
-//		
-//		return "";
-//	}
-//
-//}
+@FacesConverter(forClass = Profissional.class)
+public class ProfissionalConverter implements Converter {
+
+	//@Inject
+	private ProfissionalRepository profissionalRepository;
+	
+	public ProfissionalConverter() {
+		profissionalRepository = CDIServiceLocator.getBean(ProfissionalRepository.class);
+	}
+	
+	@Override
+	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+		Profissional retorno = null;
+		
+		if (value != null) {
+			Long id = new Long(value);
+			retorno = profissionalRepository.getProfissionalById(id);
+		}
+		
+		return retorno;
+	}
+
+	@Override
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		if (value != null && value instanceof Profissional) {
+			return String.valueOf(((Profissional) value).getId());
+		}
+		
+		return "";
+	}
+
+}
