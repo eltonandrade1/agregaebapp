@@ -90,7 +90,7 @@ public class ProfissionalBean implements Serializable {
 		//Controle de renderização de cidades (exibe conforme escolha do estado)
 		//isDisableCidades();
 
-		//limparObjeto();
+		limparObjeto();
 
 	}
 
