@@ -28,14 +28,17 @@
 
 					<p:menubar id="idMenuPrincipal" styleClass="menu-sistema">
 						<p:submenu label="Cadastros">
-							<p:menuitem id="cadProfissional" value="Profissionais"
+							<p:menuitem id="cadProfissional" value="Profissionais" icon="ui-icon-plus"
 								action="#{menuBean.novoProfissional()}" update="growlPrincipal"/>
-							<p:menuitem value="Clientes" action="#{menuBean.telaTeste()}" update="growlPrincipal"/>
-							<p:menuitem value="Usuários" />
-							<p:menuitem value="Fornecedores" />
+							<p:menuitem value="Clientes" action="#{menuBean.telaTeste()}" update="growlPrincipal" icon="ui-icon-plus"/>
+							<p:menuitem value="Usuários" icon="ui-icon-plus"/>
+							<p:menuitem value="Fornecedores" icon="ui-icon-plus"/>
 							<p:separator />
-							<p:menuitem value="Categorias" />
-							<p:menuitem value="Produtos" />
+							<p:menuitem value="Propostas" icon="ui-icon-plus"/>
+						</p:submenu>
+						<p:submenu label="Consultar">
+							<p:menuitem value="Profissionais" />
+							<p:menuitem value="Clientes" />
 						</p:submenu>
 						<p:submenu label="Projetos">
 							<p:menuitem value="Novo Projeto" />

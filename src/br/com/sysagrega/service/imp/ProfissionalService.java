@@ -25,7 +25,7 @@ public class ProfissionalService implements IProfissionalService {
 	@Transactional
 	public void salvar(IProfissional profissional) {
 		
-		//Valida√ß√£o para campos obrigat√≥rios
+		//ValidaÁ„o para campos obrigatÛrios
 		if (profissional != null) {
 			
 			validaCamposObrigatorios(profissional);
@@ -36,11 +36,11 @@ public class ProfissionalService implements IProfissionalService {
 			
 		}
 		
-		//Varifica se o profissional j√° √© cadastrado no sistema
+		//Varifica se o profissional j· est· cadastrado no sistema
 		Profissional profissionalExistente = this.profissionalRepository.getProfissionalByCpf(profissional.getCpf());
 		
 		if(profissionalExistente != null) {
-			throw new NegocioException("Profissional j√° cadastrado no banco de dados!");
+			throw new NegocioException("Profissional j·° cadastrado no banco de dados!");
 		}
 		
 		this.profissionalRepository.salvar(profissional);
