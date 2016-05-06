@@ -10,62 +10,52 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><ui:insert name="titulo">Sistema Agrega Consultores</ui:insert></title>
 	<h:outputStylesheet library="css" name="sistema.css" />
+	
 </h:head>
 
 <h:body>
-	<p:layout fullPage="true">
-		<h:form id="formPrincipal" style="display: inline-block">
 
+	<header>
+	<div style="float: left">
+		
+	</div>
+
+	<div style="float: right; margin-right: 30px; line-height:40px; margin-top:20px">
+		<span style="float: left; height: 30px; line-height: 35px; margin-right: 65px">
+			Olá usuário! 
+		</span>
+
+		<h:form id="idFormMaster" style="display: inline-block">
 			<p:growl id="growlPrincipal" showDetail="true" sticky="true" />
-
-			<p:layoutUnit position="north" size="50" resizable="true">
-
-				<div style="float: left">
-					<h:graphicImage library="images" name="logo-algaworks.png" />
-				</div>
-
-				<div style="float: right; margin-right: 110px">
-
-					<p:menubar id="idMenuPrincipal" styleClass="menu-sistema">
-						<p:submenu label="Cadastros">
-							<p:menuitem id="cadProfissional" value="Profissionais"
-								action="#{menuBean.novoProfissional()}" update="growlPrincipal"/>
-							<p:menuitem value="Clientes" action="#{menuBean.telaTeste()}" update="growlPrincipal"/>
-							<p:menuitem value="Usuários" />
-							<p:menuitem value="Fornecedores" />
-							<p:separator />
-							<p:menuitem value="Categorias" />
-							<p:menuitem value="Produtos" />
-						</p:submenu>
-						<p:submenu label="Projetos">
-							<p:menuitem value="Novo Projeto" />
-							<p:menuitem value="Pesquisar" />
-						</p:submenu>
-						<p:menuitem value="Sair" />
-					</p:menubar>
-				</div>
-				<div style="clear: both"></div>
-
-			</p:layoutUnit>
-
-			<p:layoutUnit id="layoutCentro" position="center" size="100" resizable="true">
-
-				<div id="conteudo">
-					<ui:insert name="corpo" />
-				</div>
-
-			</p:layoutUnit>
-
-			<p:layoutUnit position="south" size="50" resizable="true">
-				- Agrega Consultores - <a href="http://bit.ly/Y8saFl" target="_blank">www.agregaconsultores.com.br</a>
-			</p:layoutUnit>
-
-			<p:blockUI block="layoutCentro" trigger="cadProfissional">
-				<p:graphicImage name="images/ajaxloadingbar.gif" />
-			</p:blockUI>
+			<p:menubar styleClass="menu-sistema">
+				<p:submenu label="Cadastros">
+					<p:menuitem id="cadProfissional" value="Profissionais"
+						action="#{menuBean.novoProfissional()}" />
+					<p:menuitem value="Clientes" url="/paginas/novoTeste.xhtml" />
+					<p:menuitem value="Usuários" />
+					<p:menuitem value="Fornecedores" />
+					<p:separator />
+					<p:menuitem value="Categorias" />
+					<p:menuitem value="Produtos" />
+				</p:submenu>
+				<p:submenu label="Projetos">
+					<p:menuitem value="Novo Projeto" />
+					<p:menuitem value="Pesquisar" />
+				</p:submenu>
+				<p:menuitem value="Sair" />
+			</p:menubar>
 		</h:form>
-	</p:layout>
+	</div>
+	<div style="clear: both"></div>
+	</header>
 
+	<div id="conteudo">
+		<ui:insert name="corpo" />
+	</div>
+	<footer class="rodape"><br/> Todos os direitos reservador  a Agrega Consultores Ltda 
+		<br/><a href="http://www.agregaconsultores.com.br" target="_blank">www.agregaconsultores.com.br</a> 
+	</footer>
+	
 </h:body>
 
 </html>
