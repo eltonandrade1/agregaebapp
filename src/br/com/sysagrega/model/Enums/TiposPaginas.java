@@ -1,14 +1,15 @@
 package br.com.sysagrega.model.Enums;
 
-public enum TiposContaBancaria {
+public enum TiposPaginas {
 	
-	CORRENTE("Corrente"),
-	POUPANCA("Poupança"),
-	SALARIO("Salário");
+	NOVO_PROF("Novo"),
+	CONSULTA_PROF("Consultar"),
+	VISUALIZAR_PROF("Visualizar"),
+	EDIT_PROFI("Editar");
 	
 	private String descricao;
 
-	private TiposContaBancaria(String descricao) {
+	private TiposPaginas(String descricao) {
 		this.descricao = descricao;
 	}
 

@@ -15,10 +15,8 @@
 <h:body>
 	<p:layout fullPage="true">
 		<h:form id="formPrincipal" style="display: inline-block">
-
-			<p:growl id="growlPrincipal" showDetail="true" sticky="true" />
-
-			<p:layoutUnit position="north" size="50" resizable="true">
+		
+			<p:layoutUnit id="layoutCabecalho" position="north" size="50" resizable="true">
 
 				<div style="float: left">
 					<h:graphicImage library="images" name="logo-algaworks.png" />
@@ -26,18 +24,21 @@
 
 				<div style="float: right; margin-right: 110px">
 
-					<p:menubar id="idMenuPrincipal" styleClass="menu-sistema">
-						<p:submenu label="Cadastros">
+					<p:menubar id="idMenuPrincipal" styleClass="menu-sistema" >
+						<p:submenu label="Cadastros" >
 							<p:menuitem id="cadProfissional" value="Profissionais" icon="ui-icon-plus"
-								action="#{menuBean.novoProfissional()}" update="growlPrincipal"/>
-							<p:menuitem value="Clientes" action="#{menuBean.telaTeste()}" update="growlPrincipal" icon="ui-icon-plus"/>
+								action="#{menuBean.novoProfissional()}"/>
+							<p:menuitem value="Clientes" action="#{menuBean.telaTeste()}" icon="ui-icon-plus"/>
 							<p:menuitem value="Usuários" icon="ui-icon-plus"/>
 							<p:menuitem value="Fornecedores" icon="ui-icon-plus"/>
 							<p:separator />
 							<p:menuitem value="Propostas" icon="ui-icon-plus"/>
 						</p:submenu>
-						<p:submenu label="Consultar">
-							<p:menuitem value="Profissionais" />
+						<p:submenu label="Consultas">
+							<p:menuitem id="consultaProfissional" 
+										value="Profissionais" 
+										icon="ui-icon-search" 
+										action="#{menuBean.consultarProfissioanl()}"/>
 							<p:menuitem value="Clientes" />
 						</p:submenu>
 						<p:submenu label="Projetos">
@@ -63,7 +64,7 @@
 				- Agrega Consultores - <a href="http://bit.ly/Y8saFl" target="_blank">www.agregaconsultores.com.br</a>
 			</p:layoutUnit>
 
-			<p:blockUI block="layoutCentro" trigger="cadProfissional">
+			<p:blockUI block="layoutCentro" trigger="cadProfissional consultaProfissional" >
 				<p:graphicImage name="images/ajaxloadingbar.gif" />
 			</p:blockUI>
 		</h:form>

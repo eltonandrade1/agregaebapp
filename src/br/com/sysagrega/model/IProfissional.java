@@ -81,4 +81,8 @@ public interface IProfissional extends Serializable {
 
 	IDadosBancarios getDadosBancarios();
 
+	boolean isExistente();
+
+	boolean isNovo();
+
 }

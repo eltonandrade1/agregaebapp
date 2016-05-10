@@ -20,15 +20,33 @@
     TITLE="cadastro_profissional" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
- <PROCESS-ITEM NAME="rules:#*" PATH="/*" SHAPE="32,465,0,0" model-entity="JSFProcessGroup">
-  <PROCESS-ITEM ID="rules:#*:0" NAME="item" PATH="/*" model-entity="JSFProcessItem">
-   <PROCESS-ITEM-OUTPUT ID="novoTeste::#paginas#novoTeste.xhtml"
-    NAME="output" PATH="/paginas/novoTeste.xhtml"
-    TARGET="rules:#paginas#novoTeste.xhtml" TITLE="novoTeste" model-entity="JSFProcessItemOutput"/>
-  </PROCESS-ITEM>
- </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#paginas#Profissional.xhtml"
   PATH="/paginas/Profissional.xhtml" SHAPE="240,369,0,0" model-entity="JSFProcessGroup"/>
- <PROCESS-ITEM NAME="rules:#paginas#novoTeste.xhtml"
-  PATH="/paginas/novoTeste.xhtml" SHAPE="240,481,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:1" PATH="*" SHAPE="32,577,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:1" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="editar_profissional::#paginas#Profissional.xhtml" NAME="output"
+    PATH="/paginas/Profissional.xhtml"
+    TARGET="rules:#paginas#Profissional.xhtml"
+    TITLE="editar_profissional" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:2" PATH="*" SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:2" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="consultar_profissional::#paginas#ConsultarProfissional.xhtml"
+    NAME="output" PATH="/paginas/ConsultarProfissional.xhtml"
+    TARGET="rules:#paginas#ConsultarProfissional.xhtml"
+    TITLE="consultar_profissional" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#paginas#ConsultarProfissional.xhtml"
+  PATH="/paginas/ConsultarProfissional.xhtml" SHAPE="240,705,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:3" PATH="*" SHAPE="48,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:3" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="home::#templates#home.xhtml" NAME="output"
+    PATH="/templates/home.xhtml" TARGET="rules:#templates#home.xhtml"
+    TITLE="home" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
 </PROCESS>

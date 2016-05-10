@@ -36,11 +36,11 @@ public class Endereco implements IEndereco {
 	@Column(name = "NR_RUA")
 	private Long numeroRua;
 	
-	@ManyToOne(targetEntity = Cidade.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Cidade.class)
 	@JoinColumn(name = "ID_CIDADE")
 	private ICidade cidade;
 	
-	@ManyToOne(targetEntity = Estado.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = Estado.class)
 	@JoinColumn(name = "ID_UF")
 	private IEstado estado;
 	

@@ -12,6 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.sysagrega.model.IDadosBancarios;
 import br.com.sysagrega.model.IEndereco;
@@ -67,12 +68,23 @@ public class Profissional implements IProfissional{
 	
 	private String email;
 	
-	@OneToOne(targetEntity = Endereco.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(targetEntity = Endereco.class, cascade = CascadeType.ALL)
 	private IEndereco endereco;
 	
-	@OneToOne(targetEntity = DadosBancarios.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(targetEntity = DadosBancarios.class, cascade = CascadeType.ALL)
 	private IDadosBancarios dadosBancarios;
 	
+	@Transient
+	@Override
+	public boolean isNovo() {
+		return getId() == null;
+	}
+	
+	@Transient
+	@Override
+	public boolean isExistente() {
+		return !isNovo();
+	}
 	
 	@Override
 	public Long getId() {

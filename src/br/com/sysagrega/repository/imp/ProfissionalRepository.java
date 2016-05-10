@@ -5,11 +5,13 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import br.com.sysagrega.model.IProfissional;
 import br.com.sysagrega.model.imp.Profissional;
 import br.com.sysagrega.repository.IProfissionalRepository;
+import br.com.sysagrega.service.imp.NegocioException;
 
 public class ProfissionalRepository implements IProfissionalRepository {
 
@@ -34,14 +36,14 @@ public class ProfissionalRepository implements IProfissionalRepository {
 	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#getProfissionalById(java.lang.Long)
 	 */
 	@Override
-	public Profissional getProfissionalById(Long id) {
+	public IProfissional getProfissionalById(Long id) {
 		
 		return this.manager.find(Profissional.class, id);
 		
 	}
 	
 	@Override
-	public Profissional getProfissionalByCpf(String cpf) {
+	public IProfissional getProfissionalByCpf(String cpf) {
 		
 		try {
 			
@@ -58,41 +60,32 @@ public class ProfissionalRepository implements IProfissionalRepository {
 	}
 
 	/* (non-Javadoc)
-	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#salvar(br.com.sysagrega.model.imp.Profissional)
-	 */
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#salvar(br.com.sysagrega.model.imp.Profissional)
-	 */
-	@Override
-	public void salvar(IProfissional profissional) {
-
-		this.manager.persist(profissional);
-
-	}
-
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#atualizar(br.com.sysagrega.model.imp.Profissional)
-	 */
-	/* (non-Javadoc)
 	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#atualizar(br.com.sysagrega.model.imp.Profissional)
 	 */
 	@Override
-	public Profissional atualizar(Profissional profissional) {
+	public IProfissional saveOrMerge(IProfissional profissional) {
 
 		return this.manager.merge(profissional);
 
 	}
-
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#remover(br.com.sysagrega.model.imp.Profissional)
-	 */
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#remover(br.com.sysagrega.model.imp.Profissional)
 	 */
 	@Override
-	public void remover(Profissional profissional) {
+	public void remover(IProfissional profissional) {
 
-		this.manager.remove(profissional);
+		try {
+			
+			IProfissional prof = getProfissionalById(profissional.getId());
+			this.manager.remove(prof);
+			this.manager.flush();
+			
+		} catch (PersistenceException e) {
+			
+			throw new NegocioException("Profissional não pode ser excluído.");
+			
+		}
+		
 	}
 
 	/* (non-Javadoc)
@@ -102,9 +95,9 @@ public class ProfissionalRepository implements IProfissionalRepository {
 	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#getAllProfissionals()
 	 */
 	@Override
-	public List<Profissional> getAllProfissionals() {
+	public List<IProfissional> getAllProfissionals() {
 		
-		TypedQuery<Profissional> query = manager.createQuery("from Profissional", Profissional.class);
+		TypedQuery<IProfissional> query = manager.createQuery("from Profissional", IProfissional.class);
 		return query.getResultList();
 		
 	}

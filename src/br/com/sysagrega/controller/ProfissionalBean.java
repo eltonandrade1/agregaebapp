@@ -6,13 +6,16 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Produces;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import br.com.sysagrega.controller.Qualificadores.QualificadorProfissional;
 import br.com.sysagrega.model.IProfissional;
 import br.com.sysagrega.model.Enums.TiposContaBancaria;
+import br.com.sysagrega.model.Enums.TiposPaginas;
 import br.com.sysagrega.model.imp.Banco;
 import br.com.sysagrega.model.imp.Cidade;
 import br.com.sysagrega.model.imp.DadosBancarios;
@@ -35,83 +38,96 @@ public class ProfissionalBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	
-	@Inject 
+	@Inject
 	private IProfissionalService profissionalService;
 
-	@Inject 
+	@Inject
 	private IEstadoService estadoService;
 
 	@Inject
 	private ICidadeService cidadeService;
-	
+
 	@Inject
 	private IBancoService bancoService;
-	
 
 	@Produces
 	@QualificadorProfissional
 	private IProfissional profissional;
 
-	private Estado estado;
+	private boolean viewProfissional;
 
 	private List<Estado> estados;
 
 	private List<Cidade> cidades;
-	
+
 	private List<Banco> bancos;
-	
+
 	private List<String> tiposConta;
+
+	private List<IProfissional> profissionais;
+
+	private List<Profissional> filtroProfissionais;
 	
 	@PostConstruct
 	public void inicializar() {
-		
-		//this.profissional = new Profissional();
-		//this.profissional.setEndereco(new Endereco());
-		//this.profissional.setDadosBancarios(new DadosBancarios());
 		
 		estados = new ArrayList<>();
 		cidades = new ArrayList<>();
 		bancos = new ArrayList<>();
 		tiposConta = new ArrayList<>();
-
-		// Carregando lista de estados
+		
+		//Carrega lista de estados
 		estados = estadoService.getAllEstados();
-		
-		//Carrega lista de bancos
+
+		// Carrega lista de bancos
 		bancos = bancoService.getAllBancos();
-		
-		//Carrega Tipos de conta (Enum)
+
+		// Carrega Tipos de conta (Enum)
 		for (TiposContaBancaria tipos : TiposContaBancaria.values()) {
-			
+
 			tiposConta.add(tipos.getDescricao());
-			
+
 		}
-		//Controle de renderizaÃ§Ã£o de cidades (exibe conforme escolha do estado)
-		//isDisableCidades();
+		
+		// Carregando lista de profissionais
+		if(FacesUtil.getParamSession().equals(TiposPaginas.CONSULTA_PROF)) {
+			
+			carregarTodosProfissionais();
+			
+		} else if(FacesUtil.getParamSession().equals(TiposPaginas.EDIT_PROFI)) {
+			
+			this.profissional = FacesUtil.getProfissionalSession();
+			carregarCidadesPorEstado();
+			
+		} else if(FacesUtil.getParamSession().equals(TiposPaginas.NOVO_PROF)) {
 
-		limparObjeto();
-
+			limparObjeto();
+			
+		} else if(FacesUtil.getParamSession().equals(TiposPaginas.VISUALIZAR_PROF)) {
+			this.profissional = FacesUtil.getProfissionalSession();
+			carregarCidadesPorEstado();
+			viewProfissional = true;
+		}
 	}
 
 	private void limparObjeto() {
-
+		
 		this.profissional = new Profissional();
 		this.profissional.setEndereco(new Endereco());
 		this.profissional.setDadosBancarios(new DadosBancarios());
-
+		
 	}
 
 	public void carregarCidadesPorEstado() {
 
-		System.out.println("@@@Chamou MÃ©todo@@@");
-		cidades = cidadeService.getCidadesByEstadoId(profissional.getEndereco().getEstado().getId());
+		cidades = cidadeService.getCidadesByEstadoId(this.profissional.getEndereco().getEstado().getId());
 		isDisableCidades();
 
 	}
+	
 
 	/**
-	 * Metodo realiza a persistÃªncia de um objeto Profissional
+	 * Metodo realiza a persistência de um objeto Profissional
 	 * 
 	 * @param profissional
 	 * @author Elton
@@ -130,16 +146,138 @@ public class ProfissionalBean implements Serializable {
 
 		}
 	}
-	
-	public Boolean isDisableCidades() {
+
+	/**
+	 * Metodo realiza atualização de um objeto Profissional
+	 * 
+	 * @param profissional
+	 * @return profissional
+	 * @author Elton
+	 */
+	public void atualizarProfissional() {
 		
-		if(profissional.getEndereco().getEstado() == null || profissional.getEndereco().getEstado().getId() == null) {
+		try {
 			
+			this.profissionalService.atualizarProfissional(this.profissional);
+			limparObjeto();
+			FacesUtil.addInfoMessage("Profissional atualizado com sucesso.");
+			
+		} catch (Exception e) {
+			
+			FacesUtil.addErrorMessage(e.getMessage());
+			
+		}
+	}
+	
+	public void excluirProfissional() {
+		
+		try {
+			
+			this.profissionalService.excluirProfissional(this.profissional);
+			carregarTodosProfissionais();
+			FacesUtil.addInfoMessage("Profissional excluido com sucesso.");
+			
+		} catch (Exception e) {
+			
+			FacesUtil.addErrorMessage(e.getMessage());
+			
+		}
+	}
+
+	/**
+	 * Método controla a renderização do combo cidades, bloqueando o mesmo,
+	 * caso não tenha sido informado um estado.
+	 * 
+	 * @return Boolean
+	 * @author Elton
+	 */
+	public Boolean isDisableCidades() {
+
+		if (profissional.getEndereco().getEstado() == null || profissional.getEndereco().getEstado().getId() == null) {
+
 			return true;
+
+		}
+
+		return false;
+
+	}
+
+	/**
+	 * Carregar todos os profissionais cadastrados no sistema para tela de
+	 * consulta
+	 * @author Elton
+	 * 
+	 */
+	private void carregarTodosProfissionais() {
+
+		profissionais = new ArrayList<>();
+		profissionais = profissionalService.getAllProfissionals();
+
+	}
+	
+	public String redirectEditProfissional() {
+		if(this.profissional != null) {
+			
+			FacesUtil.addParamSession(TiposPaginas.EDIT_PROFI);
+			
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			session.setAttribute("profissional", this.profissional);
+			
+			isEditProfissional();
+			
+			
+		} else {
+			
+			FacesUtil.addErrorMessage("Favor selecionar um profissional!");
+			return null;
 			
 		}
 		
-		return false;
+		return "editar_profissional";
+		
+	}
+	
+	public String visualizarProfissional() {
+		if(this.profissional != null) {
+			
+			FacesUtil.addParamSession(TiposPaginas.VISUALIZAR_PROF);
+			
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			session.setAttribute("profissional", this.profissional);
+			
+		} else {
+			
+			FacesUtil.addErrorMessage("Favor selecionar um profissional!");
+			return null;
+			
+		}
+		
+		return "editar_profissional";
+		
+	}
+	
+	/**
+	 * Método valida se é uma edição do objeto profissional
+	 * @param profissional
+	 * @return Boolean
+	 * @author Elton
+	 */
+	public Boolean isEditProfissional() {
+		
+		return this.profissional.isExistente() && !viewProfissional;
+		
+	}
+	
+	/**
+	 * Método valida se é um novo objeto profissional
+	 * @param profissional
+	 * @return Boolean
+	 * @author Elton
+	 */
+	public Boolean isNewProfissional() {
+		
+		return this.profissional.isNovo();
 		
 	}
 
@@ -176,21 +314,6 @@ public class ProfissionalBean implements Serializable {
 	}
 
 	/**
-	 * @return the estado
-	 */
-	public Estado getEstado() {
-		return estado;
-	}
-
-	/**
-	 * @param estado
-	 *            the estado to set
-	 */
-	public void setEstado(Estado estado) {
-		this.estado = estado;
-	}
-
-	/**
 	 * @return the profissional
 	 */
 	public IProfissional getProfissional() {
@@ -204,7 +327,7 @@ public class ProfissionalBean implements Serializable {
 	public void setProfissional(IProfissional profissional) {
 		this.profissional = profissional;
 	}
-	
+
 	/**
 	 * @return the bancos
 	 */
@@ -213,7 +336,8 @@ public class ProfissionalBean implements Serializable {
 	}
 
 	/**
-	 * @param bancos the bancos to set
+	 * @param bancos
+	 *            the bancos to set
 	 */
 	public void setBancos(List<Banco> bancos) {
 		this.bancos = bancos;
@@ -227,9 +351,54 @@ public class ProfissionalBean implements Serializable {
 	}
 
 	/**
-	 * @param tiposConta the tiposConta to set
+	 * @param tiposConta
+	 *            the tiposConta to set
 	 */
 	public void setTiposConta(List<String> tiposConta) {
 		this.tiposConta = tiposConta;
+	}
+
+	/**
+	 * @return the profissionais
+	 */
+	public List<IProfissional> getProfissionais() {
+		return profissionais;
+	}
+
+	/**
+	 * @param profissionais
+	 *            the profissionais to set
+	 */
+	public void setProfissionais(List<IProfissional> profissionais) {
+		this.profissionais = profissionais;
+	}
+
+	/**
+	 * @return the filtroProfissionais
+	 */
+	public List<Profissional> getFiltroProfissionais() {
+		return filtroProfissionais;
+	}
+
+	/**
+	 * @param filtroProfissionais
+	 *            the filtroProfissionais to set
+	 */
+	public void setFiltroProfissionais(List<Profissional> filtroProfissionais) {
+		this.filtroProfissionais = filtroProfissionais;
+	}
+
+	/**
+	 * @return the viewProfissional
+	 */
+	public boolean getViewProfissional() {
+		return viewProfissional;
+	}
+
+	/**
+	 * @param viewProfissional the viewProfissional to set
+	 */
+	public void setViewProfissional(boolean viewProfissional) {
+		this.viewProfissional = viewProfissional;
 	}
 }

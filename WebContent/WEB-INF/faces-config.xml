@@ -21,13 +21,31 @@
 			<to-view-id>/paginas/Profissional.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	
-	<!-- Tela de teste -->
+
+	<!-- Editar Profissional -->
 	<navigation-rule>
-		<from-view-id>/*</from-view-id>
+		<from-view-id>*</from-view-id>
 		<navigation-case>
-			<from-outcome>novoTeste</from-outcome>
-			<to-view-id>/paginas/novoTeste.xhtml</to-view-id>
+			<from-outcome>editar_profissional</from-outcome>
+			<to-view-id>/paginas/Profissional.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Consultar Profissional -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consultar_profissional</from-outcome>
+			<to-view-id>/paginas/ConsultarProfissional.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Retorno para tela Home -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/templates/home.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -38,7 +56,7 @@
 			<var>msg</var>
 		</resource-bundle>
 	</application>
-	
+
 	<factory>
 		<exception-handler-factory>br.com.sysagrega.util.jsf.JsfExceptionHandlerFactory</exception-handler-factory>
 	</factory>

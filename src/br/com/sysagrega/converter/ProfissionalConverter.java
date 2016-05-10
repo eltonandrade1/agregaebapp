@@ -5,13 +5,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import br.com.sysagrega.model.imp.Estado;
+import br.com.sysagrega.model.IProfissional;
 import br.com.sysagrega.model.imp.Profissional;
-import br.com.sysagrega.repository.imp.EstadoRepository;
 import br.com.sysagrega.repository.imp.ProfissionalRepository;
 import br.com.sysagrega.util.cdi.CDIServiceLocator;
 
-@FacesConverter(forClass = Profissional.class)
+@FacesConverter(forClass = IProfissional.class)
 public class ProfissionalConverter implements Converter {
 
 	//@Inject
@@ -23,7 +22,7 @@ public class ProfissionalConverter implements Converter {
 	
 	@Override
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		Profissional retorno = null;
+		IProfissional retorno = null;
 		
 		if (value != null) {
 			Long id = new Long(value);
@@ -35,7 +34,7 @@ public class ProfissionalConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (value != null && value instanceof Profissional) {
+		if (value != null && value instanceof IProfissional) {
 			return String.valueOf(((Profissional) value).getId());
 		}
 		

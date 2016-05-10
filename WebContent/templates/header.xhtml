@@ -1,9 +1,42 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jb="http://xmlns.jcp.org/jsf/html"
+	xmlns:o="http://omnifaces.org/ui">
+
 	<h:form>
-		<h:outputLabel value="cabeçalho" />
+		<div style="float: left">
+			<h:graphicImage library="images" name="logo-algaworks.png" />
+		</div>
+
+		<div style="float: right; margin-right: 110px">
+
+			<p:menubar id="idMenuPrincipal" styleClass="menu-sistema">
+				<p:submenu label="Cadastros">
+					<p:menuitem id="cadProfissional" value="Profissionais"
+						icon="ui-icon-plus" action="#{menuBean.novoProfissional()}" />
+					<p:menuitem value="Clientes" action="#{menuBean.telaTeste()}"
+						icon="ui-icon-plus" />
+					<p:menuitem value="Usuários" icon="ui-icon-plus" />
+					<p:menuitem value="Fornecedores" icon="ui-icon-plus" />
+					<p:separator />
+					<p:menuitem value="Propostas" icon="ui-icon-plus" />
+				</p:submenu>
+				<p:submenu label="Consultas">
+					<p:menuitem id="consultaProfissional" value="Profissionais"
+						icon="ui-icon-search" action="#{menuBean.consultarProfissioanl()}" />
+					<p:menuitem value="Clientes" />
+				</p:submenu>
+				<p:submenu label="Projetos">
+					<p:menuitem value="Novo Projeto" />
+					<p:menuitem value="Pesquisar" />
+				</p:submenu>
+				<p:menuitem value="Sair" />
+			</p:menubar>
+		</div>
+		<div style="clear: both"></div>
 	</h:form>
 
 </ui:composition>
