@@ -169,6 +169,7 @@ public class ProfissionalBean implements Serializable {
 		}
 	}
 	
+	
 	public void excluirProfissional() {
 		
 		try {

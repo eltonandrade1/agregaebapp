@@ -48,27 +48,32 @@
 					<h:outputText value="#{profissional.dataNascimento}" />
 				</p:column>
 				<f:facet name="footer">
-					<p:commandButton process="tableProfissionais" icon="ui-icon-eye"
-						value="Visualizar" action="#{profissionalBean.visualizarProfissional()}"/>
-					<p:commandButton process="tableProfissionais" icon="fa fa-fw fa-edit"
-						value="Editar"
-						action="#{profissionalBean.redirectEditProfissional()}" ajax="false"/>
-					<p:commandButton process="tableProfissionais" icon="fa fa-fw fa-remove"
-						value="Excluir" action="#{profissionalBean.excluirProfissional()}" ajax="false"/>
+					<div align="left">
+						<p:commandButton process="tableProfissionais" icon="fa fa-fw fa-eye"
+							value="Visualizar"
+							action="#{profissionalBean.visualizarProfissional()}" />
+						<p:commandButton process="tableProfissionais"
+							icon="fa fa-fw fa-edit" value="Editar"
+							action="#{profissionalBean.redirectEditProfissional()}"
+							ajax="false" />
+						<p:commandButton process="tableProfissionais"
+							icon="fa fa-fw fa-remove" value="Excluir"
+							action="#{profissionalBean.excluirProfissional()}" ajax="false" />
+					</div>
 				</f:facet>
 
 			</p:dataTable>
-<!-- 			<br></br> -->
-<!-- 			<p:separator /> -->
-<!-- 			<p:commandButton process="tableProfissionais" icon="ui-icon-search" -->
-<!-- 				value="Visualizar" /> -->
+			<!-- 			<br></br> -->
+			<!-- 			<p:separator /> -->
+			<!-- 			<p:commandButton process="tableProfissionais" icon="ui-icon-search" -->
+			<!-- 				value="Visualizar" /> -->
 
-<!-- 			<p:commandButton process="tableProfissionais" icon="fa fa-edit" -->
-<!-- 				value="Editar" -->
-<!-- 				action="#{profissionalBean.redirectEditProfissional()}" /> -->
+			<!-- 			<p:commandButton process="tableProfissionais" icon="fa fa-edit" -->
+			<!-- 				value="Editar" -->
+			<!-- 				action="#{profissionalBean.redirectEditProfissional()}" /> -->
 
-<!-- 			<p:commandButton process="tableProfissionais" icon="fa fa-edit" -->
-<!-- 				value="Excluir" /> -->
+			<!-- 			<p:commandButton process="tableProfissionais" icon="fa fa-edit" -->
+			<!-- 				value="Excluir" /> -->
 		</p:panel>
 	</ui:define>
 </ui:composition>

@@ -71,6 +71,7 @@ public class ProfissionalRepository implements IProfissionalRepository {
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#remover(br.com.sysagrega.model.imp.Profissional)
 	 */
+	
 	@Override
 	public void remover(IProfissional profissional) {
 

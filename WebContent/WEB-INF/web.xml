@@ -18,6 +18,11 @@
 		<param-value>home</param-value>
 	</context-param>
 	
+	<context-param>
+	<param-name>primefaces.FONT_AWESOME</param-name>
+	<param-value>true</param-value>
+	</context-param>
+	
 	<!-- Listener do Jboss Weld -->
 	<listener>
 		<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>

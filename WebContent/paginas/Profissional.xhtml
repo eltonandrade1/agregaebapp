@@ -202,12 +202,12 @@
 			<p:separator />
 			<p:commandButton value="Salvar"
 				action="#{profissionalBean.salvarProfissional()}"
-				icon="ui-icon-check" update="idPanelProfissional"
+				icon="fa fa-fw fa-save" update="idPanelProfissional"
 				rendered="#{profissionalBean.isNewProfissional()}" />
 
 			<p:commandButton value="Atualizar"
 				action="#{profissionalBean.atualizarProfissional()}"
-				icon="ui-icon-check" update="idPanelProfissional"
+				icon="fa fa-fw fa-refresh" update="idPanelProfissional"
 				rendered="#{profissionalBean.isEditProfissional()}" />
 
 		</p:panel>

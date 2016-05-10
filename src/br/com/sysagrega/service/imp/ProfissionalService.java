@@ -102,6 +102,7 @@ public class ProfissionalService implements IProfissionalService {
 
 	}
 
+	
 	/**
 	 * Método exclui um objeto profissional
 	 * 
