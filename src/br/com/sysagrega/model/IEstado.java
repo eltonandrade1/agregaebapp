@@ -1,9 +1,6 @@
 package br.com.sysagrega.model;
 
 import java.io.Serializable;
-import java.util.List;
-
-import br.com.sysagrega.model.imp.Cidade;
 
 public interface IEstado extends Serializable{
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import br.com.sysagrega.model.IProfissional;
+import br.com.sysagrega.model.imp.Profissional;
 
 public interface IProfissionalRepository extends Serializable {
 
@@ -25,8 +26,10 @@ public interface IProfissionalRepository extends Serializable {
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#getAllProfissionals()
 	 */
-	List<IProfissional> getAllProfissionals();
+	List<Profissional> getAllProfissionals();
 
 	IProfissional getProfissionalByCpf(String cpf);
+
+	List<Profissional> getProfissionalByFilter(String cpf, String rg);
 
 }

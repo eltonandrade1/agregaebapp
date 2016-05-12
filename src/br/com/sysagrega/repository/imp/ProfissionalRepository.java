@@ -8,6 +8,9 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
+import com.uaihebert.factory.EasyCriteriaFactory;
+import com.uaihebert.model.EasyCriteria;
+
 import br.com.sysagrega.model.IProfissional;
 import br.com.sysagrega.model.imp.Profissional;
 import br.com.sysagrega.repository.IProfissionalRepository;
@@ -58,6 +61,33 @@ public class ProfissionalRepository implements IProfissionalRepository {
 		}
 		
 	}
+	
+	@Override
+	public List<Profissional> getProfissionalByFilter(String cpf, String rg) {
+		
+		EasyCriteria<Profissional> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager, Profissional.class);
+		
+		
+		if(!cpf.isEmpty() && cpf != null ) {
+			easyCriteria.andEquals("cpf", cpf);
+		}
+		
+		if(!rg.isEmpty() && rg != null) {
+			easyCriteria.andEquals("rg", rg);
+		}
+		
+		try {
+			
+			return easyCriteria.getResultList();
+			
+		} catch (NoResultException e) {
+			
+			return null;
+			
+		}
+		
+	}
+	
 
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#atualizar(br.com.sysagrega.model.imp.Profissional)
@@ -96,9 +126,9 @@ public class ProfissionalRepository implements IProfissionalRepository {
 	 * @see br.com.sysagrega.repository.imp.IProfissionalRepository#getAllProfissionals()
 	 */
 	@Override
-	public List<IProfissional> getAllProfissionals() {
+	public List<Profissional> getAllProfissionals() {
 		
-		TypedQuery<IProfissional> query = manager.createQuery("from Profissional", IProfissional.class);
+		TypedQuery<Profissional> query = manager.createQuery("from Profissional", Profissional.class);
 		return query.getResultList();
 		
 	}

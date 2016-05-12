@@ -27,6 +27,28 @@
 			<p:messages id="messagesConsulta" showDetail="true" autoUpdate="true"
 				closable="true" />
 			<br></br>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton id="idBtPesquisar" value="Pesquisar"
+						action="#{profissionalBean.filtrarProfissionais}" update="tableProfissionais"
+						 />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+				<p:outputLabel value="RG:" for="idRg" />
+				<p:inputMask mask="99999999-99" id="idRg" size="20"
+					value="#{profissionalBean.filtroRg}" />
+
+				<p:outputLabel value="CPF:" />
+				<p:inputMask mask="999.999.999-99"
+					value="#{profissionalBean.filtroCpf}" />
+			</p:panelGrid>
+			
+			<br></br>
+
 			<p:dataTable id="tableProfissionais" var="profissional" lazy="true"
 				value="#{profissionalBean.profissionais}"
 				emptyMessage="Nenhum profissional cadastrado" paginator="true"
@@ -49,8 +71,8 @@
 				</p:column>
 				<f:facet name="footer">
 					<div align="left">
-						<p:commandButton process="tableProfissionais" icon="fa fa-fw fa-eye"
-							value="Visualizar"
+						<p:commandButton process="tableProfissionais"
+							icon="fa fa-fw fa-eye" value="Visualizar"
 							action="#{profissionalBean.visualizarProfissional()}" />
 						<p:commandButton process="tableProfissionais"
 							icon="fa fa-fw fa-edit" value="Editar"
@@ -61,19 +83,12 @@
 							action="#{profissionalBean.excluirProfissional()}" ajax="false" />
 					</div>
 				</f:facet>
-
 			</p:dataTable>
-			<!-- 			<br></br> -->
-			<!-- 			<p:separator /> -->
-			<!-- 			<p:commandButton process="tableProfissionais" icon="ui-icon-search" -->
-			<!-- 				value="Visualizar" /> -->
 
-			<!-- 			<p:commandButton process="tableProfissionais" icon="fa fa-edit" -->
-			<!-- 				value="Editar" -->
-			<!-- 				action="#{profissionalBean.redirectEditProfissional()}" /> -->
-
-			<!-- 			<p:commandButton process="tableProfissionais" icon="fa fa-edit" -->
-			<!-- 				value="Excluir" /> -->
+			<p:blockUI block="tableProfissionais" trigger="idBtPesquisar" >
+				<p:graphicImage name="images/ajaxloadingbar.gif" />
+			</p:blockUI>
+			
 		</p:panel>
 	</ui:define>
 </ui:composition>

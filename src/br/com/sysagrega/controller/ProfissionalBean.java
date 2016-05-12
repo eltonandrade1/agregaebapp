@@ -14,8 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import br.com.sysagrega.controller.Qualificadores.QualificadorProfissional;
 import br.com.sysagrega.model.IProfissional;
-import br.com.sysagrega.model.Enums.TiposContaBancaria;
-import br.com.sysagrega.model.Enums.TiposPaginas;
+import br.com.sysagrega.model.Enums.TipoContaBancaria;
+import br.com.sysagrega.model.Enums.TipoPagina;
 import br.com.sysagrega.model.imp.Banco;
 import br.com.sysagrega.model.imp.Cidade;
 import br.com.sysagrega.model.imp.DadosBancarios;
@@ -55,6 +55,12 @@ public class ProfissionalBean implements Serializable {
 	private IProfissional profissional;
 
 	private boolean viewProfissional;
+	
+	private boolean disableCity;
+	
+	private String filtroCpf;
+	
+	private String filtroRg;
 
 	private List<Estado> estados;
 
@@ -64,10 +70,8 @@ public class ProfissionalBean implements Serializable {
 
 	private List<String> tiposConta;
 
-	private List<IProfissional> profissionais;
+	private List<Profissional> profissionais;
 
-	private List<Profissional> filtroProfissionais;
-	
 	@PostConstruct
 	public void inicializar() {
 		
@@ -83,27 +87,26 @@ public class ProfissionalBean implements Serializable {
 		bancos = bancoService.getAllBancos();
 
 		// Carrega Tipos de conta (Enum)
-		for (TiposContaBancaria tipos : TiposContaBancaria.values()) {
+		for (TipoContaBancaria tipos : TipoContaBancaria.values()) {
 
 			tiposConta.add(tipos.getDescricao());
 
 		}
 		
 		// Carregando lista de profissionais
-		if(FacesUtil.getParamSession().equals(TiposPaginas.CONSULTA_PROF)) {
+		if(FacesUtil.getParamSession().equals(TipoPagina.CONSULTA_PROF)) {
 			
 			carregarTodosProfissionais();
 			
-		} else if(FacesUtil.getParamSession().equals(TiposPaginas.EDIT_PROFI)) {
+		} else if(FacesUtil.getParamSession().equals(TipoPagina.EDIT_PROFI)) {
 			
 			this.profissional = FacesUtil.getProfissionalSession();
-			carregarCidadesPorEstado();
 			
-		} else if(FacesUtil.getParamSession().equals(TiposPaginas.NOVO_PROF)) {
+		} else if(FacesUtil.getParamSession().equals(TipoPagina.NOVO_PROF)) {
 
 			limparObjeto();
 			
-		} else if(FacesUtil.getParamSession().equals(TiposPaginas.VISUALIZAR_PROF)) {
+		} else if(FacesUtil.getParamSession().equals(TipoPagina.VISUALIZAR_PROF)) {
 			this.profissional = FacesUtil.getProfissionalSession();
 			carregarCidadesPorEstado();
 			viewProfissional = true;
@@ -115,13 +118,14 @@ public class ProfissionalBean implements Serializable {
 		this.profissional = new Profissional();
 		this.profissional.setEndereco(new Endereco());
 		this.profissional.setDadosBancarios(new DadosBancarios());
+		disableCity = true;
 		
 	}
 
 	public void carregarCidadesPorEstado() {
 
 		cidades = cidadeService.getCidadesByEstadoId(this.profissional.getEndereco().getEstado().getId());
-		isDisableCidades();
+		disableCity = false;
 
 	}
 	
@@ -220,7 +224,7 @@ public class ProfissionalBean implements Serializable {
 	public String redirectEditProfissional() {
 		if(this.profissional != null) {
 			
-			FacesUtil.addParamSession(TiposPaginas.EDIT_PROFI);
+			FacesUtil.addParamSession(TipoPagina.EDIT_PROFI);
 			
 			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 			session.setAttribute("profissional", this.profissional);
@@ -242,7 +246,7 @@ public class ProfissionalBean implements Serializable {
 	public String visualizarProfissional() {
 		if(this.profissional != null) {
 			
-			FacesUtil.addParamSession(TiposPaginas.VISUALIZAR_PROF);
+			FacesUtil.addParamSession(TipoPagina.VISUALIZAR_PROF);
 			
 			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 			session.setAttribute("profissional", this.profissional);
@@ -281,6 +285,14 @@ public class ProfissionalBean implements Serializable {
 		return this.profissional.isNovo();
 		
 	}
+	
+	public void filtrarProfissionais() {
+		
+		profissionais = new ArrayList<>();
+		profissionais = this.profissionalService.getProfissionalByFilter(this.filtroCpf, this.filtroRg);
+		
+	}
+	
 
 	/**
 	 * @return the estados
@@ -362,7 +374,7 @@ public class ProfissionalBean implements Serializable {
 	/**
 	 * @return the profissionais
 	 */
-	public List<IProfissional> getProfissionais() {
+	public List<Profissional> getProfissionais() {
 		return profissionais;
 	}
 
@@ -370,23 +382,8 @@ public class ProfissionalBean implements Serializable {
 	 * @param profissionais
 	 *            the profissionais to set
 	 */
-	public void setProfissionais(List<IProfissional> profissionais) {
+	public void setProfissionais(List<Profissional> profissionais) {
 		this.profissionais = profissionais;
-	}
-
-	/**
-	 * @return the filtroProfissionais
-	 */
-	public List<Profissional> getFiltroProfissionais() {
-		return filtroProfissionais;
-	}
-
-	/**
-	 * @param filtroProfissionais
-	 *            the filtroProfissionais to set
-	 */
-	public void setFiltroProfissionais(List<Profissional> filtroProfissionais) {
-		this.filtroProfissionais = filtroProfissionais;
 	}
 
 	/**
@@ -401,5 +398,47 @@ public class ProfissionalBean implements Serializable {
 	 */
 	public void setViewProfissional(boolean viewProfissional) {
 		this.viewProfissional = viewProfissional;
+	}
+
+	/**
+	 * @return the disableCity
+	 */
+	public boolean isDisableCity() {
+		return disableCity;
+	}
+
+	/**
+	 * @param disableCity the disableCity to set
+	 */
+	public void setDisableCity(boolean disableCity) {
+		this.disableCity = disableCity;
+	}
+
+	/**
+	 * @return the filtroCpf
+	 */
+	public String getFiltroCpf() {
+		return filtroCpf;
+	}
+
+	/**
+	 * @param filtroCpf the filtroCpf to set
+	 */
+	public void setFiltroCpf(String filtroCpf) {
+		this.filtroCpf = filtroCpf;
+	}
+
+	/**
+	 * @return the filtroRg
+	 */
+	public String getFiltroRg() {
+		return filtroRg;
+	}
+
+	/**
+	 * @param filtroRg the filtroRg to set
+	 */
+	public void setFiltroRg(String filtroRg) {
+		this.filtroRg = filtroRg;
 	}
 }

@@ -4,7 +4,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -14,7 +15,7 @@
 
 <h:body>
 	<p:layout fullPage="true">
-		<h:form id="formPrincipal" style="display: inline-block">
+		<o:form id="formPrincipal" style="display: inline-block">
 		
 			<p:layoutUnit id="layoutCabecalho" position="north" size="50" resizable="true">
 
@@ -27,8 +28,8 @@
 					<p:menubar id="idMenuPrincipal" styleClass="menu-sistema" >
 						<p:submenu label="Cadastros" >
 							<p:menuitem id="cadProfissional" value="Profissionais" icon="ui-icon-plus"
-								action="#{menuBean.novoProfissional()}"/>
-							<p:menuitem value="Clientes" action="#{menuBean.telaTeste()}" icon="ui-icon-plus"/>
+								 action="#{menuBean.novoProfissional()}"  />
+							<p:menuitem id="cadCliente" value="Clientes" action="#{menuBean.novoCliente()}" icon="ui-icon-plus"/>
 							<p:menuitem value="Usuários" icon="ui-icon-plus"/>
 							<p:menuitem value="Fornecedores" icon="ui-icon-plus"/>
 							<p:separator />
@@ -38,8 +39,14 @@
 							<p:menuitem id="consultaProfissional" 
 										value="Profissionais" 
 										icon="ui-icon-search" 
-										action="#{menuBean.consultarProfissioanl()}"/>
-							<p:menuitem value="Clientes" />
+										action="#{menuBean.consultarProfissioanl()}">
+										<o:ignoreValidationFailed />
+							</p:menuitem>
+										
+							<p:menuitem value="Clientes" 
+										id="consultaCliente"
+										icon="ui-icon-search"
+										action="#{menuBean.consultarCliente()}"/>
 						</p:submenu>
 						<p:submenu label="Projetos">
 							<p:menuitem value="Novo Projeto" />
@@ -64,10 +71,11 @@
 				- Agrega Consultores - <a href="http://bit.ly/Y8saFl" target="_blank">www.agregaconsultores.com.br</a>
 			</p:layoutUnit>
 
-			<p:blockUI block="layoutCentro" trigger="cadProfissional consultaProfissional" >
+			<p:blockUI block="layoutCentro" 
+				trigger="cadProfissional consultaProfissional cadCliente consultaCliente" >
 				<p:graphicImage name="images/ajaxloadingbar.gif" />
 			</p:blockUI>
-		</h:form>
+		</o:form>
 	</p:layout>
 </h:body>
 

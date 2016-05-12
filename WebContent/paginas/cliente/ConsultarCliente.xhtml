@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jb="http://xmlns.jcp.org/jsf/html"
+	xmlns:o="http://omnifaces.org/ui">
+
+<ui:composition template="/templates/master.xhtml">
+
+	<f:metadata>
+
+		<o:viewParam name="cliente" value="#{clienteBean.cliente}" />
+
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<p:panel id="idPanelProfissional" style="border: none;">
+
+			<h4 style="margin-top: 0" align="left">Consultar Clientes</h4>
+			<p:separator />
+
+			<p:messages id="messagesConsulta" showDetail="true" autoUpdate="true"
+				closable="true" />
+			<br></br>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton id="idBtPesquisar" value="Pesquisar"
+						action="#{clienteBean.filtrarClientes()}" update="tableClientes" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+
+				<p:outputLabel value="Nome:" for="idNomeCliente" />
+				<p:inputText id="idNomeCliente" size="60"
+					value="#{clienteBean.filtroNome}" />
+
+				<p:outputLabel value="CNPJ:" />
+				<p:inputMask mask="99.999.999/9999-99" style="width:160px;"
+					value="#{clienteBean.filtroCnpj}" />
+
+				<p:outputLabel value="Seguimento:" />
+				<p:selectOneMenu id="tipoSeguimento" style="width:120px;"
+					value="#{clienteBean.filtroSeguimento}"
+					disabled="#{clienteBean.viewCliente}">
+
+					<f:selectItem itemLabel="- Selecionar -" itemValue="" />
+					<f:selectItems value="#{clienteBean.seguimentos}" var="seguimento"
+						itemLabel="#{seguimento}" itemValue="#{seguimento}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Tipo de Cliente:" />
+				<p:selectOneMenu id="tipoCliente" style="width:120px;"
+					value="#{clienteBean.filtroTipoCliente}"
+					disabled="#{clienteBean.viewCliente}">
+
+					<f:selectItem itemLabel="- Selecionar -" itemValue="" />
+					<f:selectItems value="#{clienteBean.tiposClientes}"
+						var="tipoCliente" itemLabel="#{tipoCliente}"
+						itemValue="#{tipoCliente}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Situação:" />
+				<p:selectOneMenu id="tipoSituacao" style="width:120px;"
+					value="#{clienteBean.filtroSituacao}"
+					disabled="#{clienteBean.viewCliente}">
+					
+					<f:selectItem itemLabel="- Selecionar -" itemValue="" />
+					<f:selectItems value="#{clienteBean.situacoes}" var="situacao"
+						itemLabel="#{situacao}" itemValue="#{situacao}" />
+				</p:selectOneMenu>
+
+
+			</p:panelGrid>
+
+			<br></br>
+
+			<p:dataTable id="tableClientes" var="cliente" lazy="true"
+				value="#{clienteBean.clientes}"
+				emptyMessage="Nenhum cliente cadastrado" paginator="true"
+				rows="10" rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				selectionMode="single" selection="#{clienteBean.cliente}"
+				rowKey="#{cliente.id}">
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{cliente.nome}" />
+				</p:column>
+				<p:column headerText="CNPJ">
+					<h:outputText value="#{cliente.cnpj}" />
+				</p:column>
+				<p:column headerText="Seguimento">
+					<h:outputText value="#{cliente.seguimento}" />
+				</p:column>
+				<p:column headerText="Tipo de Cliente">
+					<h:outputText value="#{cliente.tipoCliente}" />
+				</p:column>
+				<p:column headerText="Situação">
+					<h:outputText value="#{cliente.situacao}" />
+				</p:column>
+				<f:facet name="footer">
+					<div align="left">
+						<p:commandButton process="tableClientes"
+							icon="fa fa-fw fa-eye" value="Visualizar"
+							action="#{clienteBean.visualizarCliente()}" />
+						<p:commandButton process="tableClientes"
+							icon="fa fa-fw fa-edit" value="Editar"
+							action="#{clienteBean.redirectEditCliente()}"
+							ajax="false" />
+						<p:commandButton process="tableClientes"
+							icon="fa fa-fw fa-remove" value="Excluir"
+							action="#{clienteBean.excluirCliente()}" ajax="false" />
+					</div>
+				</f:facet>
+			</p:dataTable>
+
+			<p:blockUI block="tableClientes" trigger="idBtPesquisar">
+				<p:graphicImage name="images/ajaxloadingbar.gif" />
+			</p:blockUI>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

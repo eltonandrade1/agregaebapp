@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.sysagrega.model.IProfissional;
+import br.com.sysagrega.model.imp.Profissional;
 import br.com.sysagrega.repository.IProfissionalRepository;
 import br.com.sysagrega.service.IProfissionalService;
 import br.com.sysagrega.util.cdi.Transactional;
@@ -63,7 +64,7 @@ public class ProfissionalService implements IProfissionalService {
 				|| profissional.getCpf() == null || profissional.getRg().isEmpty() || profissional.getRg() == null
 				|| profissional.getDataNascimento() == null) {
 
-			throw new NegocioException("Campos obrigatórios não informados!");
+			throw new NegocioException("Os Campos obrigatórios não foram informados!");
 
 		}
 	}
@@ -76,7 +77,7 @@ public class ProfissionalService implements IProfissionalService {
 	 * @author Elton
 	 */
 	@Override
-	public List<IProfissional> getAllProfissionals() {
+	public List<Profissional> getAllProfissionals() {
 
 		return profissionalRepository.getAllProfissionals();
 
@@ -123,6 +124,23 @@ public class ProfissionalService implements IProfissionalService {
 
 		}
 
+	}
+	
+	/**
+	 * Método realizar a busca de um objeto profissional, 
+	 * conforme o filtro informado na tela de consulta.
+	 * Se os filtros não forem informados o método retorna todos os profissionais
+	 * 
+	 * @param cpf
+	 * @param rg
+	 * @author Elton
+	 * 
+	 */
+	@Override
+	public List<Profissional> getProfissionalByFilter(String cpf, String rg) {
+		
+		return this.profissionalRepository.getProfissionalByFilter(cpf, rg);
+		
 	}
 
 }

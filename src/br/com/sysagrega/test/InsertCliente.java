@@ -5,22 +5,27 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import br.com.sysagrega.model.Enums.TipoCliente;
+import br.com.sysagrega.model.Enums.TipoSeguimentoCliente;
+import br.com.sysagrega.model.Enums.TipoSituacaoCliente;
+import br.com.sysagrega.model.Enums.TipoTamanhoCliente;
 import br.com.sysagrega.model.imp.Banco;
 import br.com.sysagrega.model.imp.Cidade;
+import br.com.sysagrega.model.imp.Cliente;
 import br.com.sysagrega.model.imp.DadosBancarios;
 import br.com.sysagrega.model.imp.Endereco;
 import br.com.sysagrega.model.imp.Estado;
 import br.com.sysagrega.model.imp.Profissional;
 
-public class InsertProfissional {
-	
-	private static Profissional profissional;
+public class InsertCliente {
 	
 	private static Endereco endereco;
 	
 	private static Estado uf;
 	
 	private static Cidade cidade;
+	
+	private static Cliente cliente;
 
 	public static void main(String[] args) {
 		
@@ -49,31 +54,21 @@ public class InsertProfissional {
 		endereco.setRua("rua A");
 		endereco.setBairro("caji");
 		
-		//Banco
-		Banco banco = new Banco();
-		banco.setId(1L);
-		banco.setNome("001 - BANCO DO BRASIL S/A");
-		banco.setCodigo(1L);
+		//Cliente
+		cliente = new Cliente();
+		cliente.setNome("Empresa teste");
+		cliente.setCnpj("222222222222222");
+		cliente.setTamanho(TipoTamanhoCliente.GRANDE.getDescricao());
+		cliente.setTipoCliente(TipoCliente.CARTEIRA.getDescricao());
+		cliente.setSeguimento(TipoSeguimentoCliente.AGRICULTURA.getDescricao());
+		cliente.setSituacao(TipoSituacaoCliente.EM_IMPLANTACAO.getDescricao());
+		cliente.setEndereco(endereco);
 		
-		//Dados Bancarios
-		DadosBancarios dadosBancarios = new DadosBancarios();
-		dadosBancarios.setIdBanco(banco);
-		dadosBancarios.setTipoConta("Corrente");
 		
-		
-		profissional = new Profissional();
-		profissional.setNome("Primeiro Teste Nome@@");
-		profissional.setProfissao("Analista Peão!!!");
-		profissional.setContratoTemporario('N');
-		profissional.setAtuacaoEspecializacao("Arquiteto de Software 4");
-		profissional.setCpf("00642748535");
-		profissional.setCelular("71987232636");
-		profissional.setEndereco(endereco);
-		profissional.setDadosBancarios(dadosBancarios);
 		
 		try {
 			
-			manager.persist(profissional);
+			manager.persist(cliente);
 			trx.commit();
 			manager.close();
 			
@@ -94,19 +89,6 @@ public class InsertProfissional {
 	}
 	
 
-	/**
-	 * @return the profissional
-	 */
-	public static Profissional getProfissional() {
-		return profissional;
-	}
-
-	/**
-	 * @param profissional the profissional to set
-	 */
-	public static void setProfissional(Profissional profissional) {
-		InsertProfissional.profissional = profissional;
-	}
 
 	/**
 	 * @return the endereco
@@ -119,7 +101,7 @@ public class InsertProfissional {
 	 * @param endereco the endereco to set
 	 */
 	public static void setEndereco(Endereco endereco) {
-		InsertProfissional.endereco = endereco;
+		InsertCliente.endereco = endereco;
 	}
 
 	/**
@@ -133,7 +115,7 @@ public class InsertProfissional {
 	 * @param uf the uf to set
 	 */
 	public static void setUf(Estado uf) {
-		InsertProfissional.uf = uf;
+		InsertCliente.uf = uf;
 	}
 
 	/**
@@ -147,7 +129,21 @@ public class InsertProfissional {
 	 * @param cidade the cidade to set
 	 */
 	public static void setCidade(Cidade cidade) {
-		InsertProfissional.cidade = cidade;
+		InsertCliente.cidade = cidade;
+	}
+
+	/**
+	 * @return the cliente
+	 */
+	public static Cliente getCliente() {
+		return cliente;
+	}
+
+	/**
+	 * @param cliente the cliente to set
+	 */
+	public static void setCliente(Cliente cliente) {
+		InsertCliente.cliente = cliente;
 	}
 	
 }

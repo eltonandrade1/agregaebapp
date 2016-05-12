@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import br.com.sysagrega.model.imp.Estado;
-import br.com.sysagrega.util.cdi.Transactional;
 
 public interface IEstadoService extends Serializable{
 

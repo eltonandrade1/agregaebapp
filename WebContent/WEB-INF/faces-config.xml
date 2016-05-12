@@ -13,12 +13,13 @@
 		</navigation-case>
 	</navigation-rule>
 
+	<!-- Inicio das telas de profissional -->
 	<!-- Cadastro Profissional -->
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>cadastro_profissional</from-outcome>
-			<to-view-id>/paginas/Profissional.xhtml</to-view-id>
+			<to-view-id>/paginas/profissional/Profissional.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -27,7 +28,7 @@
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>editar_profissional</from-outcome>
-			<to-view-id>/paginas/Profissional.xhtml</to-view-id>
+			<to-view-id>/paginas/profissional/Profissional.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -36,9 +37,10 @@
 		<from-view-id>*</from-view-id>
 		<navigation-case>
 			<from-outcome>consultar_profissional</from-outcome>
-			<to-view-id>/paginas/ConsultarProfissional.xhtml</to-view-id>
+			<to-view-id>/paginas/profissional/ConsultarProfissional.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<!-- Fim das telas de profissional -->
 
 	<!-- Retorno para tela Home -->
 	<navigation-rule>
@@ -48,6 +50,35 @@
 			<to-view-id>/templates/home.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+
+	<!-- Inicio das telas de cliente -->
+	<!-- Cadastro Cliente -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadastro_cliente</from-outcome>
+			<to-view-id>/paginas/cliente/Cliente.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Editar Cliente -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>editar_cliente</from-outcome>
+			<to-view-id>/paginas/cliente/Cliente.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Consultar Cliente -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consultar_cliente</from-outcome>
+			<to-view-id>/paginas/cliente/ConsultarCliente.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- Fim das telas de cliente -->
 
 	<!-- Configurando leitura do arquivo properties -->
 	<application>

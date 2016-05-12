@@ -11,6 +11,7 @@
 		<class>br.com.sysagrega.model.imp.Estado</class>
 		<class>br.com.sysagrega.model.imp.Login</class>
 		<class>br.com.sysagrega.model.imp.Profissional</class>
+		<class>br.com.sysagrega.model.imp.Cliente</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sysagregadb" />

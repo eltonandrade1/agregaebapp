@@ -5,49 +5,59 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import br.com.sysagrega.model.ICliente;
 import br.com.sysagrega.model.IProfissional;
-import br.com.sysagrega.model.Enums.TiposPaginas;
+import br.com.sysagrega.model.Enums.TipoPagina;
 
 public class FacesUtil {
 
 	public static boolean isPostback() {
 		return FacesContext.getCurrentInstance().isPostback();
 	}
-	
+
 	public static boolean isNotPostback() {
 		return !isPostback();
 	}
-	
+
 	public static void addErrorMessage(String message) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, message, message));
 	}
-	
+
 	public static void addInfoMessage(String message) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, message));
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, message, message));
 	}
-	
-	public static void addParamSession(TiposPaginas tipo) {
-//		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("idView", tipo);
+
+	public static void addParamSession(TipoPagina tipo) {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		HttpSession session = (HttpSession) fc.getExternalContext().getSession(true);
-		session.setAttribute("idView", tipo );
-		
+		session.setAttribute("idView", tipo);
+
 	}
-	
-	public static TiposPaginas getParamSession() {
-//		return  (TiposPaginas) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("idView");
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
+	public static TipoPagina getParamSession() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
 		HttpSession session = (HttpSession) request.getSession();
-		return (TiposPaginas) session.getAttribute("idView");
-		
+		return (TipoPagina) session.getAttribute("idView");
+
 	}
-	
+
 	public static IProfissional getProfissionalSession() {
-//		return  (TiposPaginas) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("idView");
-		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
 		HttpSession session = (HttpSession) request.getSession();
 		return (IProfissional) session.getAttribute("profissional");
-		
+
 	}
 	
+	public static ICliente getClienteSession() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		HttpSession session = (HttpSession) request.getSession();
+		return (ICliente) session.getAttribute("cliente");
+
+	}
+
 }

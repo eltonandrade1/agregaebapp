@@ -101,12 +101,12 @@
 		</dependency>
 
 		<!-- Implementação do Bean Validator -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.hibernate</groupId> -->
-<!-- 			<artifactId>hibernate-validator</artifactId> -->
-<!-- 			<version>5.3.0.Alpha1</version> -->
-<!-- 		</dependency> -->
-		
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- <artifactId>hibernate-validator</artifactId> -->
+		<!-- <version>5.3.0.Alpha1</version> -->
+		<!-- </dependency> -->
+
 		<!-- Javax Validation -->
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -139,20 +139,28 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.0-b01</version>
 		</dependency>
-		
+
 		<!-- Omnifaces -->
 		<dependency>
 			<groupId>org.omnifaces</groupId>
 			<artifactId>omnifaces</artifactId>
 			<version>2.3</version>
 		</dependency>
-		
+
 		<!-- Commons Logging (abstrai a implementação de logging) -->
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
+
+		<!-- Easycriteria (facilita as consultas ao banco de dados) -->
+		<dependency>
+			<groupId>uaihebert.com</groupId>
+			<artifactId>EasyCriteria</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
 
 	</dependencies>
 

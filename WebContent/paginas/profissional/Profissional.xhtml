@@ -23,8 +23,8 @@
 			<p:separator />
 			
 			<p:messages id="messagesCadastro" showDetail="true" autoUpdate="true" closable="true" escape="false" />
-
-			<p:tabView style="margin-top: 20px">
+        
+			<p:tabView id="idTabViewProfissional" style="margin-top: 20px">
 				
 				<p:tab id="idTabDadosPessoais" title="Dados Pessoais">
 
@@ -116,7 +116,6 @@
 							value="#{profissionalBean.profissional.endereco.estado}"
 							effect="fade" filter="true" filterMatchMode="startsWith">
 
-							<f:selectItem itemLabel="- Selecione -" itemValue="" itemDisabled="#{profissionalBean.isEditProfissional()}"/>							
 							<f:selectItems value="#{profissionalBean.estados}" var="estado"
 								itemLabel="#{estado.uf}" itemValue="#{estado}" />
 							<p:ajax event="change"
@@ -126,12 +125,12 @@
 
 						<p:outputLabel for="idCidades" value="Cidade:" />
 						<p:selectOneMenu id="idCidades" style="width:120px;" 
-							disabled="#{profissionalBean.isDisableCidades()}"
+							disabled="#{profissionalBean.disableCity}"
 							panelStyle="width:180px;" effect="fade" filter="true"
 							filterMatchMode="startsWith"
 							value="#{profissionalBean.profissional.endereco.cidade}" >
 							
-							<f:selectItem itemLabel="- Selecione -" itemValue="" itemDisabled="#{profissionalBean.isEditProfissional()}"/>
+							<f:selectItem itemLabel="#{profissionalBean.profissional.endereco.cidade.nome}" itemValue="" />
 							<f:selectItems value="#{profissionalBean.cidades}" var="cidade"
 								itemLabel="#{cidade.nome}" itemValue="#{cidade}" />
 						</p:selectOneMenu>
@@ -175,7 +174,6 @@
 						<p:selectOneMenu id="tipo" style="width:120px;"
 							value="#{profissionalBean.profissional.dadosBancarios.tipoConta}" disabled="#{profissionalBean.viewProfissional}">
 							
-							<f:selectItem itemLabel="- Selecione -" itemValue="" itemDisabled="#{profissionalBean.isEditProfissional()}"/>
 							<f:selectItems value="#{profissionalBean.tiposConta}" var="tipos"
 								itemLabel="#{tipos}" itemValue="#{tipos}" />
 						</p:selectOneMenu>
@@ -200,15 +198,19 @@
 
 			<br />
 			<p:separator />
-			<p:commandButton value="Salvar"
+			<p:commandButton id="btSalvar" value="Salvar" 
 				action="#{profissionalBean.salvarProfissional()}"
 				icon="fa fa-fw fa-save" update="idPanelProfissional"
 				rendered="#{profissionalBean.isNewProfissional()}" />
 
-			<p:commandButton value="Atualizar"
+			<p:commandButton id="btAtualizar" value="Atualizar"
 				action="#{profissionalBean.atualizarProfissional()}"
 				icon="fa fa-fw fa-refresh" update="idPanelProfissional"
 				rendered="#{profissionalBean.isEditProfissional()}" />
+				
+			<p:blockUI block="idPanelProfissional" trigger="btSalvar btAtualizar">
+				<p:graphicImage name="images/ajaxloadingbar.gif" />
+			</p:blockUI>
 
 		</p:panel>
 	</ui:define>
