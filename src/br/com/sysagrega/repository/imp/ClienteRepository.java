@@ -8,8 +8,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
-import com.uaihebert.factory.EasyCriteriaFactory;
-import com.uaihebert.model.EasyCriteria;
+import com.uaihebert.uaicriteria.UaiCriteria;
+import com.uaihebert.uaicriteria.UaiCriteriaFactory;
 
 import br.com.sysagrega.model.ICliente;
 import br.com.sysagrega.model.imp.Cliente;
@@ -68,7 +68,7 @@ public class ClienteRepository implements IClienteRepository {
 	@Override
 	public List<Cliente> getClienteByFilter(String nome, String cnpj, String situacao, String seguimento, String tipoCliente) {
 		
-		EasyCriteria<Cliente> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager, Cliente.class);
+		UaiCriteria<Cliente> easyCriteria = UaiCriteriaFactory.createQueryCriteria(manager, Cliente.class);
 		
 		if(!nome.isEmpty() && nome != null) {
 			easyCriteria.andEquals("nome", nome);

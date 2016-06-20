@@ -160,12 +160,12 @@
 								itemLabel="#{estado.uf}" itemValue="#{estado}" />
 							<p:ajax event="change"
 								listener="#{clienteBean.carregarCidadesPorEstado}"
-								update="idCidades" global="false" />
+								update="idCidades"  />
 						</p:selectOneMenu>
 
 						<p:outputLabel for="idCidades" value="Cidade:" />
 						<p:selectOneMenu id="idCidades" style="width:120px;"
-							disabled="#{clienteBean.viewCliente}" panelStyle="width:180px;"
+							disabled="#{clienteBean.disableCity}" panelStyle="width:180px;"
 							effect="fade" filter="true" filterMatchMode="startsWith"
 							value="#{clienteBean.cliente.endereco.cidade}">
 

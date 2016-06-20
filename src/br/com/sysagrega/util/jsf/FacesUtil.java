@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import br.com.sysagrega.model.ICliente;
 import br.com.sysagrega.model.IProfissional;
 import br.com.sysagrega.model.Enums.TipoPagina;
+import br.com.sysagrega.model.imp.Proposta;
 
 public class FacesUtil {
 
@@ -57,6 +58,14 @@ public class FacesUtil {
 				.getRequest();
 		HttpSession session = (HttpSession) request.getSession();
 		return (ICliente) session.getAttribute("cliente");
+
+	}
+	
+	public static Proposta getPropostaSession() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		HttpSession session = (HttpSession) request.getSession();
+		return (Proposta) session.getAttribute("proposta");
 
 	}
 

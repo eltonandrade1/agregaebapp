@@ -26,8 +26,6 @@ public class MenuBean implements Serializable {
 	}
 
 	public String consultarProfissioanl() {
-
-		// Set parametro na sessão
 		FacesUtil.addParamSession(TipoPagina.CONSULTA_PROF);
 		return "consultar_profissional";
 	}
@@ -39,10 +37,18 @@ public class MenuBean implements Serializable {
 	}
 
 	public String consultarCliente() {
-
-		// Set parametro na sessão
 		FacesUtil.addParamSession(TipoPagina.CONSULTA_CLIENTE);
 		return "consultar_cliente";
+	}
+	
+	public String novaProposta() {
+		FacesUtil.addParamSession(TipoPagina.NOVA_PROPOSTA);
+		return "cadastro_proposta";
+	}
+	
+	public String consultarProposta() {
+		FacesUtil.addParamSession(TipoPagina.CONSULTA_PROPOSTA);
+		return "consultar_proposta";
 	}
 	
 	//TODO verificar necessidade de utilização

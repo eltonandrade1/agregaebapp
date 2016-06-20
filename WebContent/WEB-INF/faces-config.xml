@@ -13,7 +13,7 @@
 		</navigation-case>
 	</navigation-rule>
 
-	<!-- Inicio das telas de profissional -->
+	<!-- ### Inicio das telas de profissional ###-->
 	<!-- Cadastro Profissional -->
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
@@ -40,7 +40,7 @@
 			<to-view-id>/paginas/profissional/ConsultarProfissional.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	<!-- Fim das telas de profissional -->
+	<!-- ### Fim das telas de profissional ### -->
 
 	<!-- Retorno para tela Home -->
 	<navigation-rule>
@@ -50,8 +50,9 @@
 			<to-view-id>/templates/home.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	<!-- ### Fim Retorno para tela Home ### -->
 
-	<!-- Inicio das telas de cliente -->
+	<!-- ### Inicio das telas de cliente ### -->
 	<!-- Cadastro Cliente -->
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
@@ -78,7 +79,36 @@
 			<to-view-id>/paginas/cliente/ConsultarCliente.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	<!-- Fim das telas de cliente -->
+	<!-- ### Fim das telas de cliente ### -->
+	
+	<!-- ### Inicio das telas de proposta ### -->
+	<!-- Cadastro Proposta -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadastro_proposta</from-outcome>
+			<to-view-id>/paginas/proposta/Proposta.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Editar Proposta -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>editar_proposta</from-outcome>
+			<to-view-id>/paginas/proposta/Proposta.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Consultar Proposta -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consultar_proposta</from-outcome>
+			<to-view-id>/paginas/proposta/ConsultarProposta.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- ### Fim das telas de proposta ### -->
 
 	<!-- Configurando leitura do arquivo properties -->
 	<application>

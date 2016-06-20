@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>5.3</version>
+			<version>6.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces.themes</groupId>
@@ -154,12 +154,13 @@
 			<version>1.2</version>
 		</dependency>
 
-		<!-- Easycriteria (facilita as consultas ao banco de dados) -->
+		<!-- uaiCriteria (facilita as consultas ao banco de dados) -->
 		<dependency>
 			<groupId>uaihebert.com</groupId>
-			<artifactId>EasyCriteria</artifactId>
-			<version>3.0.0</version>
+			<artifactId>uaiCriteria</artifactId>
+			<version>4.0.0</version>
 		</dependency>
+
 
 
 	</dependencies>

@@ -12,7 +12,13 @@ public enum TipoPagina {
 	NOVO_CLIENTE("Novo Cliente"),
 	CONSULTA_CLIENTE("Consultar Cliente"),
 	VISUALIZAR_CLIENTE("Visualizar Cliente"),
-	EDIT_CLIENTE("Editar Cliente");
+	EDIT_CLIENTE("Editar Cliente"),
+	
+	//Ações telas de proposta
+	NOVA_PROPOSTA("Nova Proposta"),
+	CONSULTA_PROPOSTA("Consultar Proposta"),
+	VISUALIZAR_PROPOSTA("Visualizar Proposta"),
+	EDIT_PROPOSTA("Editar Proposta");
 	
 	private String descricao;
 

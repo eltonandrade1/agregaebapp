@@ -13,7 +13,7 @@
 </h:head>
 
 <h:body>
-	<p:layout fullPage="true" >
+	<p:layout fullPage="true">
 		<o:form id="formPrincipal" style="display: inline-block">
 
 			<p:layoutUnit id="layoutCabecalho" position="north" size="60">
@@ -25,6 +25,7 @@
 				<div style="float: right; margin-right: 110px">
 
 					<p:menubar id="idMenuPrincipal" styleClass="menu-sistema">
+
 						<p:submenu label="Cadastros">
 							<p:menuitem id="cadProfissional" value="Profissionais"
 								icon="ui-icon-plus" action="#{menuBean.novoProfissional()}" />
@@ -32,9 +33,13 @@
 								action="#{menuBean.novoCliente()}" icon="ui-icon-plus" />
 							<p:menuitem value="Usuários" icon="ui-icon-plus" />
 							<p:menuitem value="Fornecedores" icon="ui-icon-plus" />
-							<p:separator />
-							<p:menuitem value="Propostas" icon="ui-icon-plus" />
 						</p:submenu>
+
+						<p:submenu label="Propostas">
+							<p:menuitem id="cadProposta" value="Nova Proposta" action="#{menuBean.novaProposta()}" icon="ui-icon-plus"/>
+						</p:submenu>
+
+
 						<p:submenu label="Consultas">
 							<p:menuitem id="consultaProfissional" value="Profissionais"
 								icon="ui-icon-search"
@@ -45,10 +50,7 @@
 							<p:menuitem value="Clientes" id="consultaCliente"
 								icon="ui-icon-search" action="#{menuBean.consultarCliente()}" />
 						</p:submenu>
-						<p:submenu label="Projetos">
-							<p:menuitem value="Novo Projeto" />
-							<p:menuitem value="Pesquisar" />
-						</p:submenu>
+
 						<p:menuitem value="Sair" />
 					</p:menubar>
 				</div>
@@ -72,7 +74,7 @@
 			</p:layoutUnit>
 
 			<p:blockUI block="layoutCentro"
-				trigger="cadProfissional consultaProfissional cadCliente consultaCliente">
+				trigger="cadProfissional consultaProfissional cadCliente consultaCliente cadProposta">
 				<p:graphicImage name="images/ajaxloadingbar.gif" />
 			</p:blockUI>
 		</o:form>
