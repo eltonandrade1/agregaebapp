@@ -1,0 +1,524 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jb="http://xmlns.jcp.org/jsf/html"
+	xmlns:o="http://omnifaces.org/ui">
+
+<ui:composition template="/templates/master.xhtml">
+
+	<f:metadata>
+		<o:viewParam name="proposta" value="#{propostaBean.proposta}" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<p:panel id="idPanelProposta" style="border: none;">
+
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Cadastrar Proposta"
+				rendered="#{propostaBean.isNewProposta()}" />
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Atualizar Proposta"
+				rendered="#{propostaBean.isEditProposta()}" />
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Visualizar Proposta" rendered="#{propostaBean.viewProposta}" />
+			<p:separator />
+
+			<br />
+
+			<h:panelGrid id="valorTotalProposta" columns="2"
+				style="margin-bottom:10px;" cellspacing="5">
+				<p:outputLabel value="Valor Total R$:" />
+				<p:inputText id="valorTotal" style="width:100px;"
+					value="#{propostaBean.proposta.valor}" disabled="true" />
+			</h:panelGrid>
+
+			<p:messages id="messagesCadastro" showDetail="true" autoUpdate="true"
+				closable="true" escape="false" />
+
+			<p:tabView id="idTabViewProposta" style="margin-top: 20px">
+
+				<p:tab id="idTabProposta" title="Proposta">
+
+					<p:panelGrid columns="2" width="100%">
+
+						<h:panelGrid id="idPanelGridProposta" columns="2" width="100%"
+							style="margin-bottom:10px" cellspacing="5">
+
+							<p:outputLabel value="Nº Proposta:" />
+							<p:inputText id="nrProposta" style="width:100px;"
+								value="#{propostaBean.proposta.numeroProposta}" disabled="true" />
+
+							<p:outputLabel value="Data de Inclusão:" />
+							<p:outputLabel value="#{propostaBean.formatedCurrentDate}"
+								rendered="#{propostaBean.isNewProposta()}" />
+							<p:inputText id="dtInclusao" style="width:70px;"
+								value="#{propostaBean.proposta.dataInclusao}" disabled="true"
+								rendered="#{!propostaBean.isNewProposta()}" />
+
+							<p:outputLabel value="Nome do Projeto:" />
+							<p:inputText id="nomeProjeto" style="width:160px;"
+								value="#{propostaBean.proposta.nomeProjeto}" />
+
+							<p:outputLabel value="Cliente:" />
+							<p:inputText id="cliente" style="width:300px;"
+								value="#{propostaBean.proposta.cliente}" />
+
+							<p:outputLabel value="Contato:" />
+							<p:inputText id="contato" style="width:160px;"
+								value="#{propostaBean.proposta.contato}" />
+
+							<p:outputLabel for="idEstados" value="Estado:" />
+							<p:selectOneMenu id="idEstados" style="width:160px;"
+								panelStyle="width:180px;"
+								value="#{propostaBean.proposta.estado}" effect="fade"
+								filter="true" filterMatchMode="startsWith">
+
+								<f:selectItems value="#{propostaBean.estados}" var="estado"
+									itemLabel="#{estado.uf}" itemValue="#{estado}" />
+								<p:ajax event="change"
+									listener="#{propostaBean.carregarCidadesPorEstado()}"
+									update="idCidades" />
+							</p:selectOneMenu>
+
+							<p:outputLabel for="idCidades" value="Cidade:" />
+							<p:selectOneMenu id="idCidades" style="width:120px;"
+								disabled="#{propostaBean.disableCity}" panelStyle="width:180px;"
+								effect="fade" filter="true" filterMatchMode="startsWith"
+								value="#{propostaBean.proposta.cidade}">
+
+								<f:selectItems value="#{propostaBean.cidades}" var="cidade"
+									itemLabel="#{cidade.nome}" itemValue="#{cidade}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Tipo de Proposta:" />
+							<p:selectOneMenu id="tipoProposta" style="width:120px;"
+								value="#{propostaBean.proposta.tipoProposta}">
+
+								<f:selectItems value="#{propostaBean.tiposPropostas}" var="tipo"
+									itemLabel="#{tipo}" itemValue="#{tipo}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Contratada:" />
+							<p:selectOneButton id="status"
+								value="#{propostaBean.proposta.statusContratada}">
+								<f:selectItem itemLabel="Sim" itemValue="S" />
+								<f:selectItem itemLabel="Não" itemValue="N" />
+							</p:selectOneButton>
+
+						</h:panelGrid>
+
+						<h:panelGrid columns="1" width="100%">
+							<p:outputLabel value="Objeto:" />
+							<p:editor id="objeto" width="800" widgetVar="objetoProposta" />
+
+							<p:commandButton value="Limpar" type="button"
+								onclick="PF('objetoProposta').clear();" icon="ui-icon-close" />
+
+						</h:panelGrid>
+					</p:panelGrid>
+
+					<p:blockUI block="idTabProposta" trigger="idEstados">
+						<p:graphicImage name="images/ajaxloadingbar.gif" />
+					</p:blockUI>
+
+				</p:tab>
+
+				<p:tab id="idTabPrecificacao" title="Precificação">
+
+					<br />
+					<br />
+					<p:outputLabel style="margin-top: 0" align="left"
+						value="CUSTOS DE EXECUÇÃO" />
+					<p:separator />
+
+					<h:panelGrid id="pgCustosExecucao" columns="9" cellspacing="5">
+
+						<p:outputLabel value="Descrição:" />
+						<p:inputText id="descCustoExecucao" style="width:250px;"
+							value="#{propostaBean.custoExecucao.descricao}" />
+
+						<p:outputLabel value="Quantidade:" />
+						<p:inputText id="qtCustoExecucao" style="width:40px;"
+							value="#{propostaBean.custoExecucao.quantidade}">
+							<f:convertNumber type="number" />
+						</p:inputText>
+
+						<p:outputLabel value="Valor Unitário:" />
+						<p:inputNumber id="vlCustoExecucao" style="width:50px;"
+							value="#{propostaBean.custoExecucao.valorUnitario}" />
+
+						<p:outputLabel value="Total Custos Execução:" />
+						<p:inputNumber id="vlTotalExecucao" style="width:50px;"
+							disabled="true"
+							value="#{propostaBean.proposta.precificacao.valorTotalCustosExecucao}" />
+
+						<p:commandButton id="addCustoExecucao" icon="fa fa-fw fa-plus"
+							action="#{propostaBean.somarValorCustosExecucao()}"
+							update="panelCustosExecucao pgCustosExecucao @parent">
+							<p:collector unique="false" value="#{propostaBean.custoExecucao}"
+								addTo="#{propostaBean.proposta.precificacao.custos}" />
+						</p:commandButton>
+
+					</h:panelGrid>
+					<p:outputPanel id="panelCustosExecucao">
+						<p:dataTable value="#{propostaBean.proposta.precificacao.custos}"
+							emptyMessage="Nenhum custo cadastrado" rows="5"
+							rowsPerPageTemplate="5,10,15" paginator="true" scrollable="true"
+							scrollHeight="150"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							var="custo" id="tableCusto" paginatorPosition="bottom">
+
+							<p:column headerText="Descrição">
+								<p:outputLabel value="#{custo.descricao}" />
+							</p:column>
+
+							<p:column headerText="Quantidade">
+								<p:outputLabel value="#{custo.quantidade}" />
+							</p:column>
+
+							<p:column headerText="Valor Unitário">
+								<p:outputLabel value="#{custo.valorUnitario}" />
+							</p:column>
+
+							<p:column headerText="Valor">
+								<p:outputLabel value="#{custo.valorTotal}" />
+							</p:column>
+							<p:column headerText="Excluir">
+								<p:commandButton id="removerCusto" icon="fa fa-fw fa-remove"
+									update="formPrincipal:idTabViewProposta:panelCustosExecucao formPrincipal:idTabViewProposta:pgCustosExecucao @parent"
+									action="#{propostaBean.calcularValorTotalCustosExecucao()}">
+									<p:collector unique="true" value="#{custo}"
+										removeFrom="#{propostaBean.proposta.precificacao.custos}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+					</p:outputPanel>
+
+
+					<br />
+					<br />
+					<p:outputLabel style="margin-top: 0" align="left"
+						value="DESLOCAMENTOS" />
+					<p:separator />
+
+					<h:panelGrid id="pgCustosDeslocamento" columns="9" cellspacing="5">
+						<p:outputLabel value="Descrição:" />
+						<p:selectOneMenu id="descDeslocamento" style="width:120px;"
+							value="#{propostaBean.custoDeslocamento.descricao}">
+
+							<f:selectItems value="#{propostaBean.deslocamentos}" var="tipo"
+								itemLabel="#{deslocamento}" itemValue="#{deslocamento}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Quantidade:" />
+						<p:inputText id="qtDeslocamento" style="width:40px;"
+							value="#{propostaBean.custoDeslocamento.quantidade}">
+							<f:convertNumber type="number" />
+						</p:inputText>
+
+						<p:outputLabel value="Valor Unitário:" />
+						<p:inputNumber id="vlUnitarioDeslocamento" style="width:50px;"
+							value="#{propostaBean.custoDeslocamento.valorUnitario}" />
+
+						<p:outputLabel value="Total Custo Deslocamento:" />
+						<p:inputNumber id="vlTotalDeslocamento" style="width:50px;"
+							disabled="true"
+							value="#{propostaBean.proposta.precificacao.valorTotalCustosDesclocamento}" />
+
+						<p:commandButton id="addDeslocamento" icon="fa fa-fw fa-plus"
+							action="#{propostaBean.somarValorCustosDeslocamento()}"
+							update="panelCustosDeslocamento pgCustosDeslocamento @parent">
+							<p:collector unique="false"
+								value="#{propostaBean.custoDeslocamento}"
+								addTo="#{propostaBean.proposta.precificacao.despesasDeslocamentos}" />
+						</p:commandButton>
+
+					</h:panelGrid>
+					<p:outputPanel id="panelCustosDeslocamento">
+						<p:dataTable
+							value="#{propostaBean.proposta.precificacao.despesasDeslocamentos}"
+							emptyMessage="Nenhum custo cadastrado" rows="5"
+							rowsPerPageTemplate="5,10,15" paginator="true" scrollable="true"
+							scrollHeight="150"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							var="despesasDeslocamento" id="tableCustoDeslocamento"
+							paginatorPosition="bottom">
+
+							<p:column headerText="Descrição">
+								<p:outputLabel value="#{despesasDeslocamento.descricao}" />
+							</p:column>
+
+							<p:column headerText="Quantidade">
+								<p:outputLabel value="#{despesasDeslocamento.quantidade}" />
+							</p:column>
+
+							<p:column headerText="Valor Unitário">
+								<p:outputLabel value="#{despesasDeslocamento.valorUnitario}" />
+							</p:column>
+
+							<p:column headerText="Valor">
+								<p:outputLabel value="#{despesasDeslocamento.valorTotal}" />
+							</p:column>
+							<p:column headerText="Excluir">
+								<p:commandButton id="removerCusto" icon="fa fa-fw fa-remove"
+									update="formPrincipal:idTabViewProposta:panelCustosDeslocamento formPrincipal:idTabViewProposta:pgCustosDeslocamento @parent"
+									action="#{propostaBean.calcularValorTotalCustosDeslocamento()}">
+									<p:collector unique="true" value="#{despesasDeslocamento}"
+										removeFrom="#{propostaBean.proposta.precificacao.despesasDeslocamentos}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+					</p:outputPanel>
+
+					<br />
+					<br />
+					<p:outputLabel style="margin-top: 0" align="left"
+						value="DESPESAS OPERACIONAIS" />
+					<p:separator />
+
+					<h:panelGrid id="pgCustosoOperacionais" columns="9" cellspacing="5">
+						<p:outputLabel value="Descrição:" />
+						<p:selectOneMenu id="descOperacional" style="width:120px;"
+							value="#{propostaBean.custoOperacional.descricao}">
+
+							<f:selectItems value="#{propostaBean.despesasOperacional}"
+								var="operacional" itemLabel="#{operacional}"
+								itemValue="#{operacional}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Quantidade:" />
+						<p:inputText id="qtOperacional" style="width:40px;"
+							value="#{propostaBean.custoOperacional.quantidade}">
+							<f:convertNumber type="number" />
+						</p:inputText>
+
+						<p:outputLabel value="Valor Unitário:" />
+						<p:inputNumber id="vlUnitarioOperacional" style="width:50px;"
+							value="#{propostaBean.custoOperacional.valorUnitario}" />
+
+						<p:outputLabel value="Total Custo Deslocamento:" />
+						<p:inputNumber id="vlTotalOperacional" style="width:50px;"
+							disabled="true"
+							value="#{propostaBean.proposta.precificacao.valorTotalCustosOperacionais}" />
+
+						<p:commandButton id="addOperacional" icon="fa fa-fw fa-plus"
+							action="#{propostaBean.somarValorCustosOperacionais()}"
+							update="panelCustosOperacionais pgCustosoOperacionais @parent">
+							<p:collector unique="false"
+								value="#{propostaBean.custoOperacional}"
+								addTo="#{propostaBean.proposta.precificacao.despesasOperacionais}" />
+						</p:commandButton>
+
+					</h:panelGrid>
+					<p:outputPanel id="panelCustosOperacionais">
+						<p:dataTable
+							value="#{propostaBean.proposta.precificacao.despesasOperacionais}"
+							emptyMessage="Nenhum custo cadastrado" rows="5"
+							rowsPerPageTemplate="5,10,15" paginator="true" scrollable="true"
+							scrollHeight="150"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							var="oparecional" id="tableCustoOperacional"
+							paginatorPosition="bottom">
+
+							<p:column headerText="Descrição">
+								<p:outputLabel value="#{oparecional.descricao}" />
+							</p:column>
+
+							<p:column headerText="Quantidade">
+								<p:outputLabel value="#{oparecional.quantidade}" />
+							</p:column>
+
+							<p:column headerText="Valor Unitário">
+								<p:outputLabel value="#{oparecional.valorUnitario}" />
+							</p:column>
+
+							<p:column headerText="Valor">
+								<p:outputLabel value="#{oparecional.valorTotal}" />
+							</p:column>
+							<p:column headerText="Excluir">
+								<p:commandButton id="removerCustoOperacional" icon="fa fa-fw fa-remove"
+									update="formPrincipal:idTabViewProposta:panelCustosOperacionais formPrincipal:idTabViewProposta:pgCustosoOperacionais @parent"
+									action="#{propostaBean.calcularValorTotalCustosOperacionais()}">
+									<p:collector unique="true" value="#{oparecional}"
+										removeFrom="#{propostaBean.proposta.precificacao.despesasOperacionais}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+					</p:outputPanel>
+
+					<br />
+					<br />
+					<p:outputLabel style="margin-top: 0" align="left" value="SEGURANÇA" />
+					<p:separator />
+
+					<h:panelGrid id="pgCustosSeguranca" columns="9" cellspacing="5">
+						<p:outputLabel value="Descrição:" />
+						<p:selectOneMenu id="descSeguranca" style="width:120px;"
+							value="#{propostaBean.custoSeguranca.descricao}">
+
+							<f:selectItems value="#{propostaBean.despesasSeguranca}"
+								var="seguranca" itemLabel="#{seguranca}"
+								itemValue="#{seguranca}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Quantidade:" />
+						<p:inputText id="qtSeguranca" style="width:100px;"
+							value="#{propostaBean.custoSeguranca.quantidade}">
+							<f:convertNumber type="number" />
+						</p:inputText>
+
+						<p:outputLabel value="Valor Unitário:" />
+						<p:inputNumber id="vlUnitarioSeguranca" style="width:100px;"
+							value="#{propostaBean.custoSeguranca.valorUnitario}" />
+							
+						<p:outputLabel value="Total Segurança:" />
+						<p:inputNumber id="vlTotalSeguranca" style="width:100px;" disabled="true"
+							value="#{propostaBean.proposta.precificacao.valorTotalCustosSeguranca}" />
+
+						<p:commandButton id="addSeguranca" icon="fa fa-fw fa-plus"
+							action="#{propostaBean.somarValorCustosSeguranca()}"
+							update="panelCustosSeguranca pgCustosSeguranca @parent">
+							<p:collector unique="false"
+								value="#{propostaBean.custoSeguranca}"
+								addTo="#{propostaBean.proposta.precificacao.despesasSeguranca}" />
+						</p:commandButton>
+
+					</h:panelGrid>
+					<p:outputPanel id="panelCustosSeguranca">
+						<p:dataTable
+							value="#{propostaBean.proposta.precificacao.despesasSeguranca}"
+							emptyMessage="Nenhum custo cadastrado" rows="5"
+							rowsPerPageTemplate="5,10,15" paginator="true" scrollable="true"
+							scrollHeight="150"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							var="seguranca" id="tableCustoSeguranca"
+							paginatorPosition="bottom">
+
+							<p:column headerText="Descrição">
+								<p:outputLabel value="#{seguranca.descricao}" />
+							</p:column>
+
+							<p:column headerText="Quantidade">
+								<p:outputLabel value="#{seguranca.quantidade}" />
+							</p:column>
+
+							<p:column headerText="Valor Unitário">
+								<p:outputLabel value="#{seguranca.valorUnitario}" />
+							</p:column>
+
+							<p:column headerText="Valor">
+								<p:outputLabel value="#{seguranca.valorTotal}" />
+							</p:column>
+							<p:column headerText="Excluir">
+								<p:commandButton id="removerCustoSeguranca" icon="fa fa-fw fa-remove"
+									update="formPrincipal:idTabViewProposta:panelCustosSeguranca formPrincipal:idTabViewProposta:pgCustosSeguranca @parent"
+									action="#{propostaBean.calcularValorTotalCustosSeguranca()}">
+									<p:collector unique="true" value="#{seguranca}"
+										removeFrom="#{propostaBean.proposta.precificacao.despesasSeguranca}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+					</p:outputPanel>
+
+					<br />
+					<br />
+					<p:outputLabel style="margin-top: 0" align="left"
+						value="BDI E COMISSÕES" />
+					<p:separator />
+
+					<h:panelGrid columns="7" cellspacing="5">
+
+						<p:outputLabel value="Descrição:" />
+						<p:selectOneMenu id="descBdiComissao" style="width:120px;"
+							value="#{propostaBean.custoBdiComissao.descricao}">
+
+							<f:selectItems value="#{propostaBean.bdiComissoes}"
+								var="bdiComissao" itemLabel="#{bdiComissao}"
+								itemValue="#{bdiComissao}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Quantidade:" />
+						<p:inputText id="percentBdiComissao" style="width:100px;"
+							value="#{propostaBean.custoBdiComissao.quantidade}">
+							<f:convertNumber type="number" />
+						</p:inputText>
+
+						<p:outputLabel value="Valor Unitário R$:" />
+						<p:inputNumber id="vlBdiComissao" style="width:100px;"
+							value="#{propostaBean.custoBdiComissao.valorUnitario}" />
+
+						<p:commandButton id="addBdiComissao" value="Adicionar"
+							action="#{propostaBean.somarValorCustosExecucao()}"
+							update="panelCustosExecucao @parent">
+							<p:collector unique="false"
+								value="#{propostaBean.custoBdiComissao}"
+								addTo="#{propostaBean.proposta.precificacao.despesasBdiComissao}" />
+						</p:commandButton>
+
+					</h:panelGrid>
+
+					<br />
+					<br />
+					<p:outputLabel style="margin-top: 0" align="left" value="IMPOSTOS" />
+					<p:separator />
+
+					<h:panelGrid columns="2" cellspacing="5">
+						<p:outputLabel value="ISS:" />
+						<h:outputLabel id="iss" style="width:100px;"
+							value="#{propostaBean.proposta.precificacao.ISS}%" />
+
+						<p:outputLabel value="Cofins:" />
+						<h:outputLabel id="cofins" style="width:100px;"
+							value="#{propostaBean.proposta.precificacao.COFINS}%" />
+
+						<p:outputLabel value="PIS:" />
+						<h:outputLabel id="pis" style="width:100px;"
+							value="#{propostaBean.proposta.precificacao.PIS}%" />
+
+						<p:outputLabel value="CSLL:" />
+						<h:outputLabel id="csll" style="width:100px;"
+							value="#{propostaBean.proposta.precificacao.CSLL}%" />
+
+						<p:outputLabel value="IR:" />
+						<h:outputLabel id="ir" style="width:100px;"
+							value="#{propostaBean.proposta.precificacao.IR}%" />
+
+						<p:outputLabel value="IMPOSTOS:" />
+						<h:outputLabel id="impostos" style="width:100px;"
+							value="#{propostaBean.proposta.precificacao.impostos}%" />
+
+						<p:outputLabel value="Valor Total com Impostos:" />
+						<p:inputNumber id="vlTotalImpostos" style="width:100px;"
+							disabled="true"
+							value="#{propostaBean.proposta.precificacao.valorTotalImpostos}" />
+					</h:panelGrid>
+
+				</p:tab>
+			</p:tabView>
+
+			<br />
+			<p:separator />
+			<p:commandButton id="btSalvar" value="Salvar"
+				action="#{propostaBean.salvarProposta()}" icon="fa fa-fw fa-save"
+				update="idPanelProposta" rendered="#{propostaBean.isNewProposta()}" />
+
+			<p:commandButton id="btAtualizar" value="Atualizar"
+				action="#{propostaBean.atualizarProposta()}"
+				icon="fa fa-fw fa-refresh" update="idPanelProposta"
+				rendered="#{propostaBean.isEditProposta()}" />
+
+			<p:blockUI block="idPanelProposta" trigger="btSalvar btAtualizar">
+				<p:graphicImage name="images/ajaxloadingbar.gif" />
+			</p:blockUI>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>
