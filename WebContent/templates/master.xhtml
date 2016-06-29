@@ -37,6 +37,7 @@
 
 						<p:submenu label="Propostas">
 							<p:menuitem id="cadProposta" value="Nova Proposta" action="#{menuBean.novaProposta()}" icon="ui-icon-plus"/>
+							<p:menuitem id="consultarProposta" value="Consultar" action="#{menuBean.consultarProposta()}" icon="ui-icon-search"/>
 						</p:submenu>
 
 
@@ -74,7 +75,7 @@
 			</p:layoutUnit>
 
 			<p:blockUI block="layoutCentro"
-				trigger="cadProfissional consultaProfissional cadCliente consultaCliente cadProposta">
+				trigger="cadProfissional consultaProfissional cadCliente consultaCliente cadProposta consultarProposta">
 				<p:graphicImage name="images/ajaxloadingbar.gif" />
 			</p:blockUI>
 		</o:form>

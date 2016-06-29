@@ -3,11 +3,10 @@ package br.com.sysagrega.model.imp;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import br.com.sysagrega.model.ICustoBase;
-import br.com.sysagrega.model.IPrecificacao;
+import br.com.sysagrega.model.IProposta;
 
 @MappedSuperclass
 public abstract class CustoBase implements ICustoBase {
@@ -28,9 +27,14 @@ public abstract class CustoBase implements ICustoBase {
 	private double valorUnitario;
 
 	private double valorTotal;
+	
+	private String observacoes;
+	
+	private Proposta proposta;
 
-	@ManyToOne(targetEntity = Precificacao.class)
-	private IPrecificacao precificacao;
+	
+//	@ManyToOne(targetEntity = Precificacao.class)
+//	private IPrecificacao precificacao;
 
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.model.imp.ICustoBase#getDescricao()
@@ -99,22 +103,23 @@ public abstract class CustoBase implements ICustoBase {
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.model.imp.ICustoBase#getPrecificacao()
 	 */
-	@Override
-	public IPrecificacao getPrecificacao() {
-		return precificacao;
-	}
-
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.model.imp.ICustoBase#setPrecificacao(br.com.sysagrega.model.IPrecificacao)
-	 */
-	@Override
-	public void setPrecificacao(IPrecificacao precificacao) {
-		this.precificacao = precificacao;
-	}
+//	@Override
+//	public IPrecificacao getPrecificacao() {
+//		return precificacao;
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see br.com.sysagrega.model.imp.ICustoBase#setPrecificacao(br.com.sysagrega.model.IPrecificacao)
+//	 */
+//	@Override
+//	public void setPrecificacao(IPrecificacao precificacao) {
+//		this.precificacao = precificacao;
+//	}
 
 	/**
 	 * @return the id
 	 */
+	@Override
 	public Long getId() {
 		return id;
 	}
@@ -122,8 +127,41 @@ public abstract class CustoBase implements ICustoBase {
 	/**
 	 * @param id the id to set
 	 */
+	@Override
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the observacoes
+	 */
+	@Override
+	public String getObservacoes() {
+		return observacoes;
+	}
+
+	/**
+	 * @param observacoes the observacoes to set
+	 */
+	@Override
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
+
+	/**
+	 * @return the proposta
+	 */
+	@Override
+	public IProposta getProposta() {
+		return proposta;
+	}
+
+	/**
+	 * @param proposta the proposta to set
+	 */
+	@Override
+	public void setProposta(Proposta proposta) {
+		this.proposta = proposta;
 	}
 
 	/* (non-Javadoc)
@@ -135,7 +173,8 @@ public abstract class CustoBase implements ICustoBase {
 		int result = 1;
 		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((precificacao == null) ? 0 : precificacao.hashCode());
+		result = prime * result + ((observacoes == null) ? 0 : observacoes.hashCode());
+		result = prime * result + ((proposta == null) ? 0 : proposta.hashCode());
 		result = prime * result + (int) (quantidade ^ (quantidade >>> 32));
 		long temp;
 		temp = Double.doubleToLongBits(valorTotal);
@@ -167,10 +206,15 @@ public abstract class CustoBase implements ICustoBase {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (precificacao == null) {
-			if (other.precificacao != null)
+		if (observacoes == null) {
+			if (other.observacoes != null)
 				return false;
-		} else if (!precificacao.equals(other.precificacao))
+		} else if (!observacoes.equals(other.observacoes))
+			return false;
+		if (proposta == null) {
+			if (other.proposta != null)
+				return false;
+		} else if (!proposta.equals(other.proposta))
 			return false;
 		if (quantidade != other.quantidade)
 			return false;
@@ -180,4 +224,5 @@ public abstract class CustoBase implements ICustoBase {
 			return false;
 		return true;
 	}
+	
 }

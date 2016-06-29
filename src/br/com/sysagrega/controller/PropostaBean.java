@@ -2,7 +2,10 @@ package br.com.sysagrega.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Produces;
@@ -30,13 +33,11 @@ import br.com.sysagrega.model.imp.CustoExecucao;
 import br.com.sysagrega.model.imp.CustoOperacional;
 import br.com.sysagrega.model.imp.CustoSeguranca;
 import br.com.sysagrega.model.imp.Estado;
-import br.com.sysagrega.model.imp.Precificacao;
 import br.com.sysagrega.model.imp.Proposta;
 import br.com.sysagrega.service.ICidadeService;
 import br.com.sysagrega.service.IEstadoService;
 import br.com.sysagrega.service.IPropostaService;
 import br.com.sysagrega.service.imp.NegocioException;
-import br.com.sysagrega.util.DateUtil;
 import br.com.sysagrega.util.jsf.FacesUtil;
 
 @Named
@@ -65,9 +66,18 @@ public class PropostaBean implements Serializable {
 
 	private boolean disableCity;
 
+	private boolean disableVlUnitarioAdm = true;
+
 	private Long filtroNumeroProposta;
 
-	private Long filtroNumeroPrecificacao;
+	private String filtroCliente;
+
+	private Character filtroStatus;
+
+	// Filtros Periodo
+	private Date filtroDataInicial;
+
+	private Date filtroDataFinal;
 
 	private List<Estado> estados;
 
@@ -103,22 +113,18 @@ public class PropostaBean implements Serializable {
 
 	private CustoOperacional custoOperacional;
 
-	//Listas dos objetos custos
-	private List<CustoExecucao> listaCustos;
-	
-	private List<CustoDeslocamento> listaCustosDeslocamentos;
-	
-	private List<CustoOperacional> listaCustosOperacionais;
-	
-	private List<CustoSeguranca> listaCustosSeguranca;
-	
-	private List<CustoAdministrativo> listaCustosAdm;
-	
-	private List<CustoBdiComissao> listaCustosBdiComissao;
-	
-	
-	
-	
+	// Listas dos objetos custos
+	private Set<CustoExecucao> listaCustos;
+
+	private Set<CustoDeslocamento> listaCustosDeslocamentos;
+
+	private Set<CustoOperacional> listaCustosOperacionais;
+
+	private Set<CustoSeguranca> listaCustosSeguranca;
+
+	private Set<CustoAdministrativo> listaCustosAdm;
+
+	private Set<CustoBdiComissao> listaCustosBdiComissao;
 
 	private IPrecificacao precificacao;
 
@@ -142,6 +148,8 @@ public class PropostaBean implements Serializable {
 		} else if (FacesUtil.getParamSession().equals(TipoPagina.EDIT_PROPOSTA)) {
 
 			this.proposta = FacesUtil.getPropostaSession();
+			limparObjetosCustos();
+			carregarCidadesPorEstado();
 
 		} else if (FacesUtil.getParamSession().equals(TipoPagina.NOVA_PROPOSTA)) {
 
@@ -149,6 +157,7 @@ public class PropostaBean implements Serializable {
 
 		} else if (FacesUtil.getParamSession().equals(TipoPagina.VISUALIZAR_PROPOSTA)) {
 			this.proposta = FacesUtil.getPropostaSession();
+			limparObjetosCustos();
 			carregarCidadesPorEstado();
 			viewProposta = true;
 		}
@@ -157,36 +166,40 @@ public class PropostaBean implements Serializable {
 	private void limparObjeto() {
 
 		this.proposta = new Proposta();
+		
+		limparObjetosCustos();
+
+		// Listas dos objetos de custo
+		this.listaCustos = new HashSet<>();
+		this.listaCustosDeslocamentos = new HashSet<>();
+		this.listaCustosOperacionais = new HashSet<>();
+		this.listaCustosSeguranca = new HashSet<>();
+		this.listaCustosAdm = new HashSet<>();
+		this.listaCustosBdiComissao = new HashSet<>();
+
+		this.proposta.setCustos(this.listaCustos);
+		this.proposta.setDespesasDeslocamentos(this.listaCustosDeslocamentos);
+		this.proposta.setDespesasOperacionais(this.listaCustosOperacionais);
+		this.proposta.setDespesasSeguranca(this.listaCustosSeguranca);
+		this.proposta.setDespesasAdministrativas(this.listaCustosAdm);
+		this.proposta.setDespesasBdiComissao(this.listaCustosBdiComissao);
+
+		this.proposta.setEstado(new Estado());
+		this.proposta.setCidade(new Cidade());
+
+		disableCity = true;
+
+	}
+
+	private void limparObjetosCustos() {
+		
 		this.custoExecucao = new CustoExecucao();
 		this.custoAdministrativo = new CustoAdministrativo();
 		this.custoBdiComissao = new CustoBdiComissao();
 		this.custoSeguranca = new CustoSeguranca();
 		this.custoDeslocamento = new CustoDeslocamento();
 		this.custoOperacional = new CustoOperacional();
-
-		//Listas dos objetos de custo
-		this.listaCustos = new ArrayList<>();
-		this.listaCustosDeslocamentos = new ArrayList<>();
-		this.listaCustosOperacionais = new ArrayList<>();
-		this.listaCustosSeguranca = new ArrayList<>();
-		this.listaCustosAdm = new ArrayList<>();
-		this.listaCustosBdiComissao = new ArrayList<>();
 		
-		
-		this.precificacao = new Precificacao();
-		this.precificacao.setCustos(this.listaCustos);
-		this.precificacao.setDespesasDeslocamentos(this.listaCustosDeslocamentos);
-		this.precificacao.setDespesasOperacionais(this.listaCustosOperacionais);
-		this.precificacao.setDespesasSeguranca(this.listaCustosSeguranca);
-		this.precificacao.setDespesasAdministrativas(this.listaCustosAdm);
-		this.precificacao.setDespesasBdiComissao(this.listaCustosBdiComissao);
-
-		this.proposta.setPrecificacao(precificacao);
-		this.proposta.setEstado(new Estado());
-		this.proposta.setCidade(new Cidade());
-
-		disableCity = true;
-
 	}
 
 	public void somarValorCustosExecucao() {
@@ -197,7 +210,7 @@ public class PropostaBean implements Serializable {
 
 			totalPorItem += this.custoExecucao.getValorUnitario() * this.custoExecucao.getQuantidade();
 
-		} 
+		}
 
 		this.custoExecucao.setValorTotal(totalPorItem);
 
@@ -215,7 +228,7 @@ public class PropostaBean implements Serializable {
 
 			totalPorItem += this.custoDeslocamento.getValorUnitario() * this.custoDeslocamento.getQuantidade();
 
-		} 
+		}
 
 		this.custoDeslocamento.setValorTotal(totalPorItem);
 
@@ -233,7 +246,7 @@ public class PropostaBean implements Serializable {
 
 			totalPorItem += this.custoOperacional.getValorUnitario() * this.custoOperacional.getQuantidade();
 
-		} 
+		}
 
 		this.custoOperacional.setValorTotal(totalPorItem);
 
@@ -251,7 +264,7 @@ public class PropostaBean implements Serializable {
 
 			totalPorItem += this.custoSeguranca.getValorUnitario() * this.custoSeguranca.getQuantidade();
 
-		} 
+		}
 
 		this.custoSeguranca.setValorTotal(totalPorItem);
 
@@ -265,21 +278,21 @@ public class PropostaBean implements Serializable {
 
 		double totalPorItem = 0;
 
-		if(this.custoAdministrativo.getDescricao().equals(TipoCustoAdm.ADMINISTRACAO.getDescricao())) {
-			
-			if(this.custoAdministrativo.getQuantidade() > 0) {
-				
-				totalPorItem += (this.proposta.getPrecificacao().getValorTotalCustosExecucao() * this.custoAdministrativo.getValorUnitario())/100;
-				
+		if (this.custoAdministrativo.getDescricao().equals(TipoCustoAdm.ADMINISTRACAO.getDescricao())) {
+
+			if (this.custoAdministrativo.getQuantidade() > 0) {
+
+				totalPorItem += (this.proposta.getValorTotalCustosExecucao() * this.custoAdministrativo.getQuantidade())
+						/ 100;
+
 			}
-			
-			
+
 		} else if (this.custoAdministrativo.getQuantidade() > 0) {
 
 			totalPorItem += this.custoAdministrativo.getValorUnitario() * this.custoAdministrativo.getQuantidade();
 
-		} 
-		
+		}
+
 		this.custoAdministrativo.setValorTotal(totalPorItem);
 
 		calcularValorTotalCustosAdministrativos();
@@ -288,38 +301,127 @@ public class PropostaBean implements Serializable {
 
 	}
 
+	public void somarValorCustosBdiComissao() {
+
+		double totalPorItem = 0;
+
+		if (this.custoBdiComissao.getQuantidade() > 0) {
+
+			totalPorItem += (this.proposta.getValorTotalSemBdiComissao() * this.custoBdiComissao.getQuantidade()) / 100;
+
+		}
+
+		this.custoBdiComissao.setValorTotal(totalPorItem);
+
+		calcularValorTotalCustosBdiComissao();
+
+		custoBdiComissao = new CustoBdiComissao();
+
+	}
+
+	public void calcularValorTotalCustosBdiComissao() {
+
+		this.proposta.setValorTotalCustosBdiComissoes(this.proposta.getCalculoValorTotalCustosBdiComissao());
+
+		calcularValorTotalAposBdiComissao();
+
+	}
+
+	private void calcularValorTotalAposBdiComissao() {
+
+		double totalComBdiComissao = 0;
+
+		if (this.proposta.getValorTotalCustosBdiComissoes() > 0) {
+
+			totalComBdiComissao += this.proposta.getValorTotalCustosBdiComissoes()
+					+ this.proposta.getValorTotalSemBdiComissao();
+
+		}
+
+		this.proposta.setValorTotalComBdiComissao(totalComBdiComissao);
+
+		calcularValorTotalComImpostos();
+
+	}
+
 	public void calcularValorTotalCustosAdministrativos() {
 
-		this.proposta.getPrecificacao()
-				.setValorTotalCustosAdministrativos(this.proposta.getPrecificacao().getCalculoValorTotalCustosAdministraticos());
+		this.proposta.setValorTotalCustosAdministrativos(this.proposta.getCalculoValorTotalCustosAdministraticos());
+
+		calcularValorTotalCustosSemBdi();
 
 	}
 
 	public void calcularValorTotalCustosSeguranca() {
 
-		this.proposta.getPrecificacao()
-				.setValorTotalCustosSeguranca(this.proposta.getPrecificacao().getCalculoValorTotalCustosSeguranca());
+		this.proposta.setValorTotalCustosSeguranca(this.proposta.getCalculoValorTotalCustosSeguranca());
+
+		calcularValorTotalCustosSemBdi();
 
 	}
 
 	public void calcularValorTotalCustosDeslocamento() {
 
-		this.proposta.getPrecificacao()
-				.setValorTotalCustosDesclocamento(this.proposta.getPrecificacao().getCalculoValorTotalCustosDeslocamento());
+		this.proposta.setValorTotalCustosDesclocamento(this.proposta.getCalculoValorTotalCustosDeslocamento());
+
+		calcularValorTotalCustosSemBdi();
 
 	}
 
 	public void calcularValorTotalCustosOperacionais() {
 
-		this.proposta.getPrecificacao()
-				.setValorTotalCustosOperacionais(this.proposta.getPrecificacao().getCalculoValorTotalCustosOperacionais());
+		this.proposta.setValorTotalCustosOperacionais(this.proposta.getCalculoValorTotalCustosOperacionais());
+
+		calcularValorTotalCustosSemBdi();
 
 	}
 
 	public void calcularValorTotalCustosExecucao() {
 
-		this.proposta.getPrecificacao()
-				.setValorTotalCustosExecucao(this.proposta.getPrecificacao().getCalculoValorTotalCustosExecucao());
+		this.proposta.setValorTotalCustosExecucao(this.proposta.getCalculoValorTotalCustosExecucao());
+
+		calcularValorTotalCustosSemBdi();
+
+	}
+
+	private void calcularValorTotalCustosSemBdi() {
+
+		double totalSemBdi = 0;
+
+		totalSemBdi += this.proposta.getCalculoValorTotalCustosExecucao()
+				+ this.proposta.getCalculoValorTotalCustosDeslocamento()
+				+ this.proposta.getCalculoValorTotalCustosOperacionais()
+				+ this.proposta.getCalculoValorTotalCustosSeguranca()
+				+ this.proposta.getCalculoValorTotalCustosAdministraticos();
+
+		this.proposta.setValorTotalSemBdiComissao(totalSemBdi);
+		calcularValorTotalComImpostos();
+
+	}
+
+	private void calcularValorTotalComImpostos() {
+
+		double totalComImpostos = 0;
+		double taxaImposto = 0;
+
+		if (this.proposta.getValorTotalComBdiComissao() > 0) {
+
+			taxaImposto += this.proposta.getValorTotalComBdiComissao() / (1 - this.proposta.getImpostos())
+					- this.proposta.getValorTotalComBdiComissao();
+
+			totalComImpostos += taxaImposto + this.proposta.getValorTotalComBdiComissao();
+
+		} else {
+
+			taxaImposto += this.proposta.getValorTotalSemBdiComissao() / (1 - this.proposta.getImpostos())
+					- this.proposta.getValorTotalSemBdiComissao();
+
+			totalComImpostos += taxaImposto + this.proposta.getValorTotalSemBdiComissao();
+
+		}
+
+		this.proposta.setValorTotalImpostos(totalComImpostos);
+		this.proposta.setValorTotalDaProposta(this.proposta.getValorTotalImpostos());
 
 	}
 
@@ -350,7 +452,6 @@ public class PropostaBean implements Serializable {
 		try {
 
 			this.propostaService.atualizarProposta(this.proposta);
-			limparObjeto();
 			FacesUtil.addInfoMessage("Proposta atualizada com sucesso.");
 
 		} catch (Exception e) {
@@ -410,8 +511,20 @@ public class PropostaBean implements Serializable {
 
 	}
 
-	public String getFormatedCurrentDate() {
-		return DateUtil.getFormatedCurrentDate();
+	public void habilitarValorUnitarioAdm() {
+
+		if (custoAdministrativo != null && custoAdministrativo.getDescricao() != null) {
+
+			if (custoAdministrativo.getDescricao().equalsIgnoreCase(TipoCustoAdm.ADMINISTRACAO.getDescricao())) {
+
+				setDisableVlUnitarioAdm(true);
+
+			} else {
+
+				setDisableVlUnitarioAdm(false);
+
+			}
+		}
 	}
 
 	/**
@@ -420,7 +533,7 @@ public class PropostaBean implements Serializable {
 	 * @return editar_proposta
 	 * @author Elton
 	 */
-	public String visualizarCliente() {
+	public String visualizarProposta() {
 
 		if (this.proposta != null) {
 
@@ -455,7 +568,10 @@ public class PropostaBean implements Serializable {
 	public void filtrarPropostas() {
 
 		propostas = new ArrayList<>();
-		propostas = this.propostaService.getPropostaByFilter(this.filtroNumeroProposta, this.filtroNumeroPrecificacao);
+		// TODO
+		// propostas =
+		// this.propostaService.getPropostaByFilter(this.filtroNumeroProposta,
+		// this.filtroNumeroPrecificacao);
 
 	}
 
@@ -615,21 +731,6 @@ public class PropostaBean implements Serializable {
 	}
 
 	/**
-	 * @return the filtroNumeroPrecificacao
-	 */
-	public Long getFiltroNumeroPrecificacao() {
-		return filtroNumeroPrecificacao;
-	}
-
-	/**
-	 * @param filtroNumeroPrecificacao
-	 *            the filtroNumeroPrecificacao to set
-	 */
-	public void setFiltroNumeroPrecificacao(Long filtroNumeroPrecificacao) {
-		this.filtroNumeroPrecificacao = filtroNumeroPrecificacao;
-	}
-
-	/**
 	 * @return the propostas
 	 */
 	public List<Proposta> getPropostas() {
@@ -737,7 +838,7 @@ public class PropostaBean implements Serializable {
 	/**
 	 * @return the listaCustos
 	 */
-	public List<CustoExecucao> getListaCustos() {
+	public Set<CustoExecucao> getListaCustos() {
 		return listaCustos;
 	}
 
@@ -745,7 +846,7 @@ public class PropostaBean implements Serializable {
 	 * @param listaCustos
 	 *            the listaCustos to set
 	 */
-	public void setListaCustos(List<CustoExecucao> listaCustos) {
+	public void setListaCustos(Set<CustoExecucao> listaCustos) {
 		this.listaCustos = listaCustos;
 	}
 
@@ -872,71 +973,150 @@ public class PropostaBean implements Serializable {
 	/**
 	 * @return the listaCustosDeslocamentos
 	 */
-	public List<CustoDeslocamento> getListaCustosDeslocamentos() {
+	public Set<CustoDeslocamento> getListaCustosDeslocamentos() {
 		return listaCustosDeslocamentos;
 	}
 
 	/**
-	 * @param listaCustosDeslocamentos the listaCustosDeslocamentos to set
+	 * @param listaCustosDeslocamentos
+	 *            the listaCustosDeslocamentos to set
 	 */
-	public void setListaCustosDeslocamentos(List<CustoDeslocamento> listaCustosDeslocamentos) {
+	public void setListaCustosDeslocamentos(Set<CustoDeslocamento> listaCustosDeslocamentos) {
 		this.listaCustosDeslocamentos = listaCustosDeslocamentos;
 	}
 
 	/**
 	 * @return the listaCustosOperacionais
 	 */
-	public List<CustoOperacional> getListaCustosOperacionais() {
+	public Set<CustoOperacional> getListaCustosOperacionais() {
 		return listaCustosOperacionais;
 	}
 
 	/**
-	 * @param listaCustosOperacionais the listaCustosOperacionais to set
+	 * @param listaCustosOperacionais
+	 *            the listaCustosOperacionais to set
 	 */
-	public void setListaCustosOperacionais(List<CustoOperacional> listaCustosOperacionais) {
+	public void setListaCustosOperacionais(Set<CustoOperacional> listaCustosOperacionais) {
 		this.listaCustosOperacionais = listaCustosOperacionais;
 	}
 
 	/**
 	 * @return the listaCustosSeguranca
 	 */
-	public List<CustoSeguranca> getListaCustosSeguranca() {
+	public Set<CustoSeguranca> getListaCustosSeguranca() {
 		return listaCustosSeguranca;
 	}
 
 	/**
-	 * @param listaCustosSeguranca the listaCustosSeguranca to set
+	 * @param listaCustosSeguranca
+	 *            the listaCustosSeguranca to set
 	 */
-	public void setListaCustosSeguranca(List<CustoSeguranca> listaCustosSeguranca) {
+	public void setListaCustosSeguranca(Set<CustoSeguranca> listaCustosSeguranca) {
 		this.listaCustosSeguranca = listaCustosSeguranca;
 	}
 
 	/**
 	 * @return the listaCustosAdm
 	 */
-	public List<CustoAdministrativo> getListaCustosAdm() {
+	public Set<CustoAdministrativo> getListaCustosAdm() {
 		return listaCustosAdm;
 	}
 
 	/**
-	 * @param listaCustosAdm the listaCustosAdm to set
+	 * @param listaCustosAdm
+	 *            the listaCustosAdm to set
 	 */
-	public void setListaCustosAdm(List<CustoAdministrativo> listaCustosAdm) {
+	public void setListaCustosAdm(Set<CustoAdministrativo> listaCustosAdm) {
 		this.listaCustosAdm = listaCustosAdm;
 	}
 
 	/**
 	 * @return the listaCustosBdiComissao
 	 */
-	public List<CustoBdiComissao> getListaCustosBdiComissao() {
+	public Set<CustoBdiComissao> getListaCustosBdiComissao() {
 		return listaCustosBdiComissao;
 	}
 
 	/**
-	 * @param listaCustosBdiComissao the listaCustosBdiComissao to set
+	 * @param listaCustosBdiComissao
+	 *            the listaCustosBdiComissao to set
 	 */
-	public void setListaCustosBdiComissao(List<CustoBdiComissao> listaCustosBdiComissao) {
+	public void setListaCustosBdiComissao(Set<CustoBdiComissao> listaCustosBdiComissao) {
 		this.listaCustosBdiComissao = listaCustosBdiComissao;
 	}
-	
+
+	/**
+	 * @return the disableVlUnitarioAdm
+	 */
+	public boolean isDisableVlUnitarioAdm() {
+		return disableVlUnitarioAdm;
+	}
+
+	/**
+	 * @param disableVlUnitarioAdm
+	 *            the disableVlUnitarioAdm to set
+	 */
+	public void setDisableVlUnitarioAdm(boolean disableVlUnitarioAdm) {
+		this.disableVlUnitarioAdm = disableVlUnitarioAdm;
+	}
+
+	/**
+	 * @return the filtroCliente
+	 */
+	public String getFiltroCliente() {
+		return filtroCliente;
+	}
+
+	/**
+	 * @param filtroCliente
+	 *            the filtroCliente to set
+	 */
+	public void setFiltroCliente(String filtroCliente) {
+		this.filtroCliente = filtroCliente;
+	}
+
+	/**
+	 * @return the filtroStatus
+	 */
+	public Character getFiltroStatus() {
+		return filtroStatus;
+	}
+
+	/**
+	 * @param filtroStatus
+	 *            the filtroStatus to set
+	 */
+	public void setFiltroStatus(Character filtroStatus) {
+		this.filtroStatus = filtroStatus;
+	}
+
+	/**
+	 * @return the filtroDataInicial
+	 */
+	public Date getFiltroDataInicial() {
+		return filtroDataInicial;
+	}
+
+	/**
+	 * @param filtroDataInicial
+	 *            the filtroDataInicial to set
+	 */
+	public void setFiltroDataInicial(Date filtroDataInicial) {
+		this.filtroDataInicial = filtroDataInicial;
+	}
+
+	/**
+	 * @return the filtroDataFinal
+	 */
+	public Date getFiltroDataFinal() {
+		return filtroDataFinal;
+	}
+
+	/**
+	 * @param filtroDataFinal
+	 *            the filtroDataFinal to set
+	 */
+	public void setFiltroDataFinal(Date filtroDataFinal) {
+		this.filtroDataFinal = filtroDataFinal;
+	}
 }

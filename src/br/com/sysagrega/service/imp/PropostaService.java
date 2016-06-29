@@ -14,7 +14,6 @@ import br.com.sysagrega.repository.IPropostaRepository;
 import br.com.sysagrega.service.IPropostaService;
 import br.com.sysagrega.util.DateUtil;
 import br.com.sysagrega.util.cdi.Transactional;
-import br.com.sysagrega.util.jsf.FacesUtil;
 
 public class PropostaService implements IPropostaService {
 
@@ -39,28 +38,29 @@ public class PropostaService implements IPropostaService {
 	@Transactional
 	public void salvar(Proposta proposta) {
 
-		// Validação para campos obrigatórios
-		validaCamposObrigatorios(proposta);
+		try {
 
-		// Varifica se a proposta já está cadastrada no sistema
-		IProposta propostaExistente = this.propostaRepository.getPropostaById(proposta.getId());
+			// Validação para campos obrigatórios
+			validaCamposObrigatorios(proposta);
 
-		if (propostaExistente != null) {
-			throw new NegocioException("Proposta já cadastrada no sistema!");
+			// TODO validação de datas (contratação não pode ser menor que
+			// inclusão)
+
+			proposta = this.propostaRepository.saveOrMerge(proposta);
+
+			// Gera numero da proposta padrão agrega após gerar id no banco e
+			// faz o
+			// merge pelo estado do objeto proposta
+			proposta.setNumeroProposta("AC." + proposta.getId() + "." + DateUtil.getCurrentMonthAndYear());
+
+			// Salvando histórico
+			salvarHistorico(configuraObjetoHistorico(proposta));
+
+		} catch (Exception e) {
+
+			throw new NegocioException("Erro de processamento com banco de dados!");
+
 		}
-
-		// Define a data de inclusão da proposta
-		// TODO Exibir essa informação ao editar ou visualizar
-		proposta.setDataInclusao(DateUtil.getCurrentDateTime());
-
-		proposta = this.propostaRepository.saveOrMerge(proposta);
-
-		// Gera numero da proposta padrão agrega após gerar id no banco e faz o
-		// merge pelo estado do objeto
-		proposta.setNumeroProposta("AC." + proposta.getId() + "." + DateUtil.getCurrentMonthAndYear());
-
-		// Salvando histórico
-		salvarHistorico(configuraObjetoHistorico(proposta));
 
 	}
 
@@ -70,7 +70,10 @@ public class PropostaService implements IPropostaService {
 
 			throw new NegocioException("Favor informar uma proposta!");
 
-		} else if (proposta.getTipoProposta().isEmpty() || proposta.getTipoProposta() == null) {
+		} else if (proposta.getTipoProposta().isEmpty() || proposta.getTipoProposta() == null
+				|| proposta.getCliente().isEmpty() || proposta.getCliente() == null
+				|| proposta.getStatusContratada() == null || proposta.getEstado() == null
+				|| proposta.getCidade() == null) {
 
 			throw new NegocioException("Os Campos obrigatórios não foram informados!");
 
@@ -99,15 +102,25 @@ public class PropostaService implements IPropostaService {
 	@Override
 	@Transactional
 	public IProposta atualizarProposta(Proposta proposta) {
+		
+		Proposta propostaNew = new Proposta();
 
-		// Validação para campos obrigatórios
-		validaCamposObrigatorios(proposta);
+		try {
 
-		proposta = this.propostaRepository.saveOrMerge(proposta);
-		// Salvando histórico
-		salvarHistorico(configuraObjetoHistorico(proposta));
+			// Validação para campos obrigatórios
+			validaCamposObrigatorios(proposta);
 
-		return null;
+			propostaNew = this.propostaRepository.saveOrMerge(proposta);
+			// Salvando histórico
+			salvarHistorico(configuraObjetoHistorico(propostaNew));
+
+		} catch (Exception e) {
+
+			throw new NegocioException("Erro de processamento com banco de dados!");
+
+		}
+
+		return propostaNew;
 
 	}
 
@@ -131,7 +144,7 @@ public class PropostaService implements IPropostaService {
 
 		} else {
 
-			FacesUtil.addErrorMessage("Favor selecionar uma proposta!");
+			throw new NegocioException("Favor selecionar uma proposta!");
 
 		}
 
@@ -160,29 +173,44 @@ public class PropostaService implements IPropostaService {
 	 */
 	@Override
 	public void salvarHistorico(IPropostaHistorico propostaHistorico) {
-		// TODO testar o cast
+
 		this.propostaRepositoryHistorico.saveHistorico(propostaHistorico);
+
 	}
 
-	public PropostaHistorico configuraObjetoHistorico(Proposta proposta) {
+	private PropostaHistorico configuraObjetoHistorico(Proposta proposta) {
 
 		PropostaHistorico historico = new PropostaHistorico();
 
 		// Ordem
 		historico.setPropostaId(proposta);
-		historico.setTipoProposta(proposta.getTipoProposta());
-		historico.setDataInclusao(proposta.getDataInclusao());
-		historico.setDataContratacao(proposta.getDataContratacao());
-		historico.setCliente(proposta.getCliente());
-		historico.setObjeto(proposta.getObjeto());
-		historico.setValor(proposta.getPrecificacao().getValorTotalPrecificacao());
-		historico.setCidade(proposta.getCidade());
-		historico.setEstado(proposta.getEstado());
-		historico.setContato(proposta.getContato());
-		historico.setStatusContratada(proposta.getStatusContratada());
 		historico.setNumeroProposta(proposta.getNumeroProposta());
-		historico.setPrecificacao(proposta.getPrecificacao());
+		historico.setNomeProjeto(proposta.getNomeProjeto());
+		historico.setEstado(proposta.getEstado());
+		historico.setStatusContratada(proposta.getStatusContratada());
+		historico.setObjeto(proposta.getObjeto());
+		historico.setDataInclusao(proposta.getDataInclusao());
+		historico.setCliente(proposta.getCliente());
+		historico.setCidade(proposta.getCidade());
+		historico.setStatus(proposta.getStatus());
+		historico.setDataContratacao(proposta.getDataContratacao());
+		historico.setContato(proposta.getContato());
+		historico.setTipoProposta(proposta.getTipoProposta());
+		// valores totais
+		historico.setValorTotalPrecificacao(proposta.getValorTotalPrecificacao());
+		historico.setValorTotalCustosExecucao(proposta.getValorTotalCustosExecucao());
+		historico.setValorTotalCustosDesclocamento(proposta.getCalculoValorTotalCustosDeslocamento());
+		historico.setValorTotalCustosOperacionais(proposta.getValorTotalCustosOperacionais());
+		historico.setValorTotalCustosAdministrativos(proposta.getCalculoValorTotalCustosAdministraticos());
+		historico.setValorTotalCustosBdiComissoes(proposta.getCalculoValorTotalCustosBdiComissao());
+		historico.setValorTotalCustosSeguranca(proposta.getCalculoValorTotalCustosSeguranca());
+		// Total custos com e sem bdi
+		historico.setValorTotalComBdiComissao(proposta.getValorTotalComBdiComissao());
+		historico.setValorTotalSemBdiComissao(proposta.getValorTotalSemBdiComissao());
+		historico.setValorTotalImpostos(proposta.getValorTotalImpostos());
+
 		historico.setDataRevisao(DateUtil.getCurrentDateTime());
+		historico.setNumeroRevisao("REV-" + proposta.getNumeroProposta());
 
 		return historico;
 

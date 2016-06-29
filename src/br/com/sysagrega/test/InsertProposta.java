@@ -11,7 +11,6 @@ import javax.persistence.Persistence;
 
 import br.com.sysagrega.model.ICustoExecucao;
 import br.com.sysagrega.model.imp.CustoExecucao;
-import br.com.sysagrega.model.imp.Precificacao;
 import br.com.sysagrega.model.imp.Proposta;
 import br.com.sysagrega.model.imp.PropostaHistorico;
 import br.com.sysagrega.util.DateUtil;
@@ -41,15 +40,15 @@ public class InsertProposta {
 		}
 		
 		//Precificação
-		Precificacao precificacao = new Precificacao();
-		precificacao.setCustos(lista);
+//		Precificacao precificacao = new Precificacao();
+//		precificacao.setCustos(lista);
 		
 		for (ICustoExecucao totalCustos : lista) {
 			
 			//totalPrecificacao += totalCustos.getValorTotal();
 		}
 		
-		precificacao.setValorTotalPrecificacao(totalPrecificacao);
+//		precificacao.setValorTotalPrecificacao(totalPrecificacao);
 		
 		
 		
@@ -62,8 +61,8 @@ public class InsertProposta {
 		proposta.setDataInclusao(DateUtil.getCurrentDateTime());
 		proposta.setObjeto("Proposta e precificacao");
 		proposta.setDataInclusao(new Date());
-		proposta.setValor(precificacao.getValorTotalPrecificacao());
-		proposta.setPrecificacao(precificacao);
+//		proposta.setValor(precificacao.getValorTotalPrecificacao());
+//		proposta.setPrecificacao(precificacao);
 		
 		try {
 			
@@ -106,13 +105,13 @@ public class InsertProposta {
 		historico.setDataContratacao(proposta.getDataContratacao());
 		historico.setCliente(proposta.getCliente());
 		historico.setObjeto(proposta.getObjeto());
-		historico.setValor(proposta.getPrecificacao().getValorTotalPrecificacao());
+//		historico.setValor(proposta.getPrecificacao().getValorTotalPrecificacao());
 		historico.setCidade(proposta.getCidade());
 		//historico.setUf(proposta.getUf());
 		historico.setContato(proposta.getContato());
 		historico.setStatusContratada(proposta.getStatusContratada());
 		historico.setNumeroProposta(proposta.getNumeroProposta());
-		historico.setPrecificacao(proposta.getPrecificacao());
+//		historico.setPrecificacao(proposta.getPrecificacao());
 		historico.setDataRevisao(DateUtil.getCurrentDateTime());
 		
 		return historico;

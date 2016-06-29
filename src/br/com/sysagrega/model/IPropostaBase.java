@@ -57,16 +57,6 @@ public interface IPropostaBase extends Serializable {
 	void setObjeto(String objeto);
 
 	/**
-	 * @return the valor
-	 */
-	Double getValor();
-
-	/**
-	 * @param valor the valor to set
-	 */
-	void setValor(Double valor);
-
-	/**
 	 * @return the contato
 	 */
 	String getContato();
@@ -96,9 +86,17 @@ public interface IPropostaBase extends Serializable {
 	 */
 	void setNumeroProposta(String numeroProposta);
 
-	IPrecificacao getPrecificacao();
+	String getNomeProjeto();
 
-	void setPrecificacao(IPrecificacao precificacao);
+	void setNomeProjeto(String nomeProjeto);
+
+	Long getId();
+
+	void setId(Long id);
+
+	void setStatus(Character status);
+
+	Character getStatus();
 
 	ICidade getCidade();
 
@@ -108,12 +106,60 @@ public interface IPropostaBase extends Serializable {
 
 	void setEstado(IEstado estado);
 
-	String getNomeProjeto();
+	double getValorTotalImpostos();
 
-	void setNomeProjeto(String nomeProjeto);
+	void setValorTotalImpostos(double valorTotalImpostos);
 
-	Long getId();
+	double getValorTotalPrecificacao();
 
-	void setId(Long id);
+	void setValorTotalPrecificacao(double valorTotalPrecificacao);
+
+	double getValorTotalCustosExecucao();
+
+	void setValorTotalCustosExecucao(double valorTotalCustosExecucao);
+
+	double getValorTotalCustosDesclocamento();
+
+	void setValorTotalCustosDesclocamento(double valorTotalCustosDesclocamento);
+
+	double getValorTotalCustosOperacionais();
+
+	double getImpostos();
+
+	double getIr();
+
+	double getCsll();
+
+	double getPis();
+
+	double getCofins();
+
+	double getIss();
+
+	void setValorTotalSemBdiComissao(double valorTotalSemBdiComissao);
+
+	double getValorTotalSemBdiComissao();
+
+	void setValorTotalComBdiComissao(double valorTotalComBdiComissao);
+
+	double getValorTotalComBdiComissao();
+
+	void setValorTotalCustosSeguranca(double valorTotalCustosSeguranca);
+
+	double getValorTotalCustosSeguranca();
+
+	void setValorTotalCustosBdiComissoes(double valorTotalCustosBdiComissoes);
+
+	double getValorTotalCustosBdiComissoes();
+
+	void setValorTotalCustosAdministrativos(double valorTotalCustosAdministrativos);
+
+	double getValorTotalCustosAdministrativos();
+
+	void setValorTotalCustosOperacionais(double valorTotalCustosOperacionais);
+
+	void setValorTotalDaProposta(Double valorTotalDaProposta);
+
+	Double getValorTotalDaProposta();
 
 }

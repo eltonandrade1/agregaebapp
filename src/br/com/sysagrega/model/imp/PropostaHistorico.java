@@ -23,14 +23,14 @@ public class PropostaHistorico extends PropostaBase implements IPropostaHistoric
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne(targetEntity = Proposta.class)
-	@JoinColumn(name = "propostaID")
+	@JoinColumn(name = "propostaId")
 	private IProposta propostaId;
 	
 	@Temporal(TemporalType.DATE)
 	private Date dataRevisao;
 	
 	private String numeroRevisao;
-
+	
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.model.imp.IPropostaHistorico#getPropostaId()
 	 */
@@ -85,7 +85,7 @@ public class PropostaHistorico extends PropostaBase implements IPropostaHistoric
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
+		int result = 1;
 		result = prime * result + ((dataRevisao == null) ? 0 : dataRevisao.hashCode());
 		result = prime * result + ((numeroRevisao == null) ? 0 : numeroRevisao.hashCode());
 		result = prime * result + ((propostaId == null) ? 0 : propostaId.hashCode());
@@ -99,7 +99,7 @@ public class PropostaHistorico extends PropostaBase implements IPropostaHistoric
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (!super.equals(obj))
+		if (obj == null)
 			return false;
 		if (!(obj instanceof PropostaHistorico))
 			return false;

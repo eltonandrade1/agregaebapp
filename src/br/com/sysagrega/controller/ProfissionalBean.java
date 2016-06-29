@@ -163,7 +163,6 @@ public class ProfissionalBean implements Serializable {
 		try {
 			
 			this.profissionalService.atualizarProfissional(this.profissional);
-			limparObjeto();
 			FacesUtil.addInfoMessage("Profissional atualizado com sucesso.");
 			
 		} catch (Exception e) {

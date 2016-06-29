@@ -2,6 +2,8 @@ package br.com.sysagrega.model;
 
 import java.io.Serializable;
 
+import br.com.sysagrega.model.imp.Proposta;
+
 public interface ICustoBase extends Serializable{
 
 	/**
@@ -44,14 +46,16 @@ public interface ICustoBase extends Serializable{
 	 */
 	void setValorTotal(double valorTotal);
 
-	/**
-	 * @return the precificacao
-	 */
-	IPrecificacao getPrecificacao();
+	void setObservacoes(String observacoes);
 
-	/**
-	 * @param precificacao the precificacao to set
-	 */
-	void setPrecificacao(IPrecificacao precificacao);
+	String getObservacoes();
+
+	void setId(Long id);
+
+	Long getId();
+
+	void setProposta(Proposta proposta);
+
+	IProposta getProposta();
 
 }

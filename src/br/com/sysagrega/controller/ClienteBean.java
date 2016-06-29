@@ -161,7 +161,6 @@ public class ClienteBean implements Serializable {
 		try {
 			
 			this.clienteService.atualizarCliente(this.cliente);
-			limparObjeto();
 			FacesUtil.addInfoMessage("Cliente atualizado com sucesso.");
 			
 		} catch (Exception e) {

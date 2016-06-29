@@ -15,7 +15,6 @@
 		<class>br.com.sysagrega.model.imp.Proposta</class>
 		<class>br.com.sysagrega.model.imp.PropostaBase</class>
 		<class>br.com.sysagrega.model.imp.PropostaHistorico</class>
-		<class>br.com.sysagrega.model.imp.Precificacao</class>
 		<class>br.com.sysagrega.model.imp.CustoExecucao</class>
 		<class>br.com.sysagrega.model.imp.CustoAdministrativo</class>
 		<class>br.com.sysagrega.model.imp.CustoBase</class>

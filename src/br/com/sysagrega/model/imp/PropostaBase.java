@@ -2,20 +2,17 @@ package br.com.sysagrega.model.imp;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import br.com.sysagrega.model.ICidade;
 import br.com.sysagrega.model.IEstado;
-import br.com.sysagrega.model.IPrecificacao;
 import br.com.sysagrega.model.IPropostaBase;
 
 @MappedSuperclass
@@ -44,16 +41,20 @@ public abstract class PropostaBase implements IPropostaBase {
 	
 	private String objeto;
 	
-	private Double valor;
+	private Double valorTotalDaProposta;
 	
 	private String contato;
 	
+	//S - Sim e N - Não
 	private Character statusContratada;
+	
+	//A - Aprovada e C - Candelada
+	private Character status;
 	
 	private String numeroProposta;
 	
-	@OneToOne(targetEntity = Precificacao.class, cascade = CascadeType.ALL)
-	private IPrecificacao precificacao;
+//	@OneToOne(targetEntity = Precificacao.class, cascade = CascadeType.ALL)
+//	private IPrecificacao precificacao;
 	
 	@ManyToOne(targetEntity = Cidade.class)
 	@JoinColumn(name = "ID_CIDADE")
@@ -62,6 +63,34 @@ public abstract class PropostaBase implements IPropostaBase {
 	@ManyToOne(targetEntity = Estado.class)
 	@JoinColumn(name = "ID_UF")
 	private IEstado estado;
+	
+	private static final double ISS = 5;
+	private static final double COFINS = 3;
+	private static final double PIS = 0.65;
+	private static final double CSLL = 2.88;
+	private static final double IR = 4.8;
+	private static final double IMPOSTOS = 0.1633;
+
+	private double valorTotalImpostos;
+
+	private double valorTotalPrecificacao;
+
+	private double valorTotalCustosExecucao;
+
+	private double valorTotalCustosDesclocamento;
+
+	private double valorTotalCustosOperacionais;
+
+	private double valorTotalCustosAdministrativos;
+
+	private double valorTotalCustosBdiComissoes;
+
+	private double valorTotalCustosSeguranca;
+
+	private double valorTotalComBdiComissao;
+
+	private double valorTotalSemBdiComissao;
+
 
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.model.imp.IPropostaBase#getTipoProposta()
@@ -143,21 +172,7 @@ public abstract class PropostaBase implements IPropostaBase {
 		this.objeto = objeto;
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.model.imp.IPropostaBase#getValor()
-	 */
-	@Override
-	public Double getValor() {
-		return valor;
-	}
 
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.model.imp.IPropostaBase#setValor(java.lang.Double)
-	 */
-	@Override
-	public void setValor(Double valor) {
-		this.valor = valor;
-	}
 
 	/* (non-Javadoc)
 	 * @see br.com.sysagrega.model.imp.IPropostaBase#getContato()
@@ -207,21 +222,21 @@ public abstract class PropostaBase implements IPropostaBase {
 		this.numeroProposta = numeroProposta;
 	}
 
-	/**
-	 * @return the precificacao
-	 */
-	@Override
-	public IPrecificacao getPrecificacao() {
-		return precificacao;
-	}
-
-	/**
-	 * @param precificacao the precificacao to set
-	 */
-	@Override
-	public void setPrecificacao(IPrecificacao precificacao) {
-		this.precificacao = precificacao;
-	}
+//	/**
+//	 * @return the precificacao
+//	 */
+//	@Override
+//	public IPrecificacao getPrecificacao() {
+//		return precificacao;
+//	}
+//
+//	/**
+//	 * @param precificacao the precificacao to set
+//	 */
+//	@Override
+//	public void setPrecificacao(IPrecificacao precificacao) {
+//		this.precificacao = precificacao;
+//	}
 
 	/**
 	 * @return the cidade
@@ -287,6 +302,247 @@ public abstract class PropostaBase implements IPropostaBase {
 		this.id = id;
 	}
 
+	/**
+	 * @return the status
+	 */
+	@Override
+	public Character getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	@Override
+	public void setStatus(Character status) {
+		this.status = status;
+	}
+
+
+	/**
+	 * @return the valorTotalImpostos
+	 */
+	@Override
+	public double getValorTotalImpostos() {
+		return valorTotalImpostos;
+	}
+
+	/**
+	 * @param valorTotalImpostos the valorTotalImpostos to set
+	 */
+	@Override
+	public void setValorTotalImpostos(double valorTotalImpostos) {
+		this.valorTotalImpostos = valorTotalImpostos;
+	}
+
+	/**
+	 * @return the valorTotalPrecificacao
+	 */
+	@Override
+	public double getValorTotalPrecificacao() {
+		return valorTotalPrecificacao;
+	}
+
+	/**
+	 * @param valorTotalPrecificacao the valorTotalPrecificacao to set
+	 */
+	@Override
+	public void setValorTotalPrecificacao(double valorTotalPrecificacao) {
+		this.valorTotalPrecificacao = valorTotalPrecificacao;
+	}
+
+	/**
+	 * @return the valorTotalCustosExecucao
+	 */
+	@Override
+	public double getValorTotalCustosExecucao() {
+		return valorTotalCustosExecucao;
+	}
+
+	/**
+	 * @param valorTotalCustosExecucao the valorTotalCustosExecucao to set
+	 */
+	@Override
+	public void setValorTotalCustosExecucao(double valorTotalCustosExecucao) {
+		this.valorTotalCustosExecucao = valorTotalCustosExecucao;
+	}
+
+	/**
+	 * @return the valorTotalCustosDesclocamento
+	 */
+	@Override
+	public double getValorTotalCustosDesclocamento() {
+		return valorTotalCustosDesclocamento;
+	}
+
+	/**
+	 * @param valorTotalCustosDesclocamento the valorTotalCustosDesclocamento to set
+	 */
+	@Override
+	public void setValorTotalCustosDesclocamento(double valorTotalCustosDesclocamento) {
+		this.valorTotalCustosDesclocamento = valorTotalCustosDesclocamento;
+	}
+
+	/**
+	 * @return the valorTotalCustosOperacionais
+	 */
+	@Override
+	public double getValorTotalCustosOperacionais() {
+		return valorTotalCustosOperacionais;
+	}
+
+	/**
+	 * @param valorTotalCustosOperacionais the valorTotalCustosOperacionais to set
+	 */
+	@Override
+	public void setValorTotalCustosOperacionais(double valorTotalCustosOperacionais) {
+		this.valorTotalCustosOperacionais = valorTotalCustosOperacionais;
+	}
+
+	/**
+	 * @return the valorTotalCustosAdministrativos
+	 */
+	@Override
+	public double getValorTotalCustosAdministrativos() {
+		return valorTotalCustosAdministrativos;
+	}
+
+	/**
+	 * @param valorTotalCustosAdministrativos the valorTotalCustosAdministrativos to set
+	 */
+	@Override
+	public void setValorTotalCustosAdministrativos(double valorTotalCustosAdministrativos) {
+		this.valorTotalCustosAdministrativos = valorTotalCustosAdministrativos;
+	}
+
+	/**
+	 * @return the valorTotalCustosBdiComissoes
+	 */
+	@Override
+	public double getValorTotalCustosBdiComissoes() {
+		return valorTotalCustosBdiComissoes;
+	}
+
+	/**
+	 * @param valorTotalCustosBdiComissoes the valorTotalCustosBdiComissoes to set
+	 */
+	@Override
+	public void setValorTotalCustosBdiComissoes(double valorTotalCustosBdiComissoes) {
+		this.valorTotalCustosBdiComissoes = valorTotalCustosBdiComissoes;
+	}
+
+	/**
+	 * @return the valorTotalCustosSeguranca
+	 */
+	@Override
+	public double getValorTotalCustosSeguranca() {
+		return valorTotalCustosSeguranca;
+	}
+
+	/**
+	 * @param valorTotalCustosSeguranca the valorTotalCustosSeguranca to set
+	 */
+	@Override
+	public void setValorTotalCustosSeguranca(double valorTotalCustosSeguranca) {
+		this.valorTotalCustosSeguranca = valorTotalCustosSeguranca;
+	}
+
+	/**
+	 * @return the valorTotalComBdiComissao
+	 */
+	@Override
+	public double getValorTotalComBdiComissao() {
+		return valorTotalComBdiComissao;
+	}
+
+	/**
+	 * @param valorTotalComBdiComissao the valorTotalComBdiComissao to set
+	 */
+	@Override
+	public void setValorTotalComBdiComissao(double valorTotalComBdiComissao) {
+		this.valorTotalComBdiComissao = valorTotalComBdiComissao;
+	}
+
+	/**
+	 * @return the valorTotalSemBdiComissao
+	 */
+	@Override
+	public double getValorTotalSemBdiComissao() {
+		return valorTotalSemBdiComissao;
+	}
+
+	/**
+	 * @param valorTotalSemBdiComissao the valorTotalSemBdiComissao to set
+	 */
+	@Override
+	public void setValorTotalSemBdiComissao(double valorTotalSemBdiComissao) {
+		this.valorTotalSemBdiComissao = valorTotalSemBdiComissao;
+	}
+
+	/**
+	 * @return the iss
+	 */
+	@Override
+	public double getIss() {
+		return ISS;
+	}
+
+	/**
+	 * @return the cofins
+	 */
+	@Override
+	public double getCofins() {
+		return COFINS;
+	}
+
+	/**
+	 * @return the pis
+	 */
+	@Override
+	public double getPis() {
+		return PIS;
+	}
+
+	/**
+	 * @return the csll
+	 */
+	@Override
+	public double getCsll() {
+		return CSLL;
+	}
+
+	/**
+	 * @return the ir
+	 */
+	@Override
+	public double getIr() {
+		return IR;
+	}
+
+	/**
+	 * @return the impostos
+	 */
+	@Override
+	public double getImpostos() {
+		return IMPOSTOS;
+	}
+
+	/**
+	 * @return the valorTotalDaProposta
+	 */
+	@Override
+	public Double getValorTotalDaProposta() {
+		return valorTotalDaProposta;
+	}
+
+	/**
+	 * @param valorTotalDaProposta the valorTotalDaProposta to set
+	 */
+	@Override
+	public void setValorTotalDaProposta(Double valorTotalDaProposta) {
+		this.valorTotalDaProposta = valorTotalDaProposta;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -304,10 +560,31 @@ public abstract class PropostaBase implements IPropostaBase {
 		result = prime * result + ((nomeProjeto == null) ? 0 : nomeProjeto.hashCode());
 		result = prime * result + ((numeroProposta == null) ? 0 : numeroProposta.hashCode());
 		result = prime * result + ((objeto == null) ? 0 : objeto.hashCode());
-		result = prime * result + ((precificacao == null) ? 0 : precificacao.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((statusContratada == null) ? 0 : statusContratada.hashCode());
 		result = prime * result + ((tipoProposta == null) ? 0 : tipoProposta.hashCode());
-		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(valorTotalComBdiComissao);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(valorTotalCustosAdministrativos);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(valorTotalCustosBdiComissoes);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(valorTotalCustosDesclocamento);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(valorTotalCustosExecucao);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(valorTotalCustosOperacionais);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(valorTotalCustosSeguranca);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((valorTotalDaProposta == null) ? 0 : valorTotalDaProposta.hashCode());
+		temp = Double.doubleToLongBits(valorTotalImpostos);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(valorTotalPrecificacao);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(valorTotalSemBdiComissao);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -373,10 +650,10 @@ public abstract class PropostaBase implements IPropostaBase {
 				return false;
 		} else if (!objeto.equals(other.objeto))
 			return false;
-		if (precificacao == null) {
-			if (other.precificacao != null)
+		if (status == null) {
+			if (other.status != null)
 				return false;
-		} else if (!precificacao.equals(other.precificacao))
+		} else if (!status.equals(other.status))
 			return false;
 		if (statusContratada == null) {
 			if (other.statusContratada != null)
@@ -388,10 +665,38 @@ public abstract class PropostaBase implements IPropostaBase {
 				return false;
 		} else if (!tipoProposta.equals(other.tipoProposta))
 			return false;
-		if (valor == null) {
-			if (other.valor != null)
+		if (Double.doubleToLongBits(valorTotalComBdiComissao) != Double
+				.doubleToLongBits(other.valorTotalComBdiComissao))
+			return false;
+		if (Double.doubleToLongBits(valorTotalCustosAdministrativos) != Double
+				.doubleToLongBits(other.valorTotalCustosAdministrativos))
+			return false;
+		if (Double.doubleToLongBits(valorTotalCustosBdiComissoes) != Double
+				.doubleToLongBits(other.valorTotalCustosBdiComissoes))
+			return false;
+		if (Double.doubleToLongBits(valorTotalCustosDesclocamento) != Double
+				.doubleToLongBits(other.valorTotalCustosDesclocamento))
+			return false;
+		if (Double.doubleToLongBits(valorTotalCustosExecucao) != Double
+				.doubleToLongBits(other.valorTotalCustosExecucao))
+			return false;
+		if (Double.doubleToLongBits(valorTotalCustosOperacionais) != Double
+				.doubleToLongBits(other.valorTotalCustosOperacionais))
+			return false;
+		if (Double.doubleToLongBits(valorTotalCustosSeguranca) != Double
+				.doubleToLongBits(other.valorTotalCustosSeguranca))
+			return false;
+		if (valorTotalDaProposta == null) {
+			if (other.valorTotalDaProposta != null)
 				return false;
-		} else if (!valor.equals(other.valor))
+		} else if (!valorTotalDaProposta.equals(other.valorTotalDaProposta))
+			return false;
+		if (Double.doubleToLongBits(valorTotalImpostos) != Double.doubleToLongBits(other.valorTotalImpostos))
+			return false;
+		if (Double.doubleToLongBits(valorTotalPrecificacao) != Double.doubleToLongBits(other.valorTotalPrecificacao))
+			return false;
+		if (Double.doubleToLongBits(valorTotalSemBdiComissao) != Double
+				.doubleToLongBits(other.valorTotalSemBdiComissao))
 			return false;
 		return true;
 	}

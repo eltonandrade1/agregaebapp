@@ -67,7 +67,9 @@
 					<h:outputText value="#{profissional.rg}" />
 				</p:column>
 				<p:column headerText="Data de Nascimento">
-					<h:outputText value="#{profissional.dataNascimento}" />
+					<h:outputText value="#{profissional.dataNascimento}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 				<f:facet name="footer">
 					<div align="left">

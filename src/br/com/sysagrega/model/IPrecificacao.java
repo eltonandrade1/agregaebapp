@@ -33,7 +33,7 @@ public interface IPrecificacao extends Serializable{
 	 */
 	void setCustos(List<CustoExecucao> custos);
 
-	IProposta getProposta();
+	Proposta getProposta();
 
 	void setProposta(Proposta proposta);
 
@@ -118,5 +118,8 @@ public interface IPrecificacao extends Serializable{
 	double getValorTotalSemBdiComissao();
 
 	void setValorTotalSemBdiComissao(double valorTotalSemBdiComissao);
+	
+	double getCalculoValorTotalCustosBdiComissao();
+
 
 }
