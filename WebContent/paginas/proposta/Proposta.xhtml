@@ -38,14 +38,17 @@
 					<h:panelGrid id="idPanelGridProposta" columns="6" width="100%"
 						style="margin-bottom:10px" cellspacing="5">
 
-						<p:outputLabel value="Nº Proposta:" />
-						<p:inputText id="nrProposta" style="width:100px;"
-							value="#{propostaBean.proposta.numeroProposta}" disabled="true" rendered="#{!propostaBean.viewProposta}"/>
-						<p:outputLabel value="#{propostaBean.proposta.numeroProposta}" rendered="#{propostaBean.viewProposta}"/>
+						<p:outputLabel value="Nº Proposta:" rendered="#{!propostaBean.isNewProposta()}"/>
+						<p:outputLabel value="#{propostaBean.proposta.numeroProposta}" rendered="#{!propostaBean.isNewProposta()}"/>
+						
+						<p:outputLabel value="Data de Inclusão no Sistema:" rendered="#{!propostaBean.isNewProposta()}"/>
+						<p:outputLabel value="#{propostaBean.proposta.dataInclusao}" rendered="#{!propostaBean.isNewProposta()}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
 
-						<p:outputLabel value="Data de Inclusão:" />
-						<p:calendar pattern="dd/MM/yyyy" mask="true" locale="pt" rendered="#{!propostaBean.viewProposta}"
-							id="dtInclusao" value="#{propostaBean.proposta.dataInclusao}">
+						<p:outputLabel value="Data de Envio ao Cliente:" />
+						<p:calendar pattern="dd/MM/yyyy" mask="true" locale="pt" rendered="#{!propostaBean.viewProposta}" 
+							id="dtEnvio" value="#{propostaBean.proposta.dataEnvioAoCliente}" >
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</p:calendar>
 						<p:outputLabel value="#{propostaBean.proposta.dataInclusao}" rendered="#{propostaBean.viewProposta}">
@@ -63,12 +66,14 @@
 						</p:outputLabel>
 
 						<p:outputLabel value="Nome do Projeto:" />
-						<p:inputText id="nomeProjeto" style="width:160px;" rendered="#{!propostaBean.viewProposta}"
+						<p:inputText id="nomeProjeto" style="width:160px;" rendered="#{!propostaBean.viewProposta}" required="true"
+							requiredMessage="Campo Nome do Projeto é obrigatório"
 							value="#{propostaBean.proposta.nomeProjeto}" />
 						<p:outputLabel value="#{propostaBean.proposta.nomeProjeto}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel value="Cliente:" />
-						<p:inputText id="cliente" style="width:300px;" rendered="#{!propostaBean.viewProposta}"
+						<p:inputText id="cliente" style="width:300px;" rendered="#{!propostaBean.viewProposta}" required="true"
+							requiredMessage="Campo Cliente é obrigatório"
 							value="#{propostaBean.proposta.cliente}" />
 						<p:outputLabel value="#{propostaBean.proposta.cliente}" rendered="#{propostaBean.viewProposta}"/>
 
@@ -78,7 +83,8 @@
 						<p:outputLabel value="#{propostaBean.proposta.contato}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel for="idEstados" value="Estado:" />
-						<p:selectOneMenu id="idEstados" style="width:160px;" rendered="#{!propostaBean.viewProposta}"
+						<p:selectOneMenu id="idEstados" style="width:160px;" rendered="#{!propostaBean.viewProposta}" required="true"
+							requiredMessage="Campo Estado é obrigatório"
 							panelStyle="width:180px;" value="#{propostaBean.proposta.estado}"
 							effect="fade" filter="true" filterMatchMode="startsWith">
 
@@ -93,7 +99,8 @@
 						<p:outputLabel value="#{propostaBean.proposta.estado.uf}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel for="idCidades" value="Cidade:" />
-						<p:selectOneMenu id="idCidades" style="width:120px;" rendered="#{!propostaBean.viewProposta}"
+						<p:selectOneMenu id="idCidades" style="width:120px;" rendered="#{!propostaBean.viewProposta}" required="true"
+							requiredMessage="Campo Cidade é obrigatório"
 							disabled="#{propostaBean.disableCity}" panelStyle="width:180px;"
 							effect="fade" filter="true" filterMatchMode="startsWith"
 							value="#{propostaBean.proposta.cidade}">
@@ -104,9 +111,12 @@
 						<p:outputLabel value="#{propostaBean.proposta.cidade.nome}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel value="Tipo de Proposta:" />
-						<p:selectOneMenu id="tipoProposta" style="width:120px;" rendered="#{!propostaBean.viewProposta}"
+						<p:selectOneMenu id="tipoProposta" style="width:120px;" rendered="#{!propostaBean.viewProposta}" required="true"
+							requiredMessage="Campo Tipo de proposta é obrigatório"
 							value="#{propostaBean.proposta.tipoProposta}">
 
+							<f:selectItem itemLabel="- Selecione -" itemValue="" itemDisabled="#{propostaBean.isEditProposta()}"/>
+							
 							<f:selectItems value="#{propostaBean.tiposPropostas}" var="tipo"
 								itemLabel="#{tipo}" itemValue="#{tipo}" />
 						</p:selectOneMenu>
@@ -238,6 +248,8 @@
 						<p:selectOneMenu id="descDeslocamento" style="width:120px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoDeslocamento.descricao}">
 
+							<f:selectItem itemLabel="- Selecione -" itemValue="" itemDisabled="#{propostaBean.isEditProposta()}"/>
+							
 							<f:selectItems value="#{propostaBean.deslocamentos}" var="tipo"
 								itemLabel="#{deslocamento}" itemValue="#{deslocamento}" />
 						</p:selectOneMenu>
@@ -324,6 +336,8 @@
 						<p:selectOneMenu id="descOperacional" style="width:120px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoOperacional.descricao}">
 
+							<f:selectItem itemLabel="- Selecione -" itemValue="" itemDisabled="#{propostaBean.isEditProposta()}"/>
+							
 							<f:selectItems value="#{propostaBean.despesasOperacional}"
 								var="operacional" itemLabel="#{operacional}"
 								itemValue="#{operacional}" />
@@ -410,6 +424,8 @@
 						<p:selectOneMenu id="descSeguranca" style="width:120px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoSeguranca.descricao}">
 
+							<f:selectItem itemLabel="- Selecione -" itemValue="" itemDisabled="#{propostaBean.isEditProposta()}"/>
+							
 							<f:selectItems value="#{propostaBean.despesasSeguranca}"
 								var="seguranca" itemLabel="#{seguranca}"
 								itemValue="#{seguranca}" />
@@ -497,6 +513,8 @@
 						<p:selectOneMenu id="descAdm" style="width:120px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoAdministrativo.descricao}">
 
+							<f:selectItem itemLabel="- Selecione -" itemValue="" itemDisabled="#{propostaBean.isEditProposta()}"/>
+							
 							<f:selectItems value="#{propostaBean.custosAdm}" var="adm"
 								itemLabel="#{adm}" itemValue="#{adm}" />
 
@@ -603,6 +621,8 @@
 						<p:selectOneMenu id="descBdiComissao" style="width:120px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoBdiComissao.descricao}">
 
+							<f:selectItem itemLabel="- Selecione -" itemValue="" itemDisabled="#{propostaBean.isEditProposta()}"/>
+							
 							<f:selectItems value="#{propostaBean.bdiComissoes}"
 								var="bdiComissao" itemLabel="#{bdiComissao}"
 								itemValue="#{bdiComissao}" />

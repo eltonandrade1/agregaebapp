@@ -30,7 +30,7 @@
 						<p:submenu label="Propostas">
 							<p:menuitem id="cadProposta" value="Nova Proposta"
 								action="#{menuBean.novaProposta()}" icon="ui-icon-plus" />
-							<p:menuitem id="consultarProposta" value="Consultar"
+							<p:menuitem id="consultarProposta" value="Consultar" actionListener="#{menuBean.reset()}" process="@this"
 								action="#{menuBean.consultarProposta()}" icon="ui-icon-search" />
 						</p:submenu>
 

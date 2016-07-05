@@ -100,6 +100,7 @@ public class ClienteBean implements Serializable {
 		} else if(FacesUtil.getParamSession().equals(TipoPagina.EDIT_CLIENTE)) {
 			
 			this.cliente = FacesUtil.getClienteSession();
+			carregarCidadesPorEstado();
 			
 		} else if(FacesUtil.getParamSession().equals(TipoPagina.NOVO_CLIENTE)) {
 

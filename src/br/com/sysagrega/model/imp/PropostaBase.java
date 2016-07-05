@@ -30,6 +30,9 @@ public abstract class PropostaBase implements IPropostaBase {
 	private String tipoProposta;
 	
 	@Temporal(TemporalType.DATE)
+	private Date dataEnvioAoCliente;
+	
+	@Temporal(TemporalType.DATE)
 	private Date dataInclusao;
 	
 	@Temporal(TemporalType.DATE)
@@ -543,6 +546,22 @@ public abstract class PropostaBase implements IPropostaBase {
 		this.valorTotalDaProposta = valorTotalDaProposta;
 	}
 
+	/**
+	 * @return the dataEnvioAoCliente
+	 */
+	@Override
+	public Date getDataEnvioAoCliente() {
+		return dataEnvioAoCliente;
+	}
+
+	/**
+	 * @param dataEnvioAoCliente the dataEnvioAoCliente to set
+	 */
+	@Override
+	public void setDataEnvioAoCliente(Date dataEnvioAoCliente) {
+		this.dataEnvioAoCliente = dataEnvioAoCliente;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -554,6 +573,7 @@ public abstract class PropostaBase implements IPropostaBase {
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
 		result = prime * result + ((contato == null) ? 0 : contato.hashCode());
 		result = prime * result + ((dataContratacao == null) ? 0 : dataContratacao.hashCode());
+		result = prime * result + ((dataEnvioAoCliente == null) ? 0 : dataEnvioAoCliente.hashCode());
 		result = prime * result + ((dataInclusao == null) ? 0 : dataInclusao.hashCode());
 		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -619,6 +639,11 @@ public abstract class PropostaBase implements IPropostaBase {
 			if (other.dataContratacao != null)
 				return false;
 		} else if (!dataContratacao.equals(other.dataContratacao))
+			return false;
+		if (dataEnvioAoCliente == null) {
+			if (other.dataEnvioAoCliente != null)
+				return false;
+		} else if (!dataEnvioAoCliente.equals(other.dataEnvioAoCliente))
 			return false;
 		if (dataInclusao == null) {
 			if (other.dataInclusao != null)

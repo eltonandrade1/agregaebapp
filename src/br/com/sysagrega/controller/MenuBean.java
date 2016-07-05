@@ -53,6 +53,6 @@ public class MenuBean implements Serializable {
 	
 	//TODO verificar necessidade de utilização
 	public void reset() {
-		RequestContext.getCurrentInstance().reset("formPrincipal:idPanelProfissional");
+		RequestContext.getCurrentInstance().reset("formPrincipal:layoutCentro");
 	}
 }

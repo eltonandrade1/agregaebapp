@@ -162,4 +162,8 @@ public interface IPropostaBase extends Serializable {
 
 	Double getValorTotalDaProposta();
 
+	Date getDataEnvioAoCliente();
+
+	void setDataEnvioAoCliente(Date dataEnvioAoCliente);
+
 }

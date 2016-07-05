@@ -101,6 +101,7 @@ public class ProfissionalBean implements Serializable {
 		} else if(FacesUtil.getParamSession().equals(TipoPagina.EDIT_PROFI)) {
 			
 			this.profissional = FacesUtil.getProfissionalSession();
+			carregarCidadesPorEstado();
 			
 		} else if(FacesUtil.getParamSession().equals(TipoPagina.NOVO_PROF)) {
 

@@ -41,13 +41,14 @@ public class PropostaService implements IPropostaService {
 
 		try {
 
-			// Validação para campos obrigatórios
+			// Validação para campos obrigatórios e datas
 			validaCamposObrigatorios(proposta);
-
-			// TODO validação de datas (contratação não pode ser menor que
-			// inclusão)
+			
+			//Set data de inclusão no sistema
+			proposta.setDataInclusao(DateUtil.getCurrentDateTime());
 
 			proposta = this.propostaRepository.saveOrMerge(proposta);
+			
 
 			// Gera numero da proposta padrão agrega após gerar id no banco e
 			// faz o
@@ -71,10 +72,19 @@ public class PropostaService implements IPropostaService {
 
 			throw new NegocioException("Favor informar uma proposta!");
 
+		} else if (proposta.getDataEnvioAoCliente() != null && proposta.getDataContratacao() != null) {
+
+			if (DateUtil.compareDates(proposta.getDataEnvioAoCliente(), proposta.getDataContratacao()) > 0) {
+
+				throw new NegocioException(
+						"A data de contratação deve ser igual ou superior a data de envio ao cliente");
+
+			}
 		} else if (proposta.getTipoProposta().isEmpty() || proposta.getTipoProposta() == null
 				|| proposta.getCliente().isEmpty() || proposta.getCliente() == null
 				|| proposta.getStatusContratada() == null || proposta.getEstado() == null
-				|| proposta.getCidade() == null) {
+				|| proposta.getCidade() == null
+				|| proposta.getNomeProjeto().isEmpty() || proposta.getNomeProjeto() == null) {
 
 			throw new NegocioException("Os Campos obrigatórios não foram informados!");
 
@@ -164,11 +174,11 @@ public class PropostaService implements IPropostaService {
 
 		// Validação do periodo
 		if (filtroDataInicial != null && filtroDataFinal != null) {
-			
+
 			if (DateUtil.compareDates(filtroDataInicial, filtroDataFinal) > 0) {
-				
+
 				throw new NegocioException("A data final deve ser igual ou superior a data inicial");
-				
+
 			}
 		}
 
@@ -190,12 +200,12 @@ public class PropostaService implements IPropostaService {
 		this.propostaRepositoryHistorico.saveHistorico(propostaHistorico);
 
 	}
-	
+
 	@Override
 	public List<PropostaHistorico> getPropostaHistoricoByFilter(IProposta propostaId) {
-		
+
 		return this.propostaRepositoryHistorico.getPropostaHistoricoByFilter(propostaId);
-		
+
 	}
 
 	private PropostaHistorico configuraObjetoHistorico(Proposta proposta) {
@@ -216,6 +226,7 @@ public class PropostaService implements IPropostaService {
 		historico.setDataContratacao(proposta.getDataContratacao());
 		historico.setContato(proposta.getContato());
 		historico.setTipoProposta(proposta.getTipoProposta());
+		historico.setDataEnvioAoCliente(proposta.getDataEnvioAoCliente());
 		// valores totais
 		historico.setValorTotalDaProposta(proposta.getValorTotalDaProposta());
 		historico.setValorTotalCustosExecucao(proposta.getValorTotalCustosExecucao());
