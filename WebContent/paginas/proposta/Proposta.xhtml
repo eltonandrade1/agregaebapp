@@ -40,31 +40,45 @@
 
 						<p:outputLabel value="Nº Proposta:" />
 						<p:inputText id="nrProposta" style="width:100px;"
-							value="#{propostaBean.proposta.numeroProposta}" disabled="true" />
+							value="#{propostaBean.proposta.numeroProposta}" disabled="true" rendered="#{!propostaBean.viewProposta}"/>
+						<p:outputLabel value="#{propostaBean.proposta.numeroProposta}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel value="Data de Inclusão:" />
-						<p:calendar pattern="dd/MM/yyyy" mask="true" style="width:50px;"
-							id="dtInclusao" value="#{propostaBean.proposta.dataInclusao}" />
+						<p:calendar pattern="dd/MM/yyyy" mask="true" locale="pt" rendered="#{!propostaBean.viewProposta}"
+							id="dtInclusao" value="#{propostaBean.proposta.dataInclusao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:calendar>
+						<p:outputLabel value="#{propostaBean.proposta.dataInclusao}" rendered="#{propostaBean.viewProposta}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
 
 						<p:outputLabel value="Data de Contratação:" />
-						<p:calendar pattern="dd/MM/yyyy" mask="true" style="width:50px;"
+						<p:calendar pattern="dd/MM/yyyy" mask="true" style="width:50px;" rendered="#{!propostaBean.viewProposta}"
 							id="dtContratacao"
-							value="#{propostaBean.proposta.dataContratacao}" />
+							value="#{propostaBean.proposta.dataContratacao}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />	
+						</p:calendar>
+						<p:outputLabel value="#{propostaBean.proposta.dataContratacao}" rendered="#{propostaBean.viewProposta}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:outputLabel>
 
 						<p:outputLabel value="Nome do Projeto:" />
-						<p:inputText id="nomeProjeto" style="width:160px;"
+						<p:inputText id="nomeProjeto" style="width:160px;" rendered="#{!propostaBean.viewProposta}"
 							value="#{propostaBean.proposta.nomeProjeto}" />
+						<p:outputLabel value="#{propostaBean.proposta.nomeProjeto}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel value="Cliente:" />
-						<p:inputText id="cliente" style="width:300px;"
+						<p:inputText id="cliente" style="width:300px;" rendered="#{!propostaBean.viewProposta}"
 							value="#{propostaBean.proposta.cliente}" />
+						<p:outputLabel value="#{propostaBean.proposta.cliente}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel value="Contato:" />
-						<p:inputText id="contato" style="width:160px;"
+						<p:inputText id="contato" style="width:160px;" rendered="#{!propostaBean.viewProposta}"
 							value="#{propostaBean.proposta.contato}" />
+						<p:outputLabel value="#{propostaBean.proposta.contato}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel for="idEstados" value="Estado:" />
-						<p:selectOneMenu id="idEstados" style="width:160px;" 
+						<p:selectOneMenu id="idEstados" style="width:160px;" rendered="#{!propostaBean.viewProposta}"
 							panelStyle="width:180px;" value="#{propostaBean.proposta.estado}"
 							effect="fade" filter="true" filterMatchMode="startsWith">
 
@@ -76,9 +90,10 @@
 								listener="#{propostaBean.carregarCidadesPorEstado()}"
 								update="idCidades" />
 						</p:selectOneMenu>
+						<p:outputLabel value="#{propostaBean.proposta.estado.uf}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel for="idCidades" value="Cidade:" />
-						<p:selectOneMenu id="idCidades" style="width:120px;"
+						<p:selectOneMenu id="idCidades" style="width:120px;" rendered="#{!propostaBean.viewProposta}"
 							disabled="#{propostaBean.disableCity}" panelStyle="width:180px;"
 							effect="fade" filter="true" filterMatchMode="startsWith"
 							value="#{propostaBean.proposta.cidade}">
@@ -86,34 +101,38 @@
 							<f:selectItems value="#{propostaBean.cidades}" var="cidade"
 								itemLabel="#{cidade.nome}" itemValue="#{cidade}" />
 						</p:selectOneMenu>
+						<p:outputLabel value="#{propostaBean.proposta.cidade.nome}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel value="Tipo de Proposta:" />
-						<p:selectOneMenu id="tipoProposta" style="width:120px;"
+						<p:selectOneMenu id="tipoProposta" style="width:120px;" rendered="#{!propostaBean.viewProposta}"
 							value="#{propostaBean.proposta.tipoProposta}">
 
 							<f:selectItems value="#{propostaBean.tiposPropostas}" var="tipo"
 								itemLabel="#{tipo}" itemValue="#{tipo}" />
 						</p:selectOneMenu>
+						<p:outputLabel value="#{propostaBean.proposta.tipoProposta}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel value="Contratada:" />
-						<p:selectOneButton id="statusContratada"
+						<p:selectOneButton id="statusContratada" rendered="#{!propostaBean.viewProposta}"
 							value="#{propostaBean.proposta.statusContratada}">
 							<f:selectItem itemLabel="Sim" itemValue="S" />
 							<f:selectItem itemLabel="Não" itemValue="N" />
 						</p:selectOneButton>
+						<p:outputLabel value="#{propostaBean.proposta.statusContratada}" rendered="#{propostaBean.viewProposta}"/>
 
 						<p:outputLabel value="Status:" />
-						<p:selectOneButton id="status"
+						<p:selectOneButton id="status" rendered="#{!propostaBean.viewProposta}"
 							value="#{propostaBean.proposta.status}">
 							<f:selectItem itemLabel="Aprovada" itemValue="A" />
 							<f:selectItem itemLabel="Cancelada" itemValue="C" />
 						</p:selectOneButton>
+						<p:outputLabel value="#{propostaBean.proposta.status}" rendered="#{propostaBean.viewProposta}"/>
 
 					</h:panelGrid>
 
 					<h:panelGrid columns="1" width="100%">
 						<p:outputLabel value="Objeto:" />
-						<p:editor id="objeto" widgetVar="objetoProposta" value="#{propostaBean.proposta.objeto}"/>
+						<p:editor id="objeto" widgetVar="objetoProposta" value="#{propostaBean.proposta.objeto}" disabled="#{propostaBean.viewProposta}"/>
 
 						<p:commandButton value="Limpar" type="button"
 							onclick="PF('objetoProposta').clear();" icon="ui-icon-close" />
@@ -137,29 +156,29 @@
 					<h:panelGrid id="pgCustosExecucao" columns="2" cellspacing="5">
 
 						<p:outputLabel value="Descrição:" />
-						<p:inputText id="descCustoExecucao" style="width:250px;"
+						<p:inputText id="descCustoExecucao" style="width:250px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoExecucao.descricao}" />
 
 						<p:outputLabel value="Quantidade:" />
-						<p:inputText id="qtCustoExecucao" style="width:40px;"
+						<p:inputText id="qtCustoExecucao" style="width:40px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoExecucao.quantidade}">
 							<f:convertNumber type="number" />
 						</p:inputText>
 
 						<p:outputLabel value="Valor Unitário:" />
-						<p:inputNumber id="vlCustoExecucao" style="width:50px;"
+						<p:inputNumber id="vlCustoExecucao" style="width:50px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoExecucao.valorUnitario}" />
 
 						<p:outputLabel value="Observações:" />
-						<p:inputTextarea id="obs" rows="4" cols="30" autoResize="false"
+						<p:inputTextarea id="obs" rows="4" cols="30" autoResize="false" disabled="#{propostaBean.viewProposta}"
 							maxlength="150" value="#{propostaBean.custoExecucao.observacoes}" />
 
 						<p:outputLabel value="Total Custos Execução:" />
-						<p:inputNumber id="vlTotalExecucao" style="width:50px;"
+						<p:inputNumber id="vlTotalExecucao" style="width:50px;" 
 							disabled="true"
 							value="#{propostaBean.proposta.valorTotalCustosExecucao}" />
 
-						<p:commandButton id="addCustoExecucao" icon="fa fa-fw fa-plus"
+						<p:commandButton id="addCustoExecucao" icon="fa fa-fw fa-plus" disabled="#{propostaBean.viewProposta}"
 							action="#{propostaBean.somarValorCustosExecucao()}"
 							update="panelCustosExecucao pgCustosExecucao pgValorTotalSemBdi valorTotalProposta pgImpostos @parent">
 							<p:collector value="#{propostaBean.custoExecucao}"
@@ -167,7 +186,7 @@
 						</p:commandButton>
 					</h:panelGrid>
 					<p:outputPanel id="panelCustosExecucao">
-						<p:dataTable value="#{propostaBean.proposta.custos}"
+						<p:dataTable value="#{propostaBean.proposta.custos}" 
 							resizableColumns="true" resizeMode="expand"
 							emptyMessage="Nenhum custo cadastrado" rows="5"
 							rowsPerPageTemplate="5,10,15" paginator="true" scrollable="true"
@@ -196,7 +215,7 @@
 							</p:column>
 
 							<p:column headerText="Excluir">
-								<p:commandButton id="removerCusto" icon="fa fa-fw fa-remove"
+								<p:commandButton id="removerCusto" icon="fa fa-fw fa-remove" disabled="#{propostaBean.viewProposta}"
 									update="formPrincipal:idTabViewProposta:panelCustosExecucao formPrincipal:idTabViewProposta:pgCustosExecucao formPrincipal:idTabViewProposta:pgValorTotalSemBdi formPrincipal:idTabViewProposta:valorTotalProposta formPrincipal:idTabViewProposta:pgImpostos @parent"
 									action="#{propostaBean.calcularValorTotalCustosExecucao()}">
 									<p:collector unique="true" value="#{custo}"
@@ -216,7 +235,7 @@
 
 					<h:panelGrid id="pgCustosDeslocamento" columns="2" cellspacing="5">
 						<p:outputLabel value="Descrição:" />
-						<p:selectOneMenu id="descDeslocamento" style="width:120px;"
+						<p:selectOneMenu id="descDeslocamento" style="width:120px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoDeslocamento.descricao}">
 
 							<f:selectItems value="#{propostaBean.deslocamentos}" var="tipo"
@@ -224,17 +243,17 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Quantidade:" />
-						<p:inputText id="qtDeslocamento" style="width:40px;"
+						<p:inputText id="qtDeslocamento" style="width:40px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoDeslocamento.quantidade}">
 							<f:convertNumber type="number" />
 						</p:inputText>
 
 						<p:outputLabel value="Valor Unitário:" />
-						<p:inputNumber id="vlUnitarioDeslocamento" style="width:50px;"
+						<p:inputNumber id="vlUnitarioDeslocamento" style="width:50px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoDeslocamento.valorUnitario}" />
 
 						<p:outputLabel value="Observações:" />
-						<p:inputTextarea id="obsDeslocamento" rows="4" cols="30"
+						<p:inputTextarea id="obsDeslocamento" rows="4" cols="30" disabled="#{propostaBean.viewProposta}"
 							autoResize="false" maxlength="150"
 							value="#{propostaBean.custoDeslocamento.observacoes}" />
 
@@ -243,7 +262,7 @@
 							disabled="true"
 							value="#{propostaBean.proposta.valorTotalCustosDesclocamento}" />
 
-						<p:commandButton id="addDeslocamento" icon="fa fa-fw fa-plus"
+						<p:commandButton id="addDeslocamento" icon="fa fa-fw fa-plus" disabled="#{propostaBean.viewProposta}"
 							action="#{propostaBean.somarValorCustosDeslocamento()}"
 							update="panelCustosDeslocamento pgCustosDeslocamento pgValorTotalSemBdi pgImpostos @parent">
 							<p:collector unique="false"
@@ -284,7 +303,7 @@
 							</p:column>
 
 							<p:column headerText="Excluir">
-								<p:commandButton id="removerCusto" icon="fa fa-fw fa-remove"
+								<p:commandButton id="removerCusto" icon="fa fa-fw fa-remove" disabled="#{propostaBean.viewProposta}"
 									update="formPrincipal:idTabViewProposta:panelCustosDeslocamento formPrincipal:idTabViewProposta:pgCustosDeslocamento formPrincipal:idTabViewProposta:pgValorTotalSemBdi formPrincipal:idTabViewProposta:valorTotalProposta formPrincipal:idTabViewProposta:pgImpostos @parent"
 									action="#{propostaBean.calcularValorTotalCustosDeslocamento()}">
 									<p:collector unique="true" value="#{despesasDeslocamento}"
@@ -302,7 +321,7 @@
 
 					<h:panelGrid id="pgCustosoOperacionais" columns="2" cellspacing="5">
 						<p:outputLabel value="Descrição:" />
-						<p:selectOneMenu id="descOperacional" style="width:120px;"
+						<p:selectOneMenu id="descOperacional" style="width:120px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoOperacional.descricao}">
 
 							<f:selectItems value="#{propostaBean.despesasOperacional}"
@@ -311,26 +330,26 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Quantidade:" />
-						<p:inputText id="qtOperacional" style="width:40px;"
+						<p:inputText id="qtOperacional" style="width:40px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoOperacional.quantidade}">
 							<f:convertNumber type="number" />
 						</p:inputText>
 
 						<p:outputLabel value="Valor Unitário:" />
-						<p:inputNumber id="vlUnitarioOperacional" style="width:50px;"
+						<p:inputNumber id="vlUnitarioOperacional" style="width:50px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoOperacional.valorUnitario}" />
 
 						<p:outputLabel value="Observações:" />
-						<p:inputTextarea id="obsOperacionais" rows="4" cols="30"
+						<p:inputTextarea id="obsOperacionais" rows="4" cols="30" disabled="#{propostaBean.viewProposta}"
 							autoResize="false" maxlength="150"
 							value="#{propostaBean.custoOperacional.observacoes}" />
 
-						<p:outputLabel value="Total Custo Deslocamento:" />
+						<p:outputLabel value="Total Custo Operacional:" />
 						<p:inputNumber id="vlTotalOperacional" style="width:50px;"
 							disabled="true"
 							value="#{propostaBean.proposta.valorTotalCustosOperacionais}" />
 
-						<p:commandButton id="addOperacional" icon="fa fa-fw fa-plus"
+						<p:commandButton id="addOperacional" icon="fa fa-fw fa-plus" disabled="#{propostaBean.viewProposta}"
 							action="#{propostaBean.somarValorCustosOperacionais()}"
 							update="panelCustosOperacionais pgCustosoOperacionais pgValorTotalSemBdi valorTotalProposta pgImpostos @parent">
 							<p:collector unique="false"
@@ -370,7 +389,7 @@
 							</p:column>
 
 							<p:column headerText="Excluir">
-								<p:commandButton id="removerCustoOperacional"
+								<p:commandButton id="removerCustoOperacional" disabled="#{propostaBean.viewProposta}"
 									icon="fa fa-fw fa-remove"
 									update="formPrincipal:idTabViewProposta:panelCustosOperacionais formPrincipal:idTabViewProposta:pgCustosoOperacionais formPrincipal:idTabViewProposta:pgValorTotalSemBdi formPrincipal:idTabViewProposta:valorTotalProposta formPrincipal:idTabViewProposta:pgImpostos @parent"
 									action="#{propostaBean.calcularValorTotalCustosOperacionais()}">
@@ -388,7 +407,7 @@
 
 					<h:panelGrid id="pgCustosSeguranca" columns="2" cellspacing="5">
 						<p:outputLabel value="Descrição:" />
-						<p:selectOneMenu id="descSeguranca" style="width:120px;"
+						<p:selectOneMenu id="descSeguranca" style="width:120px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoSeguranca.descricao}">
 
 							<f:selectItems value="#{propostaBean.despesasSeguranca}"
@@ -397,17 +416,17 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Quantidade:" />
-						<p:inputText id="qtSeguranca" style="width:100px;"
+						<p:inputText id="qtSeguranca" style="width:100px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoSeguranca.quantidade}">
 							<f:convertNumber type="number" />
 						</p:inputText>
 
 						<p:outputLabel value="Valor Unitário:" />
-						<p:inputNumber id="vlUnitarioSeguranca" style="width:100px;"
+						<p:inputNumber id="vlUnitarioSeguranca" style="width:100px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoSeguranca.valorUnitario}" />
 
 						<p:outputLabel value="Observações:" />
-						<p:inputTextarea id="obsSeguranca" rows="4" cols="30"
+						<p:inputTextarea id="obsSeguranca" rows="4" cols="30" disabled="#{propostaBean.viewProposta}"
 							autoResize="false" maxlength="150"
 							value="#{propostaBean.custoSeguranca.observacoes}" />
 
@@ -416,7 +435,7 @@
 							disabled="true"
 							value="#{propostaBean.proposta.valorTotalCustosSeguranca}" />
 
-						<p:commandButton id="addSeguranca" icon="fa fa-fw fa-plus"
+						<p:commandButton id="addSeguranca" icon="fa fa-fw fa-plus" disabled="#{propostaBean.viewProposta}"
 							action="#{propostaBean.somarValorCustosSeguranca()}"
 							update="panelCustosSeguranca pgCustosSeguranca pgValorTotalSemBdi valorTotalProposta pgImpostos @parent">
 							<p:collector unique="false"
@@ -456,7 +475,7 @@
 							</p:column>
 
 							<p:column headerText="Excluir">
-								<p:commandButton id="removerCustoSeguranca"
+								<p:commandButton id="removerCustoSeguranca" disabled="#{propostaBean.viewProposta}"
 									icon="fa fa-fw fa-remove"
 									update="formPrincipal:idTabViewProposta:panelCustosSeguranca formPrincipal:idTabViewProposta:pgCustosSeguranca formPrincipal:idTabViewProposta:pgValorTotalSemBdi formPrincipal:idTabViewProposta:valorTotalProposta formPrincipal:idTabViewProposta:pgImpostos @parent"
 									action="#{propostaBean.calcularValorTotalCustosSeguranca()}">
@@ -475,7 +494,7 @@
 
 					<h:panelGrid id="pgCustosAdm" columns="2" cellspacing="5">
 						<p:outputLabel value="Descrição:" />
-						<p:selectOneMenu id="descAdm" style="width:120px;"
+						<p:selectOneMenu id="descAdm" style="width:120px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoAdministrativo.descricao}">
 
 							<f:selectItems value="#{propostaBean.custosAdm}" var="adm"
@@ -487,18 +506,18 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Quantidade / %:" />
-						<p:inputText id="qtAdm" style="width:100px;"
+						<p:inputText id="qtAdm" style="width:100px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoAdministrativo.quantidade}">
 							<f:convertNumber type="number" />
 						</p:inputText>
 
 						<p:outputLabel value="Valor Unitário:" />
-						<p:inputNumber id="vlUnitarioAdm" style="width:100px;"
-							disabled="#{propostaBean.disableVlUnitarioAdm}"
+						<p:inputNumber id="vlUnitarioAdm" style="width:100px;" 
+							disabled="#{propostaBean.disableVlUnitarioAdm or propostaBean.viewProposta}"
 							value="#{propostaBean.custoAdministrativo.valorUnitario}" />
 
 						<p:outputLabel value="Observações:" />
-						<p:inputTextarea id="obsAdm" rows="4" cols="30" autoResize="false"
+						<p:inputTextarea id="obsAdm" rows="4" cols="30" autoResize="false" disabled="#{propostaBean.viewProposta}"
 							maxlength="150"
 							value="#{propostaBean.custoAdministrativo.observacoes}" />
 
@@ -507,7 +526,7 @@
 							disabled="true"
 							value="#{propostaBean.proposta.valorTotalCustosAdministrativos}" />
 
-						<p:commandButton id="addAdm" icon="fa fa-fw fa-plus"
+						<p:commandButton id="addAdm" icon="fa fa-fw fa-plus" disabled="#{propostaBean.viewProposta}"
 							action="#{propostaBean.somarValorCustosAdministrativo()}"
 							update="panelCustosAdm pgCustosAdm pgValorTotalSemBdi valorTotalProposta pgImpostos @parent">
 							<p:collector unique="false"
@@ -547,7 +566,7 @@
 							</p:column>
 
 							<p:column headerText="Excluir">
-								<p:commandButton id="removerCustoSeguranca"
+								<p:commandButton id="removerCustoSeguranca" disabled="#{propostaBean.viewProposta}"
 									icon="fa fa-fw fa-remove"
 									update="formPrincipal:idTabViewProposta:panelCustosAdm formPrincipal:idTabViewProposta:pgCustosAdm formPrincipal:idTabViewProposta:pgValorTotalSemBdi formPrincipal:idTabViewProposta:valorTotalProposta formPrincipal:idTabViewProposta:pgImpostos @parent"
 									action="#{propostaBean.calcularValorTotalCustosAdministrativos()}">
@@ -581,7 +600,7 @@
 					<h:panelGrid id="pgBdiComissao" columns="2" cellspacing="5">
 
 						<p:outputLabel value="Descrição:" />
-						<p:selectOneMenu id="descBdiComissao" style="width:120px;"
+						<p:selectOneMenu id="descBdiComissao" style="width:120px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoBdiComissao.descricao}">
 
 							<f:selectItems value="#{propostaBean.bdiComissoes}"
@@ -590,13 +609,13 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Porcentagem %:" />
-						<p:inputText id="percentBdiComissao" style="width:100px;"
+						<p:inputText id="percentBdiComissao" style="width:100px;" disabled="#{propostaBean.viewProposta}"
 							value="#{propostaBean.custoBdiComissao.quantidade}">
 							<f:convertNumber type="number" />
 						</p:inputText>
 
 						<p:outputLabel value="Observações:" />
-						<p:inputTextarea id="obsBdiComissoes" rows="4" cols="30"
+						<p:inputTextarea id="obsBdiComissoes" rows="4" cols="30" disabled="#{propostaBean.viewProposta}"
 							autoResize="false" maxlength="150"
 							value="#{propostaBean.custoBdiComissao.observacoes}" />
 
@@ -605,7 +624,7 @@
 							disabled="true"
 							value="#{propostaBean.proposta.valorTotalCustosBdiComissoes}" />
 
-						<p:commandButton id="addBdiComissao" icon="fa fa-fw fa-plus"
+						<p:commandButton id="addBdiComissao" icon="fa fa-fw fa-plus" disabled="#{propostaBean.viewProposta}"
 							action="#{propostaBean.somarValorCustosBdiComissao()}"
 							update="panelCustosBdiComissao pgBdiComissao pgValorTotalPosBdiComissao valorTotalProposta pgImpostos @parent">
 							<p:collector unique="false"
@@ -641,7 +660,7 @@
 							</p:column>
 
 							<p:column headerText="Excluir">
-								<p:commandButton id="removerCustoBdiComissao"
+								<p:commandButton id="removerCustoBdiComissao" disabled="#{propostaBean.viewProposta}"
 									icon="fa fa-fw fa-remove"
 									update="formPrincipal:idTabViewProposta:panelCustosBdiComissao formPrincipal:idTabViewProposta:pgBdiComissao formPrincipal:idTabViewProposta:pgValorTotalPosBdiComissao formPrincipal:idTabViewProposta:valorTotalProposta formPrincipal:idTabViewProposta:pgImpostos @parent"
 									action="#{propostaBean.calcularValorTotalCustosBdiComissao()}">

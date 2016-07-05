@@ -18,7 +18,8 @@ public enum TipoPagina {
 	NOVA_PROPOSTA("Nova Proposta"),
 	CONSULTA_PROPOSTA("Consultar Proposta"),
 	VISUALIZAR_PROPOSTA("Visualizar Proposta"),
-	EDIT_PROPOSTA("Editar Proposta");
+	EDIT_PROPOSTA("Editar Proposta"),
+	HISTORICO_PROPOSTA("Hitorico Proposta");
 	
 	private String descricao;
 

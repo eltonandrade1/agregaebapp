@@ -13,7 +13,8 @@ public interface IPropostaRepository extends Serializable{
 
 	IProposta getPropostaByPrecificacao(Long idPrecificacao);
 
-	List<Proposta> getPropostaByFilter(Long numeroProposta, Long numeroPrecificacao);
+	List<Proposta> getPropostaByFilter(String filtroNumeroProposta, String filtroCliente,
+			Character filtroStatus, Date filtroDataInicial, Date filtroDataFinal);
 
 	List<IProposta> getPropostasByPeriodo(Date dataInicial, Date dataFinal);
 

@@ -1,5 +1,6 @@
 package br.com.sysagrega.service.imp;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -102,7 +103,7 @@ public class PropostaService implements IPropostaService {
 	@Override
 	@Transactional
 	public IProposta atualizarProposta(Proposta proposta) {
-		
+
 		Proposta propostaNew = new Proposta();
 
 		try {
@@ -158,9 +159,21 @@ public class PropostaService implements IPropostaService {
 	 * lang.Long, java.lang.Long)
 	 */
 	@Override
-	public List<Proposta> getPropostaByFilter(Long numeroProposta, Long numeroPrecificacao) {
+	public List<Proposta> getPropostaByFilter(String filtroNumeroProposta, String filtroCliente, Character filtroStatus,
+			Date filtroDataInicial, Date filtroDataFinal) {
 
-		return this.propostaRepository.getPropostaByFilter(numeroProposta, numeroPrecificacao);
+		// Validação do periodo
+		if (filtroDataInicial != null && filtroDataFinal != null) {
+			
+			if (DateUtil.compareDates(filtroDataInicial, filtroDataFinal) > 0) {
+				
+				throw new NegocioException("A data final deve ser igual ou superior a data inicial");
+				
+			}
+		}
+
+		return this.propostaRepository.getPropostaByFilter(filtroNumeroProposta, filtroCliente, filtroStatus,
+				filtroDataInicial, filtroDataFinal);
 
 	}
 
@@ -176,6 +189,13 @@ public class PropostaService implements IPropostaService {
 
 		this.propostaRepositoryHistorico.saveHistorico(propostaHistorico);
 
+	}
+	
+	@Override
+	public List<PropostaHistorico> getPropostaHistoricoByFilter(IProposta propostaId) {
+		
+		return this.propostaRepositoryHistorico.getPropostaHistoricoByFilter(propostaId);
+		
 	}
 
 	private PropostaHistorico configuraObjetoHistorico(Proposta proposta) {
@@ -197,7 +217,7 @@ public class PropostaService implements IPropostaService {
 		historico.setContato(proposta.getContato());
 		historico.setTipoProposta(proposta.getTipoProposta());
 		// valores totais
-		historico.setValorTotalPrecificacao(proposta.getValorTotalPrecificacao());
+		historico.setValorTotalDaProposta(proposta.getValorTotalDaProposta());
 		historico.setValorTotalCustosExecucao(proposta.getValorTotalCustosExecucao());
 		historico.setValorTotalCustosDesclocamento(proposta.getCalculoValorTotalCustosDeslocamento());
 		historico.setValorTotalCustosOperacionais(proposta.getValorTotalCustosOperacionais());

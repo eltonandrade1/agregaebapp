@@ -23,61 +23,76 @@ public class PropostaHistoricoRepository implements IPropostaHistoricoRepository
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private EntityManager manager;
 
-	@Inject 
+	@Inject
 	public PropostaHistoricoRepository(EntityManager manager) {
-		
+
 		this.manager = manager;
-		
+
 	}
 
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.repository.imp.IPropostaHistoricoRepository#getPropostaHistoricoById(java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.sysagrega.repository.imp.IPropostaHistoricoRepository#
+	 * getPropostaHistoricoById(java.lang.Long)
 	 */
 	@Override
 	public IPropostaHistorico getPropostaHistoricoById(Long id) {
-		
+
 		return this.manager.find(PropostaHistorico.class, id);
-		
+
 	}
-	
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.repository.imp.IPropostaHistoricoRepository#getPropostaHistoricoByFilter(br.com.sysagrega.model.IProposta)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.sysagrega.repository.imp.IPropostaHistoricoRepository#
+	 * getPropostaHistoricoByFilter(br.com.sysagrega.model.IProposta)
 	 */
 	@Override
 	public List<PropostaHistorico> getPropostaHistoricoByFilter(IProposta propostaId) {
-		
-		UaiCriteria<PropostaHistorico> easyCriteria = UaiCriteriaFactory.createQueryCriteria(manager, PropostaHistorico.class);
-		
-		
-		if(propostaId != null ) {
+
+		UaiCriteria<PropostaHistorico> easyCriteria = UaiCriteriaFactory.createQueryCriteria(manager,
+				PropostaHistorico.class);
+
+		if (propostaId != null) {
+
 			easyCriteria.andEquals("propostaId", propostaId);
+			easyCriteria.orderByDesc("dataRevisao");
+
 		}
-		
+
 		try {
-			
+
 			return easyCriteria.getResultList();
-			
+
 		} catch (NoResultException e) {
-			
+
 			return null;
-			
+
 		}
 	}
-	
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.repository.imp.IPropostaHistoricoRepository#getHistoricosByPeriodo(java.util.Date, java.util.Date)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.sysagrega.repository.imp.IPropostaHistoricoRepository#
+	 * getHistoricosByPeriodo(java.util.Date, java.util.Date)
 	 */
 	@Override
 	public List<IPropostaHistorico> getHistoricosByPeriodo(Date dataInicial, Date dataFinal) {
-		//TODO Implementar
+		// TODO Implementar
 		return null;
 	}
-	
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.repository.imp.IPropostaHistoricoRepository#saveHistorico(br.com.sysagrega.model.IPropostaHistorico)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.sysagrega.repository.imp.IPropostaHistoricoRepository#
+	 * saveHistorico(br.com.sysagrega.model.IPropostaHistorico)
 	 */
 	@Override
 	public void saveHistorico(IPropostaHistorico propostaHistorico) {
@@ -85,31 +100,34 @@ public class PropostaHistoricoRepository implements IPropostaHistoricoRepository
 		this.manager.persist(propostaHistorico);
 
 	}
-	
-	/* (non-Javadoc)
-	 * @see br.com.sysagrega.repository.imp.IPropostaHistoricoRepository#removerHistorico(br.com.sysagrega.model.IProposta)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.com.sysagrega.repository.imp.IPropostaHistoricoRepository#
+	 * removerHistorico(br.com.sysagrega.model.IProposta)
 	 */
 	@Override
 	public void removerHistorico(IProposta proposta) {
-		
+
 		try {
-			
+
 			List<PropostaHistorico> list = getPropostaHistoricoByFilter(proposta);
 
 			for (PropostaHistorico propostaHistorico : list) {
-				
+
 				this.manager.remove(propostaHistorico);
-				
+
 			}
-			
+
 			this.manager.flush();
-			
+
 		} catch (PersistenceException e) {
-			
+
 			throw new NegocioException("O Histórico não pode ser excluído.");
-			
+
 		}
-		
+
 	}
-	
+
 }

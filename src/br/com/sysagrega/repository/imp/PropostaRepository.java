@@ -67,17 +67,26 @@ public class PropostaRepository implements IPropostaRepository  {
 	 * @see br.com.sysagrega.repository.imp.IPropostaRepository#getPropostaByFilter(java.lang.Long, java.lang.Long)
 	 */
 	@Override
-	public List<Proposta> getPropostaByFilter(Long numeroProposta, Long numeroPrecificacao) {
+	public List<Proposta> getPropostaByFilter(String filtroNumeroProposta, String filtroCliente,
+			Character filtroStatus, Date filtroDataInicial, Date filtroDataFinal) {
 		
 		UaiCriteria<Proposta> easyCriteria = UaiCriteriaFactory.createQueryCriteria(manager, Proposta.class);
 		
 		
-		if(numeroProposta != null ) {
-			easyCriteria.andEquals("id", numeroProposta);
+		if(!filtroNumeroProposta.isEmpty() && filtroNumeroProposta != null ) {
+			easyCriteria.andEquals("numeroProposta", filtroNumeroProposta);
 		}
 		
-		if(numeroPrecificacao != null) {
-			easyCriteria.andEquals("precificacao.id", numeroPrecificacao);
+		if(!filtroCliente.isEmpty() && filtroCliente != null) {
+			easyCriteria.andStringLike("cliente", "%" + filtroCliente + "%");
+		}
+		
+		if(filtroStatus != null) {
+			easyCriteria.andEquals("status", filtroStatus);
+		}
+		
+		if(filtroDataInicial != null && filtroDataFinal != null) {
+			easyCriteria.andBetween("dataInclusao", filtroDataInicial, filtroDataFinal);
 		}
 		
 		try {
@@ -138,7 +147,7 @@ public class PropostaRepository implements IPropostaRepository  {
 	@Override
 	public List<Proposta> getAllPropostas() {
 		
-		TypedQuery<Proposta> query = manager.createQuery("from Proposta", Proposta.class);
+		TypedQuery<Proposta> query = manager.createQuery("from Proposta p order by p.dataInclusao desc", Proposta.class);
 		return query.getResultList();
 		
 	}

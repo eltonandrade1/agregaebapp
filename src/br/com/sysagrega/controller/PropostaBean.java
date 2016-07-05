@@ -15,7 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import br.com.sysagrega.controller.Qualificadores.QualificadorCliente;
+import br.com.sysagrega.controller.Qualificadores.QualificadorProposta;
 import br.com.sysagrega.model.IPrecificacao;
 import br.com.sysagrega.model.Enums.TipoCustoAdm;
 import br.com.sysagrega.model.Enums.TipoCustoBdiComissao;
@@ -34,6 +34,7 @@ import br.com.sysagrega.model.imp.CustoOperacional;
 import br.com.sysagrega.model.imp.CustoSeguranca;
 import br.com.sysagrega.model.imp.Estado;
 import br.com.sysagrega.model.imp.Proposta;
+import br.com.sysagrega.model.imp.PropostaHistorico;
 import br.com.sysagrega.service.ICidadeService;
 import br.com.sysagrega.service.IEstadoService;
 import br.com.sysagrega.service.IPropostaService;
@@ -59,8 +60,10 @@ public class PropostaBean implements Serializable {
 	private ICidadeService cidadeService;
 
 	@Produces
-	@QualificadorCliente
+	@QualificadorProposta
 	private Proposta proposta;
+
+	private List<PropostaHistorico> historicos;
 
 	private boolean viewProposta;
 
@@ -68,13 +71,14 @@ public class PropostaBean implements Serializable {
 
 	private boolean disableVlUnitarioAdm = true;
 
-	private Long filtroNumeroProposta;
+	// Filtros consultas
+	private String filtroNumeroProposta;
 
 	private String filtroCliente;
 
 	private Character filtroStatus;
 
-	// Filtros Periodo
+	// Filtros consultas Periodo
 	private Date filtroDataInicial;
 
 	private Date filtroDataFinal;
@@ -160,13 +164,18 @@ public class PropostaBean implements Serializable {
 			limparObjetosCustos();
 			carregarCidadesPorEstado();
 			viewProposta = true;
+		} else if (FacesUtil.getParamSession().equals(TipoPagina.HISTORICO_PROPOSTA)) {
+			
+			this.proposta = FacesUtil.getPropostaSession();
+			carregarHistoricoByProposta(this.proposta);
+
 		}
 	}
 
 	private void limparObjeto() {
 
 		this.proposta = new Proposta();
-		
+
 		limparObjetosCustos();
 
 		// Listas dos objetos de custo
@@ -192,14 +201,14 @@ public class PropostaBean implements Serializable {
 	}
 
 	private void limparObjetosCustos() {
-		
+
 		this.custoExecucao = new CustoExecucao();
 		this.custoAdministrativo = new CustoAdministrativo();
 		this.custoBdiComissao = new CustoBdiComissao();
 		this.custoSeguranca = new CustoSeguranca();
 		this.custoDeslocamento = new CustoDeslocamento();
 		this.custoOperacional = new CustoOperacional();
-		
+
 	}
 
 	public void somarValorCustosExecucao() {
@@ -553,6 +562,42 @@ public class PropostaBean implements Serializable {
 
 	}
 
+	public String consultarHistoricoProposta() {
+
+		if (this.proposta != null) {
+
+			FacesUtil.addParamSession(TipoPagina.HISTORICO_PROPOSTA);
+
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			session.setAttribute("proposta", this.proposta);
+
+		} else {
+
+			FacesUtil.addErrorMessage("Favor selecionar uma proposta!");
+			return null;
+
+		}
+
+		return "historico_proposta";
+
+	}
+
+	private void carregarHistoricoByProposta(Proposta propostaId) {
+
+		historicos = new ArrayList<>();
+
+		try {
+
+			historicos = this.propostaService.getPropostaHistoricoByFilter(propostaId);
+
+		} catch (NegocioException e) {
+
+			FacesUtil.addErrorMessage(e.getMessage());
+
+		}
+
+	}
+
 	public Boolean isEditProposta() {
 
 		return this.proposta.isExistente() && !viewProposta;
@@ -568,11 +613,17 @@ public class PropostaBean implements Serializable {
 	public void filtrarPropostas() {
 
 		propostas = new ArrayList<>();
-		// TODO
-		// propostas =
-		// this.propostaService.getPropostaByFilter(this.filtroNumeroProposta,
-		// this.filtroNumeroPrecificacao);
 
+		try {
+
+			propostas = this.propostaService.getPropostaByFilter(this.filtroNumeroProposta, this.filtroCliente,
+					this.filtroStatus, this.filtroDataInicial, this.filtroDataFinal);
+
+		} catch (NegocioException e) {
+
+			FacesUtil.addErrorMessage(e.getMessage());
+
+		}
 	}
 
 	/**
@@ -718,7 +769,7 @@ public class PropostaBean implements Serializable {
 	/**
 	 * @return the filtroNumeroProposta
 	 */
-	public Long getFiltroNumeroProposta() {
+	public String getFiltroNumeroProposta() {
 		return filtroNumeroProposta;
 	}
 
@@ -726,7 +777,7 @@ public class PropostaBean implements Serializable {
 	 * @param filtroNumeroProposta
 	 *            the filtroNumeroProposta to set
 	 */
-	public void setFiltroNumeroProposta(Long filtroNumeroProposta) {
+	public void setFiltroNumeroProposta(String filtroNumeroProposta) {
 		this.filtroNumeroProposta = filtroNumeroProposta;
 	}
 
@@ -1118,5 +1169,20 @@ public class PropostaBean implements Serializable {
 	 */
 	public void setFiltroDataFinal(Date filtroDataFinal) {
 		this.filtroDataFinal = filtroDataFinal;
+	}
+
+	/**
+	 * @return the historicos
+	 */
+	public List<PropostaHistorico> getHistoricos() {
+		return historicos;
+	}
+
+	/**
+	 * @param historicos
+	 *            the historicos to set
+	 */
+	public void setHistoricos(List<PropostaHistorico> historicos) {
+		this.historicos = historicos;
 	}
 }

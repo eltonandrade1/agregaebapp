@@ -108,6 +108,16 @@
 			<to-view-id>/paginas/proposta/ConsultarProposta.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<!-- Histórico Proposta -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>historico_proposta</from-outcome>
+			<to-view-id>/paginas/proposta/HistoricoProposta.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
 	<!-- ### Fim das telas de proposta ### -->
 
 	<!-- Configurando leitura do arquivo properties -->

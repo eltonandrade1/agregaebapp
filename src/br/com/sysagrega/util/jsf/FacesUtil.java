@@ -9,6 +9,7 @@ import br.com.sysagrega.model.ICliente;
 import br.com.sysagrega.model.IProfissional;
 import br.com.sysagrega.model.Enums.TipoPagina;
 import br.com.sysagrega.model.imp.Proposta;
+import br.com.sysagrega.model.imp.PropostaHistorico;
 
 public class FacesUtil {
 
@@ -52,7 +53,7 @@ public class FacesUtil {
 		return (IProfissional) session.getAttribute("profissional");
 
 	}
-	
+
 	public static ICliente getClienteSession() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
@@ -60,7 +61,7 @@ public class FacesUtil {
 		return (ICliente) session.getAttribute("cliente");
 
 	}
-	
+
 	public static Proposta getPropostaSession() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
@@ -68,5 +69,4 @@ public class FacesUtil {
 		return (Proposta) session.getAttribute("proposta");
 
 	}
-
 }

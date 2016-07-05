@@ -10,6 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title><ui:insert name="titulo">Sistema Agrega Consultores</ui:insert></title>
 	<h:outputStylesheet library="css" name="sistema.css" />
+	<h:outputScript name="localePtBr.js" library="js"></h:outputScript>
 </h:head>
 
 <h:body>
@@ -26,6 +27,13 @@
 
 					<p:menubar id="idMenuPrincipal" styleClass="menu-sistema">
 
+						<p:submenu label="Propostas">
+							<p:menuitem id="cadProposta" value="Nova Proposta"
+								action="#{menuBean.novaProposta()}" icon="ui-icon-plus" />
+							<p:menuitem id="consultarProposta" value="Consultar"
+								action="#{menuBean.consultarProposta()}" icon="ui-icon-search" />
+						</p:submenu>
+
 						<p:submenu label="Cadastros">
 							<p:menuitem id="cadProfissional" value="Profissionais"
 								icon="ui-icon-plus" action="#{menuBean.novoProfissional()}" />
@@ -34,12 +42,6 @@
 							<p:menuitem value="Usuários" icon="ui-icon-plus" />
 							<p:menuitem value="Fornecedores" icon="ui-icon-plus" />
 						</p:submenu>
-
-						<p:submenu label="Propostas">
-							<p:menuitem id="cadProposta" value="Nova Proposta" action="#{menuBean.novaProposta()}" icon="ui-icon-plus"/>
-							<p:menuitem id="consultarProposta" value="Consultar" action="#{menuBean.consultarProposta()}" icon="ui-icon-search"/>
-						</p:submenu>
-
 
 						<p:submenu label="Consultas">
 							<p:menuitem id="consultaProfissional" value="Profissionais"
