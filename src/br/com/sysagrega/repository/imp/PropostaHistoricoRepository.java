@@ -61,7 +61,7 @@ public class PropostaHistoricoRepository implements IPropostaHistoricoRepository
 		if (propostaId != null) {
 
 			easyCriteria.andEquals("propostaId", propostaId);
-			easyCriteria.orderByDesc("dataRevisao");
+			easyCriteria.orderByDesc("id");
 
 		}
 
@@ -95,9 +95,9 @@ public class PropostaHistoricoRepository implements IPropostaHistoricoRepository
 	 * saveHistorico(br.com.sysagrega.model.IPropostaHistorico)
 	 */
 	@Override
-	public void saveHistorico(IPropostaHistorico propostaHistorico) {
+	public PropostaHistorico saveHistorico(PropostaHistorico propostaHistorico) {
 
-		this.manager.persist(propostaHistorico);
+		 return this.manager.merge(propostaHistorico);
 
 	}
 

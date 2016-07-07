@@ -7,7 +7,6 @@ import javax.inject.Inject;
 
 import br.com.sysagrega.model.IProposta;
 import br.com.sysagrega.model.IPropostaBase;
-import br.com.sysagrega.model.IPropostaHistorico;
 import br.com.sysagrega.model.imp.Proposta;
 import br.com.sysagrega.model.imp.PropostaHistorico;
 import br.com.sysagrega.repository.IPropostaHistoricoRepository;
@@ -45,7 +44,7 @@ public class PropostaService implements IPropostaService {
 			validaCamposObrigatorios(proposta);
 			
 			//Set data de inclusão no sistema
-			proposta.setDataInclusao(DateUtil.getCurrentDateTime());
+			proposta.setDataInclusao(new Date());
 
 			proposta = this.propostaRepository.saveOrMerge(proposta);
 			
@@ -195,9 +194,11 @@ public class PropostaService implements IPropostaService {
 	 * sysagrega.model.IPropostaHistorico)
 	 */
 	@Override
-	public void salvarHistorico(IPropostaHistorico propostaHistorico) {
+	public void salvarHistorico(PropostaHistorico propostaHistorico) {
 
-		this.propostaRepositoryHistorico.saveHistorico(propostaHistorico);
+		propostaHistorico = this.propostaRepositoryHistorico.saveHistorico(propostaHistorico);
+		//Gerando numero da revisão
+		propostaHistorico.setNumeroRevisao("REV-" + propostaHistorico.getId() + "." + DateUtil.getCurrentMonthAndYear());
 
 	}
 
@@ -240,8 +241,8 @@ public class PropostaService implements IPropostaService {
 		historico.setValorTotalSemBdiComissao(proposta.getValorTotalSemBdiComissao());
 		historico.setValorTotalImpostos(proposta.getValorTotalImpostos());
 
-		historico.setDataRevisao(DateUtil.getCurrentDateTime());
-		historico.setNumeroRevisao("REV-" + proposta.getNumeroProposta());
+		historico.setDataRevisao(new Date());
+		
 
 		return historico;
 

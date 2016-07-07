@@ -16,7 +16,7 @@ public interface IPropostaHistoricoRepository extends Serializable{
 
 	List<IPropostaHistorico> getHistoricosByPeriodo(Date dataInicial, Date dataFinal);
 
-	void saveHistorico(IPropostaHistorico propostaHistorico);
+	PropostaHistorico saveHistorico(PropostaHistorico propostaHistorico);
 
 	void removerHistorico(IProposta proposta);
 

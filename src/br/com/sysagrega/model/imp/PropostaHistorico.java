@@ -1,5 +1,6 @@
 package br.com.sysagrega.model.imp;
 
+
 import java.util.Date;
 
 import javax.persistence.Entity;

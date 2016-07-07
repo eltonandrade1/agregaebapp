@@ -404,6 +404,7 @@ public class PropostaBean implements Serializable {
 				+ this.proposta.getCalculoValorTotalCustosAdministraticos();
 
 		this.proposta.setValorTotalSemBdiComissao(totalSemBdi);
+		calcularValorTotalAposBdiComissao();
 		calcularValorTotalComImpostos();
 
 	}
@@ -430,7 +431,7 @@ public class PropostaBean implements Serializable {
 		}
 
 		this.proposta.setValorTotalImpostos(totalComImpostos);
-		this.proposta.setValorTotalDaProposta(this.proposta.getValorTotalImpostos());
+		this.proposta.setValorTotalDaProposta(totalComImpostos);
 
 	}
 
