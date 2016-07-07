@@ -17,64 +17,84 @@
 	<ui:define name="corpo">
 		<p:panel id="idPanelProfissional" style="border: none;">
 
-			<p:outputLabel style="margin-top: 0" align="left" value="Cadastrar Profissional" rendered="#{profissionalBean.isNewProfissional()}"/>
-			<p:outputLabel style="margin-top: 0" align="left" value="Atualizar Profissional" rendered="#{profissionalBean.isEditProfissional()}"/>
-			<p:outputLabel style="margin-top: 0" align="left" value="Visualizar Profissional" rendered="#{profissionalBean.viewProfissional}"/>
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Cadastrar Profissional"
+				rendered="#{profissionalBean.isNewProfissional()}" />
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Atualizar Profissional"
+				rendered="#{profissionalBean.isEditProfissional()}" />
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Visualizar Profissional"
+				rendered="#{profissionalBean.viewProfissional}" />
 			<p:separator />
-			
-			<p:messages id="messagesCadastro" showDetail="true" autoUpdate="true" closable="true" escape="false" />
-        
+
+			<p:messages id="messagesCadastro" showDetail="true" autoUpdate="true"
+				closable="true" escape="false" />
+
 			<p:tabView id="idTabViewProfissional" style="margin-top: 20px">
-				
+
 				<p:tab id="idTabDadosPessoais" title="Dados Pessoais">
 
 					<h:panelGrid columns="4" style="margin-bottom:10px" cellspacing="5">
 
 						<p:outputLabel value="Nome:" />
-						<p:inputText id="nome" style="width:400px;" disabled="#{profissionalBean.viewProfissional}"
+						<p:inputText id="nome" style="width:400px;"
+							disabled="#{profissionalBean.viewProfissional}"
 							value="#{profissionalBean.profissional.nome}" />
 
 						<p:outputLabel value="CPF:" />
-						<p:inputMask mask="999.999.999-99" style="width:160px;" disabled="#{profissionalBean.viewProfissional}"
-							value="#{profissionalBean.profissional.cpf}"  />
+						<p:inputMask mask="999.999.999-99" style="width:160px;"
+							disabled="#{profissionalBean.viewProfissional}"
+							value="#{profissionalBean.profissional.cpf}" />
 
 						<p:outputLabel value="Data de Nascimento:" />
-						<p:calendar pattern="dd/MM/yyyy" mask="true" style="width:50px;" disabled="#{profissionalBean.viewProfissional}"
-							value="#{profissionalBean.profissional.dataNascimento}" />
+						<p:calendar pattern="dd/MM/yyyy" mask="true" style="width:50px;" locale="pt"
+							disabled="#{profissionalBean.viewProfissional}"
+							value="#{profissionalBean.profissional.dataNascimento}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</p:calendar>
 
 						<p:outputLabel value="RG:" />
-						<p:inputMask mask="99999999-99" style="width:160px;" disabled="#{profissionalBean.viewProfissional}"
-							value="#{profissionalBean.profissional.rg}"  />
+						<p:inputMask mask="99999999-99" style="width:160px;"
+							disabled="#{profissionalBean.viewProfissional}"
+							value="#{profissionalBean.profissional.rg}" />
 
 						<p:outputLabel value="Profissão:" />
 						<p:inputText style="width:300px;"
-							value="#{profissionalBean.profissional.profissao}" disabled="#{profissionalBean.viewProfissional}"/>
+							value="#{profissionalBean.profissional.profissao}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="Especialização:" />
-						<p:inputText style="width:300px;" disabled="#{profissionalBean.viewProfissional}"
+						<p:inputText style="width:300px;"
+							disabled="#{profissionalBean.viewProfissional}"
 							value="#{profissionalBean.profissional.atuacaoEspecializacao}" />
 
 						<p:outputLabel value="Contrato CLT:" />
-						<p:selectOneButton id="idSelectContratoTemp" disabled="#{profissionalBean.viewProfissional}"
+						<p:selectOneButton id="idSelectContratoTemp"
+							disabled="#{profissionalBean.viewProfissional}"
 							value="#{profissionalBean.profissional.contratoTemporario}">
 							<f:selectItem itemLabel="Sim" itemValue="S" />
 							<f:selectItem itemLabel="Não" itemValue="N" />
 						</p:selectOneButton>
 
 						<p:outputLabel value="PIS:" />
-						<p:inputText value="#{profissionalBean.profissional.pisPasep}" disabled="#{profissionalBean.viewProfissional}"/>
+						<p:inputText value="#{profissionalBean.profissional.pisPasep}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="Carteira de Trabalho:" />
 						<p:inputText
-							value="#{profissionalBean.profissional.carteiraTrabalho}" disabled="#{profissionalBean.viewProfissional}"/>
+							value="#{profissionalBean.profissional.carteiraTrabalho}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="Cons. Classe:" />
 						<p:inputText
-							value="#{profissionalBean.profissional.numeroConsClasse}" disabled="#{profissionalBean.viewProfissional}"/>
+							value="#{profissionalBean.profissional.numeroConsClasse}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 
 						<p:outputLabel value="Camisa:" />
-						<p:selectOneButton id="idSelectCamisa" disabled="#{profissionalBean.viewProfissional}"
+						<p:selectOneButton id="idSelectCamisa"
+							disabled="#{profissionalBean.viewProfissional}"
 							value="#{profissionalBean.profissional.tamanhoCamisa}">
 							<f:selectItem itemLabel="P" itemValue="P" />
 							<f:selectItem itemLabel="M" itemValue="M" />
@@ -84,23 +104,28 @@
 
 						<p:outputLabel value="Calça:" />
 						<p:inputMask mask="99"
-							value="#{profissionalBean.profissional.tamanhoCalca}" disabled="#{profissionalBean.viewProfissional}" />
+							value="#{profissionalBean.profissional.tamanhoCalca}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="Calçado:" />
 						<p:inputMask mask="99/99"
-							value="#{profissionalBean.profissional.numeroSapato}" disabled="#{profissionalBean.viewProfissional}"/>
+							value="#{profissionalBean.profissional.numeroSapato}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="Telefone:" />
 						<p:inputMask mask="(99) 9999-9999"
-							value="#{profissionalBean.profissional.telefone}" disabled="#{profissionalBean.viewProfissional}"/>
+							value="#{profissionalBean.profissional.telefone}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="Celular:" />
 						<p:inputMask mask="(99) 99999-9999"
-							value="#{profissionalBean.profissional.celular}" disabled="#{profissionalBean.viewProfissional}"/>
+							value="#{profissionalBean.profissional.celular}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="Email:" />
 						<p:inputText style="width:300px;"
-							value="#{profissionalBean.profissional.email}" disabled="#{profissionalBean.viewProfissional}"/>
+							value="#{profissionalBean.profissional.email}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 					</h:panelGrid>
 
@@ -111,7 +136,8 @@
 						style="margin-bottom:10px" cellspacing="5">
 
 						<p:outputLabel for="idEstados" value="Estado:" />
-						<p:selectOneMenu id="idEstados" style="width:160px;" disabled="#{profissionalBean.viewProfissional}"
+						<p:selectOneMenu id="idEstados" style="width:160px;"
+							disabled="#{profissionalBean.viewProfissional}"
 							panelStyle="width:180px;"
 							value="#{profissionalBean.profissional.endereco.estado}"
 							effect="fade" filter="true" filterMatchMode="startsWith">
@@ -120,35 +146,47 @@
 								itemLabel="#{estado.uf}" itemValue="#{estado}" />
 							<p:ajax event="change"
 								listener="#{profissionalBean.carregarCidadesPorEstado}"
-								update="idCidades" global="false" />
+								update="idCidades" />
 						</p:selectOneMenu>
 
 						<p:outputLabel for="idCidades" value="Cidade:" />
-						<p:selectOneMenu id="idCidades" style="width:120px;" 
+						<p:selectOneMenu id="idCidades" style="width:120px;"
 							disabled="#{profissionalBean.disableCity}"
 							panelStyle="width:180px;" effect="fade" filter="true"
 							filterMatchMode="startsWith"
-							value="#{profissionalBean.profissional.endereco.cidade}" >
-							
-							<f:selectItem itemLabel="#{profissionalBean.profissional.endereco.cidade.nome}" itemValue="" />
+							value="#{profissionalBean.profissional.endereco.cidade}">
+
+							<f:selectItem
+								itemLabel="#{profissionalBean.profissional.endereco.cidade.nome}"
+								itemValue="" />
 							<f:selectItems value="#{profissionalBean.cidades}" var="cidade"
 								itemLabel="#{cidade.nome}" itemValue="#{cidade}" />
 						</p:selectOneMenu>
 
 						<p:outputLabel value="Rua:" />
-						<p:inputText style="width:200px;" value="#{profissionalBean.profissional.endereco.rua}" disabled="#{profissionalBean.viewProfissional}"/>
+						<p:inputText style="width:200px;"
+							value="#{profissionalBean.profissional.endereco.rua}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="Bairro:" />
-						<p:inputText style="width:200px;" value="#{profissionalBean.profissional.endereco.bairro}" disabled="#{profissionalBean.viewProfissional}"/>
+						<p:inputText style="width:200px;"
+							value="#{profissionalBean.profissional.endereco.bairro}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="CEP:" />
-						<p:inputMask mask="99999-999" value="#{profissionalBean.profissional.endereco.cep}" disabled="#{profissionalBean.viewProfissional}"/>
+						<p:inputMask mask="99999-999"
+							value="#{profissionalBean.profissional.endereco.cep}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="Número:" />
-						<p:inputText style="width:40px;" value="#{profissionalBean.profissional.endereco.numeroRua}" disabled="#{profissionalBean.viewProfissional}"/>
+						<p:inputText style="width:40px;"
+							value="#{profissionalBean.profissional.endereco.numeroRua}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="Complemento:" />
-						<p:inputText style="width:200px;" value="#{profissionalBean.profissional.endereco.infoComplementar}" disabled="#{profissionalBean.viewProfissional}"/>
+						<p:inputText style="width:200px;"
+							value="#{profissionalBean.profissional.endereco.infoComplementar}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 					</h:panelGrid>
 
@@ -164,28 +202,33 @@
 
 						<p:outputLabel for="agencia" value="Nº Agência:" />
 						<p:inputText id="agencia" style="width:80px;"
-							value="#{profissionalBean.profissional.dadosBancarios.nrAgencia}" disabled="#{profissionalBean.viewProfissional}"/>
+							value="#{profissionalBean.profissional.dadosBancarios.nrAgencia}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel value="Nº Conta:" />
 						<p:inputText style="width:80px;"
-							value="#{profissionalBean.profissional.dadosBancarios.nrConta}" disabled="#{profissionalBean.viewProfissional}"/>
+							value="#{profissionalBean.profissional.dadosBancarios.nrConta}"
+							disabled="#{profissionalBean.viewProfissional}" />
 
 						<p:outputLabel for="tipo" value="Tipo:" />
 						<p:selectOneMenu id="tipo" style="width:120px;"
-							value="#{profissionalBean.profissional.dadosBancarios.tipoConta}" disabled="#{profissionalBean.viewProfissional}">
-							
+							value="#{profissionalBean.profissional.dadosBancarios.tipoConta}"
+							disabled="#{profissionalBean.viewProfissional}">
+
 							<f:selectItems value="#{profissionalBean.tiposConta}" var="tipos"
 								itemLabel="#{tipos}" itemValue="#{tipos}" />
 						</p:selectOneMenu>
 
 
 						<p:outputLabel for="banco" value="Banco:" />
-						<p:selectOneMenu id="banco" style="width:120px;" disabled="#{profissionalBean.viewProfissional}"
+						<p:selectOneMenu id="banco" style="width:120px;"
+							disabled="#{profissionalBean.viewProfissional}"
 							panelStyle="width:180px;" effect="fade" filter="true"
 							filterMatchMode="startsWith"
 							value="#{profissionalBean.profissional.dadosBancarios.idBanco}">
 
-							<f:selectItem itemLabel="- Selecione -" itemValue="" itemDisabled="#{profissionalBean.isEditProfissional()}"/>
+							<f:selectItem itemLabel="- Selecione -" itemValue=""
+								itemDisabled="#{profissionalBean.isEditProfissional()}" />
 							<f:selectItems value="#{profissionalBean.bancos}" var="banco"
 								itemLabel="#{banco.nome}" itemValue="#{banco}" />
 						</p:selectOneMenu>
@@ -198,7 +241,7 @@
 
 			<br />
 			<p:separator />
-			<p:commandButton id="btSalvar" value="Salvar" 
+			<p:commandButton id="btSalvar" value="Salvar"
 				action="#{profissionalBean.salvarProfissional()}"
 				icon="fa fa-fw fa-save" update="idPanelProfissional"
 				rendered="#{profissionalBean.isNewProfissional()}" />
@@ -207,7 +250,7 @@
 				action="#{profissionalBean.atualizarProfissional()}"
 				icon="fa fa-fw fa-refresh" update="idPanelProfissional"
 				rendered="#{profissionalBean.isEditProfissional()}" />
-				
+
 			<p:blockUI block="idPanelProfissional" trigger="btSalvar btAtualizar">
 				<p:graphicImage name="images/ajaxloadingbar.gif" />
 			</p:blockUI>

@@ -100,6 +100,7 @@ public class ClienteBean implements Serializable {
 		} else if(FacesUtil.getParamSession().equals(TipoPagina.EDIT_CLIENTE)) {
 			
 			this.cliente = FacesUtil.getClienteSession();
+			carregarCidadesPorEstado();
 			
 		} else if(FacesUtil.getParamSession().equals(TipoPagina.NOVO_CLIENTE)) {
 
@@ -161,7 +162,6 @@ public class ClienteBean implements Serializable {
 		try {
 			
 			this.clienteService.atualizarCliente(this.cliente);
-			limparObjeto();
 			FacesUtil.addInfoMessage("Cliente atualizado com sucesso.");
 			
 		} catch (Exception e) {

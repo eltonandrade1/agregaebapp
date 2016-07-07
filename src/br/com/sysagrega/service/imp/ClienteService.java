@@ -9,7 +9,6 @@ import br.com.sysagrega.model.imp.Cliente;
 import br.com.sysagrega.repository.IClienteRepository;
 import br.com.sysagrega.service.IClienteService;
 import br.com.sysagrega.util.cdi.Transactional;
-import br.com.sysagrega.util.jsf.FacesUtil;
 
 public class ClienteService implements IClienteService  {
 
@@ -30,18 +29,25 @@ public class ClienteService implements IClienteService  {
 	@Transactional
 	public void salvar(ICliente cliente) {
 
-		// Validação para campos obrigatórios
-		validaCamposObrigatorios(cliente);
+		try {
+			
+			// Validação para campos obrigatórios
+			validaCamposObrigatorios(cliente);
 
-		// Varifica se o profissional já está cadastrado no sistema
-		ICliente clienteExistente = this.clienteRepository.getClienteByCnpj(cliente.getCnpj());
+			// Varifica se o profissional já está cadastrado no sistema
+			ICliente clienteExistente = this.clienteRepository.getClienteByCnpj(cliente.getCnpj());
 
-		if (clienteExistente != null) {
-			throw new NegocioException("Cliente já cadastrado no sistema!");
+			if (clienteExistente != null) {
+				throw new NegocioException("Cliente já cadastrado no sistema!");
+			}
+
+			this.clienteRepository.saveOrMerge(cliente);
+			
+		} catch (Exception e) {
+			
+			throw new NegocioException("Erro de processamento com banco de dados!");
+			
 		}
-
-		this.clienteRepository.saveOrMerge(cliente);
-
 	}
 
 	/**
@@ -85,12 +91,22 @@ public class ClienteService implements IClienteService  {
 	@Override
 	@Transactional
 	public ICliente atualizarCliente(ICliente cliente) {
+		
+		ICliente clienteAtual = new Cliente();
 
-		// Validação para campos obrigatórios
-		validaCamposObrigatorios(cliente);
+		try {
+			
+			// Validação para campos obrigatórios
+			validaCamposObrigatorios(cliente);
 
-		ICliente clienteAtual = this.clienteRepository.saveOrMerge(cliente);
-
+			clienteAtual = this.clienteRepository.saveOrMerge(cliente);
+			
+		} catch (Exception e) {
+			
+			throw new NegocioException("Erro de processamento com banco de dados!");
+			
+		}
+		
 		return clienteAtual;
 
 	}
@@ -109,7 +125,7 @@ public class ClienteService implements IClienteService  {
 
 		} else {
 
-			FacesUtil.addErrorMessage("Favor selecionar um cliente!");
+			throw new NegocioException("Favor selecionar um cliente!");
 
 		}
 

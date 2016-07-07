@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jb="http://xmlns.jcp.org/jsf/html"
+	xmlns:o="http://omnifaces.org/ui">
+
+<ui:composition template="/templates/master.xhtml">
+
+	<f:metadata>
+		<o:viewParam name="proposta" value="#{propostaBean.proposta}" />
+
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<p:panel id="idPanelProposta" style="border: none;">
+
+			<h4 style="margin-top: 0" align="left">Consultar Propostas</h4>
+			<p:separator />
+
+			<p:messages id="messagesConsulta" showDetail="true" autoUpdate="true"
+				closable="true" />
+			<br></br>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton id="idBtPesquisar" value="Pesquisar"
+						action="#{propostaBean.filtrarPropostas()}"
+						update="tablePropostas" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<h:panelGrid columns="1" id="painel">
+
+				<div class="ui-g">
+					<div class="ui-g-3">
+						<h:panelGrid columns="1" cellspacing="5">
+							<p:outputLabel value="Período:">
+								<p:calendar pattern="dd/MM/yyyy" mask="true" locale="pt"
+									title="Data Inicial" id="dtInicial"
+									value="#{propostaBean.filtroDataInicial}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:calendar>
+								<p:outputLabel value=" Á " />
+								<p:calendar pattern="dd/MM/yyyy" mask="true" locale="pt"
+									title="Data Final" id="dtFinal"
+									value="#{propostaBean.filtroDataFinal}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:calendar>
+							</p:outputLabel>
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Nº Proposta:" for="nrProposta" />
+								<p:inputText id="nrProposta"
+									value="#{propostaBean.filtroNumeroProposta}" />
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Cliente:" for="cliente" />
+								<p:inputText id="cliente" value="#{propostaBean.filtroCliente}" />
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:outputLabel value="Status:" />
+								<p:selectOneButton id="status"
+									value="#{propostaBean.filtroStatus}">
+									<f:selectItem itemLabel="Aprovada" itemValue="A" />
+									<f:selectItem itemLabel="Cancelada" itemValue="C" />
+								</p:selectOneButton>
+							</h:panelGrid>
+						</h:panelGrid>
+					</div>
+				</div>
+			</h:panelGrid>
+
+			<br></br>
+
+			<p:dataTable id="tablePropostas" var="proposta" lazy="true"
+				value="#{propostaBean.propostas}"
+				emptyMessage="Nenhuma proprosta cadastrada" paginator="true"
+				rows="10" rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				selectionMode="single" selection="#{propostaBean.proposta}"
+				rowKey="#{proposta.id}">
+
+				<p:column headerText="Nº Proposta">
+					<h:outputText value="#{proposta.numeroProposta}" />
+				</p:column>
+				<p:column headerText="Nome do Projeto">
+					<h:outputText value="#{proposta.nomeProjeto}" />
+				</p:column>
+				<p:column headerText="Cliente">
+					<h:outputText value="#{proposta.cliente}" />
+				</p:column>
+				<p:column headerText="Status">
+					<h:outputText value="#{proposta.status}" />
+				</p:column>
+				<p:column headerText="Data de Inclusão">
+					<h:outputText value="#{proposta.dataInclusao}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Data de Contratação">
+					<h:outputText value="#{proposta.dataContratacao}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Valor">
+					<h:outputText value="#{proposta.valorTotalDaProposta}">
+						<f:convertNumber currencySymbol="R$" type="currency" />
+					</h:outputText>
+				</p:column>
+				<f:facet name="footer">
+					<div align="left">
+						<p:commandButton process="tablePropostas" icon="fa fa-fw fa-eye"
+							value="Visualizar" action="#{propostaBean.visualizarProposta()}" />
+						<p:commandButton process="tablePropostas" icon="fa fa-fw fa-edit"
+							value="Editar" action="#{propostaBean.redirectEditProposta()}"
+							ajax="false" />
+						<p:commandButton process="tablePropostas"
+							icon="fa fa-fw fa-remove" value="Excluir"
+							action="#{propostaBean.excluirProposta()}" ajax="false" />
+						<p:commandButton process="tablePropostas"
+							icon="fa fa-fw fa-history" value="Histórico"
+							action="#{propostaBean.consultarHistoricoProposta()}" ajax="false" />
+					</div>
+				</f:facet>
+			</p:dataTable>
+
+			<p:blockUI block="tablePropostas" trigger="idBtPesquisar">
+				<p:graphicImage name="images/ajaxloadingbar.gif" />
+			</p:blockUI>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

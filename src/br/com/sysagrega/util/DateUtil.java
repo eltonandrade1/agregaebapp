@@ -928,5 +928,21 @@ public class DateUtil {
 		return new GregorianCalendar().isLeapYear(ano);
 		
 	}
-
+	
+	/**
+	 * retorna o mês e ano corrente
+	 * @return String MM/yyyy
+	 * @author Elton
+	 */
+	public static String getCurrentMonthAndYear() {
+		
+		return new SimpleDateFormat("MM/yyyy").format(new Date());
+		
+	}
+	
+	public static String getFormatedCurrentDate() {
+		
+		return new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+		
+	}
 }

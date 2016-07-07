@@ -9,7 +9,6 @@ import br.com.sysagrega.model.imp.Profissional;
 import br.com.sysagrega.repository.IProfissionalRepository;
 import br.com.sysagrega.service.IProfissionalService;
 import br.com.sysagrega.util.cdi.Transactional;
-import br.com.sysagrega.util.jsf.FacesUtil;
 
 public class ProfissionalService implements IProfissionalService {
 
@@ -32,18 +31,25 @@ public class ProfissionalService implements IProfissionalService {
 	@Transactional
 	public void salvar(IProfissional profissional) {
 
-		// Validação para campos obrigatórios
-		validaCamposObrigatorios(profissional);
+		try {
+			
+			// Validação para campos obrigatórios
+			validaCamposObrigatorios(profissional);
 
-		// Varifica se o profissional já está cadastrado no sistema
-		IProfissional profissionalExistente = this.profissionalRepository.getProfissionalByCpf(profissional.getCpf());
+			// Varifica se o profissional já está cadastrado no sistema
+			IProfissional profissionalExistente = this.profissionalRepository.getProfissionalByCpf(profissional.getCpf());
 
-		if (profissionalExistente != null) {
-			throw new NegocioException("Profissional já cadastrado no sistema!");
+			if (profissionalExistente != null) {
+				throw new NegocioException("Profissional já cadastrado no sistema!");
+			}
+
+			this.profissionalRepository.saveOrMerge(profissional);
+			
+		} catch (Exception e) {
+			
+			throw new NegocioException("Erro de processamento com banco de dados!");
+			
 		}
-
-		this.profissionalRepository.saveOrMerge(profissional);
-
 	}
 
 	/**
@@ -93,13 +99,23 @@ public class ProfissionalService implements IProfissionalService {
 	@Override
 	@Transactional
 	public IProfissional atualizarProfissional(IProfissional profissional) {
+		
+		IProfissional profissionalNew = new Profissional();
 
-		// Validação para campos obrigatórios
-		validaCamposObrigatorios(profissional);
+		try {
 
-		IProfissional profissionalAtual = this.profissionalRepository.saveOrMerge(profissional);
+			// Validação para campos obrigatórios
+			validaCamposObrigatorios(profissional);
 
-		return profissionalAtual;
+			profissionalNew = this.profissionalRepository.saveOrMerge(profissional);
+			
+		} catch (Exception e) {
+			
+			throw new NegocioException("Erro de processamento com banco de dados!");
+			
+		}
+		
+		return profissionalNew;
 
 	}
 
@@ -120,7 +136,7 @@ public class ProfissionalService implements IProfissionalService {
 
 		} else {
 
-			FacesUtil.addErrorMessage("Favor selecionar um profissional!");
+			throw new NegocioException("Favor selecionar um profissional!");
 
 		}
 

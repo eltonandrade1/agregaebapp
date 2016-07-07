@@ -8,8 +8,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
-import com.uaihebert.factory.EasyCriteriaFactory;
-import com.uaihebert.model.EasyCriteria;
+import com.uaihebert.uaicriteria.UaiCriteria;
+import com.uaihebert.uaicriteria.UaiCriteriaFactory;
 
 import br.com.sysagrega.model.IProfissional;
 import br.com.sysagrega.model.imp.Profissional;
@@ -65,7 +65,7 @@ public class ProfissionalRepository implements IProfissionalRepository {
 	@Override
 	public List<Profissional> getProfissionalByFilter(String cpf, String rg) {
 		
-		EasyCriteria<Profissional> easyCriteria = EasyCriteriaFactory.createQueryCriteria(manager, Profissional.class);
+		UaiCriteria<Profissional> easyCriteria = UaiCriteriaFactory.createQueryCriteria(manager, Profissional.class);
 		
 		
 		if(!cpf.isEmpty() && cpf != null ) {

@@ -7,6 +7,12 @@ body {
 	font-weight: normal;
 }
 
+.ui-widget-content {
+    background: url(#{resource['images:cabecalho_fundo.png']}) no-repeat;
+    border: 1px solid #cccccc;
+    
+}
+
 header {
 	padding: 5px 0px;
 	margin-bottom: 20px;
@@ -164,4 +170,10 @@ h1 {
 
 .ui-layout-south .ui-layout-unit-content {
 	overflow: visible !important;
+}
+
+element.style {
+    height: 0px !important;;
+    position: relative !important;;
+    visibility: visible !important;;
 }
