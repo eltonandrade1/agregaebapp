@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import br.com.sysagrega.controller.Qualificadores.QualificadorProposta;
 import br.com.sysagrega.model.IPrecificacao;
+import br.com.sysagrega.model.IProposta;
 import br.com.sysagrega.model.Enums.TipoCustoAdm;
 import br.com.sysagrega.model.Enums.TipoCustoBdiComissao;
 import br.com.sysagrega.model.Enums.TipoCustoImpostos;
@@ -39,6 +40,7 @@ import br.com.sysagrega.service.ICidadeService;
 import br.com.sysagrega.service.IEstadoService;
 import br.com.sysagrega.service.IPropostaService;
 import br.com.sysagrega.service.imp.NegocioException;
+import br.com.sysagrega.util.RelatorioUtil;
 import br.com.sysagrega.util.jsf.FacesUtil;
 
 @Named
@@ -165,7 +167,7 @@ public class PropostaBean implements Serializable {
 			carregarCidadesPorEstado();
 			viewProposta = true;
 		} else if (FacesUtil.getParamSession().equals(TipoPagina.HISTORICO_PROPOSTA)) {
-			
+
 			this.proposta = FacesUtil.getPropostaSession();
 			carregarHistoricoByProposta(this.proposta);
 
@@ -687,6 +689,17 @@ public class PropostaBean implements Serializable {
 
 			this.listaImpostos.add(impostos.getDescricao());
 
+		}
+	}
+
+	public void gerarPdf() {
+		List<IProposta> list = new ArrayList<>();
+		if (proposta != null) {
+			list.add(proposta);
+			RelatorioUtil.geraRelatorio("RelatorioProposta", list);
+
+		} else {
+			throw new NegocioException("Favor selecionar uma proposta!");
 		}
 	}
 

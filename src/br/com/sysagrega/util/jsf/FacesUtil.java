@@ -1,15 +1,17 @@
 package br.com.sysagrega.util.jsf;
 
+import java.io.InputStream;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.com.sysagrega.model.ICliente;
 import br.com.sysagrega.model.IProfissional;
 import br.com.sysagrega.model.Enums.TipoPagina;
 import br.com.sysagrega.model.imp.Proposta;
-import br.com.sysagrega.model.imp.PropostaHistorico;
 
 public class FacesUtil {
 
@@ -68,5 +70,21 @@ public class FacesUtil {
 		HttpSession session = (HttpSession) request.getSession();
 		return (Proposta) session.getAttribute("proposta");
 
+	}
+	
+	public static HttpServletResponse getResponseJsf() {
+		return (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+	}
+	
+	public static InputStream getReportStream(String caminhoJasper) {
+		
+		return FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream(caminhoJasper);
+		
+	}
+	
+	public static void responseComplete() {
+		
+		FacesContext.getCurrentInstance().responseComplete();
+		
 	}
 }

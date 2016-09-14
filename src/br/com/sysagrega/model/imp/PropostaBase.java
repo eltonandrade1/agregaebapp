@@ -56,10 +56,10 @@ public abstract class PropostaBase implements IPropostaBase {
 	private String contato;
 	
 	//S - Sim e N - Não
-	private Character statusContratada;
+	private String statusContratada;
 	
 	//A - Aprovada e C - Candelada
-	private Character status;
+	private String status;
 	
 	private String numeroProposta;
 	
@@ -204,7 +204,7 @@ public abstract class PropostaBase implements IPropostaBase {
 	 * @see br.com.sysagrega.model.imp.IPropostaBase#getStatusContratada()
 	 */
 	@Override
-	public Character getStatusContratada() {
+	public String getStatusContratada() {
 		return statusContratada;
 	}
 
@@ -212,7 +212,7 @@ public abstract class PropostaBase implements IPropostaBase {
 	 * @see br.com.sysagrega.model.imp.IPropostaBase#setStatusContratada(java.lang.Character)
 	 */
 	@Override
-	public void setStatusContratada(Character statusContratada) {
+	public void setStatusContratada(String statusContratada) {
 		this.statusContratada = statusContratada;
 	}
 
@@ -316,7 +316,7 @@ public abstract class PropostaBase implements IPropostaBase {
 	 * @return the status
 	 */
 	@Override
-	public Character getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
@@ -324,7 +324,7 @@ public abstract class PropostaBase implements IPropostaBase {
 	 * @param status the status to set
 	 */
 	@Override
-	public void setStatus(Character status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

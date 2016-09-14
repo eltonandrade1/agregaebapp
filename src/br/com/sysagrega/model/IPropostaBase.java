@@ -69,12 +69,12 @@ public interface IPropostaBase extends Serializable {
 	/**
 	 * @return the statusContratada
 	 */
-	Character getStatusContratada();
+	String getStatusContratada();
 
 	/**
 	 * @param statusContratada the statusContratada to set
 	 */
-	void setStatusContratada(Character statusContratada);
+	void setStatusContratada(String statusContratada);
 
 	/**
 	 * @return the numeroProposta
@@ -94,9 +94,9 @@ public interface IPropostaBase extends Serializable {
 
 	void setId(Long id);
 
-	void setStatus(Character status);
+	void setStatus(String status);
 
-	Character getStatus();
+	String getStatus();
 
 	ICidade getCidade();
 

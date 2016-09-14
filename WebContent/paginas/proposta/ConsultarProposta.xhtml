@@ -123,7 +123,10 @@
 							action="#{propostaBean.excluirProposta()}" ajax="false" />
 						<p:commandButton process="tablePropostas"
 							icon="fa fa-fw fa-history" value="Histórico"
-							action="#{propostaBean.consultarHistoricoProposta()}" ajax="false" />
+							action="#{propostaBean.consultarHistoricoProposta()}"
+							ajax="false" />
+						<p:commandButton icon="fa fa-fw fa-print" value="Imprimir"
+							action="#{propostaBean.gerarPdf()}" ajax="false" />
 					</div>
 				</f:facet>
 			</p:dataTable>

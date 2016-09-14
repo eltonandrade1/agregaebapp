@@ -57,8 +57,16 @@ public class InterfaceConstants implements Serializable {
 	
 	//Tratamento para limite de data e hora corrente
 	public static final String MAX_DATE_TIME = DateUtil.formattedDateTime(DateUtil.getCurrentDateTime());
+	
+	//Diretorio arquivos ireport SO Windows
+	public static final String IREPORT_PATH_WIN = "C:\\temp\\";
 
-	//Tratamento para exibi��o do select dos calendar. quantos anos atr�s e para frente ser� mostrado no select
-	public static final String YEAR_SELECTION_RANGE = "c-113:c+10";
+	public static final String IREPORT_PATH_JASPER = "/jasper/";
+	public static final String IREPORT_PATH_IMAGE = "/resources/images/logoAgrega2.jpg";
+	
+	
+	
+	
+
 	
 }
