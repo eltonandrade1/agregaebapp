@@ -19,7 +19,13 @@ public enum TipoPagina {
 	CONSULTA_PROPOSTA("Consultar Proposta"),
 	VISUALIZAR_PROPOSTA("Visualizar Proposta"),
 	EDIT_PROPOSTA("Editar Proposta"),
-	HISTORICO_PROPOSTA("Hitorico Proposta");
+	HISTORICO_PROPOSTA("Hitorico Proposta"),
+	
+	//Ações telas de contrato
+	NOVO_CONTRATO("Novo Contrato"),
+	CONSULTA_CONTRATO("Consultar Contrato"),
+	VISUALIZAR_CONTRATO("Visualizar Contrato"),
+	EDIT_CONTRATO("Editar Contrato");
 	
 	private String descricao;
 

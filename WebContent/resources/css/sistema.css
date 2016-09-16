@@ -8,11 +8,35 @@ body {
 }
 
 .ui-widget-content {
-    background: url(#{resource['images:cabecalho_fundo.png']}) no-repeat;
-    border: 1px solid #cccccc;
-    
+	background: url(#{ resource [ 'images:cabecalho_fundo.png' ]
 }
 
+)
+no-repeat
+
+
+;
+border
+
+
+:
+
+ 
+
+1
+px
+
+ 
+
+solid
+
+ 
+
+#cccccc
+
+
+;
+}
 header {
 	padding: 5px 0px;
 	margin-bottom: 20px;
@@ -23,7 +47,7 @@ header {
 	box-shadow: 0px 2px 2px #ccc;
 }
 
-header > div {
+header>div {
 	margin-left: 8px
 }
 
@@ -88,39 +112,46 @@ h1 {
 
 /* Customiza TabView - início */
 .ui-tabs .ui-tabs-panel {
-    padding: 0.5em 0.2em !important;
+	padding: 0.5em 0.2em !important;
 }
 
 .ui-tabs {
-    padding: 0px !important;
+	padding: 0px !important;
 }
 
 .ui-tabs .ui-tabs-nav {
-    margin: -1px !important;
+	margin: -1px !important;
 }
 
-.ui-tabs.ui-tabs-top > .ui-tabs-nav {
-    padding: 0px !important;
+.ui-tabs.ui-tabs-top>.ui-tabs-nav {
+	padding: 0px !important;
 }
 /* Customiza TabView - fim */
 
 /* Menu sistema inicio */
 .menu-sistema {
-    border: 0px !important;
-    padding: 0px !important;
-    background: none !important;
+	border: 0px !important;
+	padding: 0px !important;
+	background: none !important;
 }
 
-.menu-sistema .ui-menu-parent > a .ui-menuitem-text, .menu-sistema > .ui-menu-list > .ui-menuitem > a > .ui-menuitem-text {
-    color: #ffffff !important;
+.menu-sistema .ui-menu-parent>a .ui-menuitem-text, .menu-sistema>.ui-menu-list>.ui-menuitem>a>.ui-menuitem-text
+	{
+	color: #ffffff !important;
 }
 
 .menu-sistema .ui-icon-triangle-1-s {
-    background: url(#{resource['images:seta-para-baixo.png']}) no-repeat;
+	background: url(#{ resource [ 'images:seta-para-baixo.png' ]
 }
 
-.rodape{
-	font-family: Arial,Helvetica,sans-serif;
+)
+no-repeat
+
+
+;
+}
+.rodape {
+	font-family: Arial, Helvetica, sans-serif;
 	text-align: center;
 	font-size: 12px;
 	font-weight: normal;
@@ -129,22 +160,22 @@ h1 {
 }
 
 #home_apresetacao {
-  right: 0px;
-  margin: 0px auto;
-  max-width: 300px;
-  position: relative;
+	right: 0px;
+	margin: 0px auto;
+	max-width: 300px;
+	position: relative;
 }
 
 .apresentacao_imagem {
-  margin: 0 auto;
-  position: relative;
-  text-align: center;
-  text-shadow: 0 1px 0 #fff;
-  min-width: 280px;
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+	text-shadow: 0 1px 0 #fff;
+	min-width: 280px;
 }
 
-.text_apresentacao{
-	font-family: Arial,Helvetica,sans-serif;
+.text_apresentacao {
+	font-family: Arial, Helvetica, sans-serif;
 	text-align: center;
 	font-size: 25px;
 	font-weight: bold;
@@ -153,7 +184,6 @@ h1 {
 /* Menu sistema fim */
 
 /*Configurações para cabeçalho e rodapé*/
-
 .ui-layout-north {
 	z-index: 20 !important;
 	overflow: visible !important;
@@ -172,8 +202,17 @@ h1 {
 	overflow: visible !important;
 }
 
+.companyHeaderGrid.ui-panelgrid>*>tr, .companyHeaderGrid.ui-panelgrid .ui-panelgrid-cell
+	{
+	border: none;
+}
+
+.colunaContrato {
+	width: 90px;
+}
+
 element.style {
-    height: 0px !important;;
-    position: relative !important;;
-    visibility: visible !important;;
+	height: 0px !important;;
+	position: relative !important;;
+	visibility: visible !important;;
 }

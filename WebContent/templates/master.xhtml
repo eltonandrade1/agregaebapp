@@ -28,8 +28,15 @@
 
 					<p:menubar id="idMenuPrincipal" styleClass="menu-sistema">
 
+						<p:submenu label="Contratos">
+							<p:menuitem id="cadContrato" value="Novo Contrato" actionListener="#{menuBean.reset()}" process="@this"
+								action="#{menuBean.novoContrato()}" icon="ui-icon-plus" />
+							<p:menuitem id="consultarContrato" value="Consultar" actionListener="#{menuBean.reset()}" process="@this"
+								action="#{menuBean.consultarContrato()}" icon="ui-icon-search" />
+						</p:submenu>
+						
 						<p:submenu label="Propostas">
-							<p:menuitem id="cadProposta" value="Nova Proposta"
+							<p:menuitem id="cadProposta" value="Nova Proposta" actionListener="#{menuBean.reset()}" process="@this"
 								action="#{menuBean.novaProposta()}" icon="ui-icon-plus" />
 							<p:menuitem id="consultarProposta" value="Consultar" actionListener="#{menuBean.reset()}" process="@this"
 								action="#{menuBean.consultarProposta()}" icon="ui-icon-search" />
@@ -47,7 +54,7 @@
 						<p:submenu label="Consultas">
 							<p:menuitem id="consultaProfissional" value="Profissionais"
 								icon="ui-icon-search"
-								action="#{menuBean.consultarProfissioanl()}"
+								action="#{menuBean.consultarProfissional()}"
 								actionListener="#{menuBean.reset()}"
 								process="@this">
 								<o:ignoreValidationFailed />

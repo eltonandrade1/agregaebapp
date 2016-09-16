@@ -22,6 +22,9 @@
 		<class>br.com.sysagrega.model.imp.CustoDeslocamento</class>
 		<class>br.com.sysagrega.model.imp.CustoOperacional</class>
 		<class>br.com.sysagrega.model.imp.CustoSeguranca</class>
+		<class>br.com.sysagrega.model.imp.Contrato</class>
+		<class>br.com.sysagrega.model.imp.ItensControleContrato</class>
+		<class>br.com.sysagrega.model.imp.Parcela</class>
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/sysagregadb" />

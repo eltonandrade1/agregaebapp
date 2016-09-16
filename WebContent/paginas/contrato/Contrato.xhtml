@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:jb="http://xmlns.jcp.org/jsf/html"
+	xmlns:o="http://omnifaces.org/ui">
+
+<ui:composition template="/templates/master.xhtml">
+
+	<f:metadata>
+		<o:viewParam name="contrato" value="#{contratoBean.contrato}" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<p:panel id="idPanelContrato" style="border: none;">
+
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Cadastrar Contrato"
+				rendered="#{contratoBean.isNewContrato()}" />
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Atualizar Contrato"
+				rendered="#{contratoBean.isEditContrato()}" />
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Visualizar Contrato" rendered="#{contratoBean.viewContrato}" />
+			<p:separator />
+
+			<br />
+
+			<p:messages id="messagesCadastro" showDetail="true" autoUpdate="true"
+				closable="true" escape="false" />
+
+			<p:tabView id="idTabViewContrato" style="margin-top: 20px">
+
+				<p:tab id="idTabContrato" title="Contrato">
+
+					<h:panelGrid id="idPanelGridContrato" columns="2" width="100%"
+						cellpadding="2" columnClasses="colunaContrato"
+						styleClass="companyHeaderGrid">
+
+						<p:outputLabel value="Nº Contrato:" />
+						<p:inputText id="nrContrato" style="width:100px;"
+							rendered="#{!contratoBean.viewContrato}" required="true"
+							requiredMessage="Campo Número do Contrato é obrigatório"
+							value="#{contratoBean.contrato.nrContrato}" />
+						<p:outputLabel value="#{contratoBean.contrato.nrContrato}"
+							rendered="#{contratoBean.viewContrato}" />
+
+						<p:outputLabel value="Cliente:" />
+						<p:inputText id="cliente" style="width:290px;"
+							rendered="#{!contratoBean.viewContrato}" required="true"
+							requiredMessage="Campo Cliente é obrigatório"
+							value="#{contratoBean.contrato.nomeCliente}" />
+						<p:outputLabel value="#{contratoBean.contrato.nomeCliente}"
+							rendered="#{contratoBean.viewContrato}" />
+
+						<p:outputLabel value="Descrição:" />
+						<p:inputTextarea id="descricao" rows="4" cols="35"
+							autoResize="false" disabled="#{contratoBean.viewContrato}"
+							maxlength="150"
+							value="#{contratoBean.contrato.descricaoContrato}" />
+
+					</h:panelGrid>
+
+					<br />
+					<br />
+					<p:outputLabel style="margin-top: 0" align="left"
+						value="Itens de Controle do Contrato" />
+					<p:separator />
+
+					<h:panelGrid id="idPanelGridItenContrato" columns="7" width="100%"
+						styleClass="companyHeaderGrid">
+
+						<p:outputLabel value="Nº Estudo:">
+							<p:inputText id="nrEstudo" style="width:100px;"
+								disabled="#{contratoBean.viewContrato}"
+								value="#{contratoBean.itenControleContrato.nrEstudo}" />
+						</p:outputLabel>
+
+						<p:outputLabel value="Nome do Projeto:">
+							<p:inputText id="nomeProjeto" style="width:200px;"
+								disabled="#{contratoBean.viewContrato}"
+								value="#{contratoBean.itenControleContrato.nomeProjeto}" />
+						</p:outputLabel>
+
+						<p:outputLabel value="Projeto:">
+							<p:inputText id="projeto" style="width:100px;"
+								disabled="#{contratoBean.viewContrato}"
+								value="#{contratoBean.itenControleContrato.projeto}" />
+						</p:outputLabel>
+
+						<p:outputLabel value="Município:">
+							<p:inputText id="municipio" style="width:150px;"
+								disabled="#{contratoBean.viewContrato}"
+								value="#{contratoBean.itenControleContrato.municipio}" />
+						</p:outputLabel>
+
+						<p:outputLabel value="EPI:">
+							<p:inputText id="epi" style="width:100px;"
+								disabled="#{contratoBean.viewContrato}"
+								value="#{contratoBean.itenControleContrato.epi}" />
+						</p:outputLabel>
+
+						<p:outputLabel value="OS:">
+							<p:inputText id="os" style="width:100px;"
+								disabled="#{contratoBean.viewContrato}"
+								value="#{contratoBean.itenControleContrato.os}" />
+						</p:outputLabel>
+
+						<p:commandButton id="addItenContrato" icon="fa fa-fw fa-plus"
+							disabled="#{contratoBean.viewContrato}"
+							action="#{contratoBean.adicionarItenContrato()}"
+							update="idPanelGridItenContrato  panelItensContrato @parent">
+							<p:collector value="#{contratoBean.itenControleContrato}"
+								addTo="#{contratoBean.contrato.itensControleContratos}" />
+						</p:commandButton>
+					</h:panelGrid>
+
+					<p:outputPanel id="panelItensContrato">
+						<p:dataTable
+							value="#{contratoBean.contrato.itensControleContratos}"
+							resizableColumns="true" resizeMode="expand"
+							emptyMessage="Nenhum Item cadastrado" rows="5"
+							rowsPerPageTemplate="5,10,15" paginator="true" scrollable="true"
+							scrollHeight="150"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							var="iten" id="tableIten" paginatorPosition="bottom">
+
+							<p:column headerText="Nº Estudo">
+								<p:outputLabel value="#{iten.nrEstudo}" />
+							</p:column>
+
+							<p:column headerText="Nome Projeto">
+								<p:outputLabel value="#{iten.nomeProjeto}" />
+							</p:column>
+
+							<p:column headerText="Projeto">
+								<p:outputLabel value="#{iten.projeto}" />
+							</p:column>
+
+							<p:column headerText="Município">
+								<p:outputLabel value="#{iten.municipio}" />
+							</p:column>
+
+							<p:column headerText="EPI">
+								<p:outputLabel value="#{iten.epi}" />
+							</p:column>
+
+							<p:column headerText="OS">
+								<p:outputLabel value="#{iten.os}" />
+							</p:column>
+
+							<p:column>
+								<p:commandButton id="removerCusto" icon="fa fa-fw fa-remove"
+									title="Excluir Iten" disabled="#{contratoBean.viewContrato}"
+									update="formPrincipal:idTabViewContrato:panelItensContrato formPrincipal:idTabViewContrato:idPanelGridItenContrato @parent">
+									<p:collector unique="true" value="#{iten}"
+										removeFrom="#{contratoBean.contrato.itensControleContratos}" />
+								</p:commandButton>
+								<p:commandButton
+									update="formPrincipal:idTabViewContrato:parcelasPanel"
+									oncomplete="PF('parcelasDialog').show()" icon="ui-icon-search"
+									title="Pacelas">
+									<f:setPropertyActionListener value="#{iten}"
+										target="#{contratoBean.itenSelecionado}" />
+								</p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+						<p:dialog header="Parcelas" widgetVar="parcelasDialog" width="50%"
+							modal="true" showEffect="fade" hideEffect="fade"
+							appendTo="@(body)" resizable="false">
+
+							<h:panelGrid id="idPanelGridParcela" columns="2" width="100%"
+								styleClass="companyHeaderGrid" columnClasses="colunaContrato">
+
+								<p:outputLabel value="NFS:" />
+								<p:inputText id="nfs" style="width:100px;"
+									disabled="#{contratoBean.viewContrato}"
+									value="#{contratoBean.parcela.nfs}" />
+
+								<p:outputLabel value="Emissão:" />
+								<p:calendar pattern="dd/MM/yyyy" mask="true" locale="pt"
+									rendered="#{!contratoBean.viewContrato}" id="dtEmissao"
+									value="#{contratoBean.parcela.dataEmissao}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:calendar>
+								<p:outputLabel value="#{contratoBean.parcela.dataEmissao}"
+									rendered="#{contratoBean.viewContrato}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+
+								<p:outputLabel value="Valor:" />
+								<p:inputNumber id="vlParcela" style="width:50px;"
+									disabled="#{contratoBean.viewContrato}"
+									value="#{contratoBean.parcela.valor}" />
+
+								<p:outputLabel value="Data Pagamento" />
+								<p:calendar pattern="dd/MM/yyyy" mask="true" locale="pt"
+									rendered="#{!contratoBean.viewContrato}" id="dtPagamento"
+									value="#{contratoBean.parcela.dataPgto}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:calendar>
+								<p:outputLabel value="#{contratoBean.parcela.dataPgto}"
+									rendered="#{contratoBean.viewContrato}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:outputLabel>
+
+								<p:commandButton id="addParcela" icon="fa fa-fw fa-plus"
+									disabled="#{contratoBean.viewContrato}"
+									action="#{contratoBean.adicionarParcela()}"
+									update="idPanelGridParcela  parcelasPanel @parent">
+									<p:collector value="#{contratoBean.parcela}"
+										addTo="#{contratoBean.itenSelecionado.parcelas}" />
+								</p:commandButton>
+
+							</h:panelGrid>
+
+							<p:outputPanel id="parcelasPanel" style="text-align:center;">
+								<p:dataTable value="#{contratoBean.itenSelecionado.parcelas}"
+									resizableColumns="true" resizeMode="expand"
+									emptyMessage="Nenhum Item cadastrado" rows="5" var="parcela"
+									id="tableParcela">
+
+									<p:column headerText="NFS">
+										<p:outputLabel value="#{parcela.nfs}" />
+									</p:column>
+
+									<p:column headerText="Emissão">
+										<h:outputText value="#{parcela.dataEmissao}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+
+									<p:column headerText="Valor">
+										<h:outputText value="#{parcela.valor}">
+											<f:convertNumber currencySymbol="R$" type="currency" />
+										</h:outputText>
+									</p:column>
+
+									<p:column headerText="Emissão">
+										<h:outputText value="#{parcela.dataPgto}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+
+									<p:column>
+										<p:commandButton id="removerParcela" icon="fa fa-fw fa-remove"
+											title="Excluir Parcela" disabled="#{contratoBean.viewContrato}"
+											update="formPrincipal:idTabViewContrato:parcelasPanel formPrincipal:idTabViewContrato:idPanelGridParcela @parent">
+											<p:collector unique="true" value="#{parcela}"
+												removeFrom="#{contratoBean.itenSelecionado.parcelas}" />
+										</p:commandButton>
+									</p:column>
+
+								</p:dataTable>
+
+							</p:outputPanel>
+						</p:dialog>
+
+					</p:outputPanel>
+
+				</p:tab>
+
+			</p:tabView>
+
+			<br />
+			<p:separator />
+			<p:commandButton id="btSalvar" value="Salvar"
+				action="#{contratoBean.salvarContrato()}" icon="fa fa-fw fa-save"
+				update="idPanelContrato" rendered="#{contratoBean.isNewContrato()}" />
+
+			<p:commandButton id="btAtualizar" value="Atualizar"
+				action="#{contratoBean.atualizarContrato()}"
+				icon="fa fa-fw fa-refresh" update="idPanelContrato"
+				rendered="#{contratoBean.isEditContrato()}" />
+
+			<p:blockUI block="idPanelContrato" trigger="btSalvar btAtualizar">
+				<p:graphicImage name="images/ajaxloadingbar.gif" />
+			</p:blockUI>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

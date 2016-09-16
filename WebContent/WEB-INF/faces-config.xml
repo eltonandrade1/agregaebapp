@@ -119,6 +119,39 @@
 	</navigation-rule>
 	
 	<!-- ### Fim das telas de proposta ### -->
+	
+	<!-- Inicio das telas de contrato -->
+	
+	<!-- Cadastro Contrato -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadastro_contrato</from-outcome>
+			<to-view-id>/paginas/contrato/Contrato.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Editar Contrato -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>editar_contrato</from-outcome>
+			<to-view-id>/paginas/contrato/Contrato.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Consultar Contrato -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consultar_contrato</from-outcome>
+			<to-view-id>/paginas/contrato/ConsultarContrato.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- ### Fim das telas de contrato ### -->
+	
+	
 
 	<!-- Configurando leitura do arquivo properties -->
 	<application>

@@ -25,11 +25,11 @@ public class MenuBean implements Serializable {
 
 	}
 
-	public String consultarProfissioanl() {
+	public String consultarProfissional() {
 		FacesUtil.addParamSession(TipoPagina.CONSULTA_PROF);
 		return "consultar_profissional";
 	}
-	
+
 	public String novoCliente() {
 		FacesUtil.addParamSession(TipoPagina.NOVO_CLIENTE);
 		return "cadastro_cliente";
@@ -40,19 +40,29 @@ public class MenuBean implements Serializable {
 		FacesUtil.addParamSession(TipoPagina.CONSULTA_CLIENTE);
 		return "consultar_cliente";
 	}
-	
+
 	public String novaProposta() {
 		FacesUtil.addParamSession(TipoPagina.NOVA_PROPOSTA);
 		return "cadastro_proposta";
 	}
-	
+
 	public String consultarProposta() {
 		FacesUtil.addParamSession(TipoPagina.CONSULTA_PROPOSTA);
 		return "consultar_proposta";
 	}
-	
-	//TODO verificar necessidade de utilização
+
+	public String novoContrato() {
+		FacesUtil.addParamSession(TipoPagina.NOVO_CONTRATO);
+		return "cadastro_contrato";
+	}
+
+	public String consultarContrato() {
+		FacesUtil.addParamSession(TipoPagina.CONSULTA_CONTRATO);
+		return "consultar_contrato";
+	}
+
 	public void reset() {
 		RequestContext.getCurrentInstance().reset("formPrincipal:layoutCentro");
+
 	}
 }
