@@ -19,7 +19,9 @@ import javax.servlet.http.HttpSession;
 
 import br.com.sysagrega.model.IProposta;
 import br.com.sysagrega.model.Enums.TipoArquivoRelatorio;
-import br.com.sysagrega.model.imp.CustoExecucao;
+import br.com.sysagrega.model.Enums.TipoProposta;
+import br.com.sysagrega.model.imp.Proposta;
+import br.com.sysagrega.model.imp.PropostaBase;
 import br.com.sysagrega.util.jsf.FacesUtil;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -154,7 +156,7 @@ public class RelatorioUtil {
 
 	}
 
-	public static void geraRelatorio(String nomeRelatorio, List<IProposta> proposta) {
+	public static void geraRelatorio(String nomeRelatorio, List<Proposta> proposta) {
 
 		String jasper = getDiretorioReal(
 				InterfaceConstants.IREPORT_PATH_JASPER + nomeRelatorio + TipoArquivoRelatorio.JASPER.getDescricao());
@@ -171,6 +173,20 @@ public class RelatorioUtil {
 
 			//param.put("IMAGE_PATH", image);
 			param.put("SUBREPORT_DIR", getDiretorioReal("/jasper/") + "/");
+			
+			for (Proposta iProposta : proposta) {
+				
+				if (!iProposta.getTipoProposta().equalsIgnoreCase(TipoProposta.TECNICA.getDescricao())) {
+					
+					param.put("RENDER_CUSTOS", true);
+					
+				} else {
+					
+					param.put("RENDER_CUSTOS", false);
+					
+				}
+				
+			}
 
 			JasperPrint print = JasperFillManager.fillReport(jasper, param, ds);
 			// Gero o PDF

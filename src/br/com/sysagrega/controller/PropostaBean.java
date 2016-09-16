@@ -693,7 +693,7 @@ public class PropostaBean implements Serializable {
 	}
 
 	public void gerarPdf() {
-		List<IProposta> list = new ArrayList<>();
+		List<Proposta> list = new ArrayList<>();
 		if (proposta != null) {
 			list.add(proposta);
 			RelatorioUtil.geraRelatorio("RelatorioProposta", list);

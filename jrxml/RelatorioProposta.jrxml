@@ -2,11 +2,12 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioProposta" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ddffff67-31a5-4133-b4fe-9c8b76a5c17a">
 	<property name="ireport.zoom" value="1.210000000000003"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="187"/>
+	<property name="ireport.y" value="221"/>
 	<subDataset name="dataset1" uuid="7af184e8-d2c6-445b-8141-506c883c5741"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Elton\\workspace\\sysagrega\\jrxml\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="RENDER_CUSTOS" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[SELECT
      tb_proposta.`numeroProposta` AS numeroProposta,
@@ -273,7 +274,7 @@ WHERE
 		<band height="135" splitType="Stretch">
 			<subreport>
 				<reportElement positionType="Float" x="0" y="19" width="555" height="19" isRemoveLineWhenBlank="true" uuid="607f5e4e-01ee-4535-8708-308772603d29">
-					<printWhenExpression><![CDATA[ new Boolean(!$F{tipoProposta}.equalsIgnoreCase("Técnica"))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{RENDER_CUSTOS}]]></printWhenExpression>
 				</reportElement>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{custos}, false)]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioPropostaCustoExecucao.jasper"]]></subreportExpression>
@@ -287,35 +288,35 @@ WHERE
 			</textField>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="38" width="555" height="19" uuid="76adb44a-a76d-4859-8cb9-b2bd29af36c7">
-					<printWhenExpression><![CDATA[ new Boolean(!$F{tipoProposta}.equalsIgnoreCase("Técnica"))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{RENDER_CUSTOS}]]></printWhenExpression>
 				</reportElement>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{despesasDeslocamentos}, false)]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioPropostaCustoDeslocamento.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="57" width="555" height="19" uuid="b49bdfd0-dd6e-4953-8af2-bf6ca3e25b32">
-					<printWhenExpression><![CDATA[ new Boolean(!$F{tipoProposta}.equalsIgnoreCase("Técnica"))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{RENDER_CUSTOS}]]></printWhenExpression>
 				</reportElement>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{despesasOperacionais}, false)]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioPropostaCustoOperacional.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="76" width="555" height="19" uuid="cc7131f8-5a44-435a-b690-369e367621f4">
-					<printWhenExpression><![CDATA[ new Boolean(!$F{tipoProposta}.equalsIgnoreCase("Técnica"))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{RENDER_CUSTOS}]]></printWhenExpression>
 				</reportElement>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{despesasSeguranca}, false)]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioPropostaCustoSeguranca.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="95" width="555" height="19" uuid="d4cf7187-89ac-4de5-b22b-9dac20ba749f">
-					<printWhenExpression><![CDATA[ new Boolean(!$F{tipoProposta}.equalsIgnoreCase("Técnica"))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{RENDER_CUSTOS}]]></printWhenExpression>
 				</reportElement>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{despesasAdministrativas}, false)]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioPropostaCustoAdm.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="114" width="555" height="19" uuid="6a29cc48-9ec9-43ec-ae42-bd5e968b2644">
-					<printWhenExpression><![CDATA[ new Boolean(!$F{tipoProposta}.equalsIgnoreCase("Técnica"))]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{RENDER_CUSTOS}]]></printWhenExpression>
 				</reportElement>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{despesasBdiComissao}, false)]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "RelatorioPropostaCustoBdiComissao.jasper"]]></subreportExpression>
@@ -362,7 +363,7 @@ WHERE
 	</pageFooter>
 	<summary>
 		<band height="235" splitType="Stretch">
-			<printWhenExpression><![CDATA[ new Boolean(!$F{tipoProposta}.equalsIgnoreCase("Técnica"))]]></printWhenExpression>
+			<printWhenExpression><![CDATA[new Boolean(!$F{tipoProposta}.equalsIgnoreCase("Técnica"))]]></printWhenExpression>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="7" width="169" height="20" backcolor="#A8A3A3" uuid="442e8578-efdc-449e-92d9-aa32ce5ac51b"/>
 				<textElement verticalAlignment="Middle">
