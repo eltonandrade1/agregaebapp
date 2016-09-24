@@ -47,8 +47,11 @@
 								icon="ui-icon-plus" action="#{menuBean.novoProfissional()}" actionListener="#{menuBean.reset()}" process="@this"/>
 							<p:menuitem id="cadCliente" value="Clientes"
 								action="#{menuBean.novoCliente()}" icon="ui-icon-plus" actionListener="#{menuBean.reset()}" process="@this"/>
-							<p:menuitem value="Usuários" icon="ui-icon-plus" />
-							<p:menuitem value="Fornecedores" icon="ui-icon-plus" />
+							
+							<p:menuitem value="Usuários" icon="ui-icon-plus" disabled="true"/>
+							
+							<p:menuitem id="cadFornecedor" value="Fornecedores" 
+								icon="ui-icon-plus" action="#{menuBean.novoFornecedor()}" actionListener="#{menuBean.reset()}" process="@this"/>
 						</p:submenu>
 
 						<p:submenu label="Consultas">
@@ -59,12 +62,20 @@
 								process="@this">
 								<o:ignoreValidationFailed />
 							</p:menuitem>
+							
+							<p:menuitem id="consultaFornecedor" value="Fornecedores" 
+								icon="ui-icon-search" 
+								action="#{menuBean.consultarFornecedor()}"
+								actionListener="#{menuBean.reset()}"
+								process="@this">
+										<o:ignoreValidationFailed />
+							</p:menuitem>
 
 							<p:menuitem value="Clientes" id="consultaCliente"
 								icon="ui-icon-search" action="#{menuBean.consultarCliente()}" actionListener="#{menuBean.reset()}" process="@this"/>
 						</p:submenu>
 
-						<p:menuitem value="Sair" />
+						<p:menuitem value="Sair" disabled="true"/>
 					</p:menubar>
 				</div>
 				<div style="clear: both"></div>

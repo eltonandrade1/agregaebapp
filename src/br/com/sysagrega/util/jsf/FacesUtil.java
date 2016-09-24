@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import br.com.sysagrega.model.ICliente;
+import br.com.sysagrega.model.IFornecedor;
 import br.com.sysagrega.model.IProfissional;
 import br.com.sysagrega.model.Enums.TipoPagina;
 import br.com.sysagrega.model.imp.Contrato;
@@ -62,6 +63,14 @@ public class FacesUtil {
 				.getRequest();
 		HttpSession session = (HttpSession) request.getSession();
 		return (ICliente) session.getAttribute("cliente");
+
+	}
+	
+	public static IFornecedor getFornecedorSession() {
+		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
+				.getRequest();
+		HttpSession session = (HttpSession) request.getSession();
+		return (IFornecedor) session.getAttribute("fornecedor");
 
 	}
 

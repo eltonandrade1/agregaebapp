@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jb="http://xmlns.jcp.org/jsf/html"
+	xmlns:o="http://omnifaces.org/ui">
+
+<ui:composition template="/templates/master.xhtml">
+
+	<f:metadata>
+			<o:viewParam name="fornecedor"
+			value="#{fornecedorBean.fornecedor}" />
+
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<p:panel id="idPanelProfissional" style="border: none;">
+
+			<h4 style="margin-top: 0" align="left">Consultar Fornecedores</h4>
+			<p:separator />
+
+			<p:messages id="messagesConsulta" showDetail="true" autoUpdate="true"
+				closable="true" />
+			<br></br>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton id="idBtPesquisar" value="Pesquisar"
+						action="#{fornecedorBean.filtrarFornecedores}" update="tableFornecedores"
+						 />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+				<p:outputLabel value="CNPJ:" for="idCnpj" />
+				<p:inputMask mask="99.999.999/9999-99" id="idCnpj" size="20"
+					value="#{fornecedorBean.filtroCnpj}" />
+
+				<p:outputLabel value="Nome Fantasia:" />
+				<p:inputMask value="#{fornecedorBean.filtroNomeFantasia}" />
+			</p:panelGrid>
+			
+			<br></br>
+
+			<p:dataTable id="tableFornecedores" var="fornecedor" lazy="true"
+				value="#{fornecedorBean.fornecedores}"
+				emptyMessage="Nenhum fornecedor cadastrado" paginator="true"
+				rows="10" rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				selectionMode="single" selection="#{fornecedorBean.fornecedor}"
+				rowKey="#{fornecedor.id}">
+
+				<p:column headerText="Nome Fantasia">
+					<h:outputText value="#{fornecedor.nomeFantasia}" />
+				</p:column>
+				<p:column headerText="CNPJ">
+					<h:outputText value="#{fornecedor.cnpj}" />
+				</p:column>
+				<p:column headerText="CONTATO">
+					<h:outputText value="#{fornecedor.pessoaContato}" />
+				</p:column>
+				<p:column headerText="TELEFONE">
+					<h:outputText value="#{fornecedor.telefone}" />
+				</p:column>
+				<f:facet name="footer">
+					<div align="left">
+						<p:commandButton process="tableFornecedores"
+							icon="fa fa-fw fa-eye" value="Visualizar"
+							action="#{fornecedorBean.visualizarFornecedor()}" />
+						<p:commandButton process="tableFornecedores"
+							icon="fa fa-fw fa-edit" value="Editar"
+							action="#{fornecedorBean.redirectEditFornecedor()}"
+							ajax="false" />
+						<p:commandButton process="tableFornecedores"
+							icon="fa fa-fw fa-remove" value="Excluir"
+							action="#{fornecedorBean.excluirFornecedor()}" ajax="false" />
+					</div>
+				</f:facet>
+			</p:dataTable>
+
+			<p:blockUI block="tableFornecedores" trigger="idBtPesquisar" >
+				<p:graphicImage name="images/ajaxloadingbar.gif" />
+			</p:blockUI>
+			
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

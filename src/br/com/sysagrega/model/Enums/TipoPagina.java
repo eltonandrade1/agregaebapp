@@ -14,6 +14,12 @@ public enum TipoPagina {
 	VISUALIZAR_CLIENTE("Visualizar Cliente"),
 	EDIT_CLIENTE("Editar Cliente"),
 	
+	//Ações telas de fornecedor
+	NOVO_FORNEC("Novo Fornecedor"),
+	CONSULTA_FORNEC("Consultar Fornecedor"),
+	VISUALIZAR_FORNEC("Visualizar fornecedor"),
+	EDIT_FORNEC("Editar Fornecedor"),
+	
 	//Ações telas de proposta
 	NOVA_PROPOSTA("Nova Proposta"),
 	CONSULTA_PROPOSTA("Consultar Proposta"),
