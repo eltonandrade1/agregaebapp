@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><ui:insert name="titulo">Sistema Agrega Consultores</ui:insert></title>
+	<h:outputStylesheet library="css" name="sistema.css" />
+	<h:outputScript name="localePtBr.js" library="js"></h:outputScript>
+</h:head>
+
+<h:body>
+
+	<p:layout fullPage="true">
+		<o:form id="formPrincipal" style="display: inline-block">
+
+			<p:layoutUnit id="layoutCabecalho" position="north" size="60">
+
+				<div style="float: left; margin-left: 20px; height: 45px;">
+					<h:graphicImage library="images" name="logo_topo.png" />
+				</div>
+
+				<div style="float: right; margin-right: 110px">
+
+					<p:menubar id="idMenuPrincipal" styleClass="menu-sistema">
+
+						<p:submenu label="Contratos">
+							<p:menuitem id="cadContrato" value="Novo Contrato" actionListener="#{menuBean.reset()}" process="@this"
+								action="#{menuBean.novoContrato()}" icon="ui-icon-plus" />
+							<p:menuitem id="consultarContrato" value="Consultar" actionListener="#{menuBean.reset()}" process="@this"
+								action="#{menuBean.consultarContrato()}" icon="ui-icon-search" />
+						</p:submenu>
+						
+						<p:submenu label="Propostas">
+							<p:menuitem id="cadProposta" value="Nova Proposta" actionListener="#{menuBean.reset()}" process="@this"
+								action="#{menuBean.novaProposta()}" icon="ui-icon-plus" />
+							<p:menuitem id="consultarProposta" value="Consultar" actionListener="#{menuBean.reset()}" process="@this"
+								action="#{menuBean.consultarProposta()}" icon="ui-icon-search" />
+						</p:submenu>
+
+						<p:submenu label="Cadastros">
+							<p:menuitem id="cadProfissional" value="Profissionais"
+								icon="ui-icon-plus" action="#{menuBean.novoProfissional()}" actionListener="#{menuBean.reset()}" process="@this"/>
+							<p:menuitem id="cadCliente" value="Clientes"
+								action="#{menuBean.novoCliente()}" icon="ui-icon-plus" actionListener="#{menuBean.reset()}" process="@this"/>
+							<p:menuitem value="Usuários" icon="ui-icon-plus" />
+							<p:menuitem value="Fornecedores" icon="ui-icon-plus" />
+						</p:submenu>
+
+						<p:submenu label="Consultas">
+							<p:menuitem id="consultaProfissional" value="Profissionais"
+								icon="ui-icon-search"
+								action="#{menuBean.consultarProfissional()}"
+								actionListener="#{menuBean.reset()}"
+								process="@this">
+								<o:ignoreValidationFailed />
+							</p:menuitem>
+
+							<p:menuitem value="Clientes" id="consultaCliente"
+								icon="ui-icon-search" action="#{menuBean.consultarCliente()}" actionListener="#{menuBean.reset()}" process="@this"/>
+						</p:submenu>
+
+						<p:menuitem value="Sair" />
+					</p:menubar>
+				</div>
+				<div style="clear: both"></div>
+
+			</p:layoutUnit>
+
+			<p:layoutUnit id="layoutCentro" position="center" size="90">
+
+				<div id="conteudo">
+					<ui:insert name="corpo" />
+				</div>
+			</p:layoutUnit>
+
+			<p:layoutUnit position="south" size="60">
+				<div
+					style="text-align: center; font: bold; font-family font-size: 13px; height: 45px;">
+					Todos os direitos reservador a Agrega Consultores Ltda <br /> <a
+						href="http://www.agregaconsultores.com.br" target="_blank">www.agregaconsultores.com.br</a>
+				</div>
+			</p:layoutUnit>
+
+			<p:blockUI block="layoutCentro"
+				trigger="cadProfissional consultaProfissional cadCliente consultaCliente cadProposta consultarProposta">
+				<p:graphicImage name="images/ajaxloadingbar.gif" />
+			</p:blockUI>
+		</o:form>
+	</p:layout>
+</h:body>
+
+</html>

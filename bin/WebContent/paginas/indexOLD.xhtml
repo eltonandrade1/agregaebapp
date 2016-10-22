@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jb="http://xmlns.jcp.org/jsf/html">
+
+<ui:composition>
+	<f:view>
+		<h:head>
+			<title>Index</title>
+		</h:head>
+		<h:form>
+			<p:messages id="messages" closable="true" />
+			<p:panel header="#{msg['pagina.index.painel.titulo']}" style="width:50%">
+				<p:panelGrid columns="2" >
+					<p:outputLabel value="Nome: "/>
+					<p:inputText id="inputNome" value="#{testeBean.nome}" required="true" requiredMessage="#{msg['pagina.index.validacao']}" />
+					<p:commandButton action="#{testeBean.btEnviar()}" value="#{msg['bt.enviar']}"  ajax="false"/>
+<!-- 					<p:outputLabel id="exibeNome" value="#{testeBean.nome}" /> -->
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</f:view>
+</ui:composition>
+
+</html>

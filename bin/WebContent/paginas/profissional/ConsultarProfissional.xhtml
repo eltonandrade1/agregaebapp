@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jb="http://xmlns.jcp.org/jsf/html"
+	xmlns:o="http://omnifaces.org/ui">
+
+<ui:composition template="/templates/master.xhtml">
+
+	<f:metadata>
+		<!-- 		<f:event listener="#{profissionalBean.carregarTodosProfissionais()}" -->
+		<!-- 			type="preRenderView" /> -->
+
+		<o:viewParam name="profissional"
+			value="#{profissionalBean.profissional}" />
+
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<p:panel id="idPanelProfissional" style="border: none;">
+
+			<h4 style="margin-top: 0" align="left">Consultar Profissionais</h4>
+			<p:separator />
+
+			<p:messages id="messagesConsulta" showDetail="true" autoUpdate="true"
+				closable="true" />
+			<br></br>
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton id="idBtPesquisar" value="Pesquisar"
+						action="#{profissionalBean.filtrarProfissionais}" update="tableProfissionais"
+						 />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel"
+				style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+				<p:outputLabel value="RG:" for="idRg" />
+				<p:inputMask mask="99999999-99" id="idRg" size="20"
+					value="#{profissionalBean.filtroRg}" />
+
+				<p:outputLabel value="CPF:" />
+				<p:inputMask mask="999.999.999-99"
+					value="#{profissionalBean.filtroCpf}" />
+			</p:panelGrid>
+			
+			<br></br>
+
+			<p:dataTable id="tableProfissionais" var="profissional" lazy="true"
+				value="#{profissionalBean.profissionais}"
+				emptyMessage="Nenhum profissional cadastrado" paginator="true"
+				rows="10" rowsPerPageTemplate="5,10,15" paginatorPosition="bottom"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				selectionMode="single" selection="#{profissionalBean.profissional}"
+				rowKey="#{profissional.id}">
+
+				<p:column headerText="Nome">
+					<h:outputText value="#{profissional.nome}" />
+				</p:column>
+				<p:column headerText="CPF">
+					<h:outputText value="#{profissional.cpf}" />
+				</p:column>
+				<p:column headerText="RG">
+					<h:outputText value="#{profissional.rg}" />
+				</p:column>
+				<p:column headerText="Data de Nascimento">
+					<h:outputText value="#{profissional.dataNascimento}" >
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				<f:facet name="footer">
+					<div align="left">
+						<p:commandButton process="tableProfissionais"
+							icon="fa fa-fw fa-eye" value="Visualizar"
+							action="#{profissionalBean.visualizarProfissional()}" />
+						<p:commandButton process="tableProfissionais"
+							icon="fa fa-fw fa-edit" value="Editar"
+							action="#{profissionalBean.redirectEditProfissional()}"
+							ajax="false" />
+						<p:commandButton process="tableProfissionais"
+							icon="fa fa-fw fa-remove" value="Excluir"
+							action="#{profissionalBean.excluirProfissional()}" ajax="false" />
+					</div>
+				</f:facet>
+			</p:dataTable>
+
+			<p:blockUI block="tableProfissionais" trigger="idBtPesquisar" >
+				<p:graphicImage name="images/ajaxloadingbar.gif" />
+			</p:blockUI>
+			
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

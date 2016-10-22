@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+	<!-- Configurando navegação das telas -->
+
+	<!-- Login -->
+	<navigation-rule>
+		<from-view-id>/paginas/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>pag_principal</from-outcome>
+			<to-view-id>/templates/home.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- ### Inicio das telas de profissional ###-->
+	<!-- Cadastro Profissional -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadastro_profissional</from-outcome>
+			<to-view-id>/paginas/profissional/Profissional.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Editar Profissional -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>editar_profissional</from-outcome>
+			<to-view-id>/paginas/profissional/Profissional.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Consultar Profissional -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consultar_profissional</from-outcome>
+			<to-view-id>/paginas/profissional/ConsultarProfissional.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- ### Fim das telas de profissional ### -->
+
+	<!-- Retorno para tela Home -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/templates/home.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- ### Fim Retorno para tela Home ### -->
+
+	<!-- ### Inicio das telas de cliente ### -->
+	<!-- Cadastro Cliente -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadastro_cliente</from-outcome>
+			<to-view-id>/paginas/cliente/Cliente.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Editar Cliente -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>editar_cliente</from-outcome>
+			<to-view-id>/paginas/cliente/Cliente.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Consultar Cliente -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consultar_cliente</from-outcome>
+			<to-view-id>/paginas/cliente/ConsultarCliente.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- ### Fim das telas de cliente ### -->
+	
+	<!-- ### Inicio das telas de proposta ### -->
+	<!-- Cadastro Proposta -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadastro_proposta</from-outcome>
+			<to-view-id>/paginas/proposta/Proposta.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Editar Proposta -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>editar_proposta</from-outcome>
+			<to-view-id>/paginas/proposta/Proposta.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Consultar Proposta -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consultar_proposta</from-outcome>
+			<to-view-id>/paginas/proposta/ConsultarProposta.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Histórico Proposta -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>historico_proposta</from-outcome>
+			<to-view-id>/paginas/proposta/HistoricoProposta.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- ### Fim das telas de proposta ### -->
+	
+	<!-- Inicio das telas de contrato -->
+	
+	<!-- Cadastro Contrato -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadastro_contrato</from-outcome>
+			<to-view-id>/paginas/contrato/Contrato.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Editar Contrato -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>editar_contrato</from-outcome>
+			<to-view-id>/paginas/contrato/Contrato.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Consultar Contrato -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consultar_contrato</from-outcome>
+			<to-view-id>/paginas/contrato/ConsultarContrato.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- ### Fim das telas de contrato ### -->
+	
+	
+
+	<!-- Configurando leitura do arquivo properties -->
+	<application>
+		<resource-bundle>
+			<base-name>mensagens</base-name>
+			<var>msg</var>
+		</resource-bundle>
+	</application>
+
+	<factory>
+		<exception-handler-factory>br.com.sysagrega.util.jsf.JsfExceptionHandlerFactory</exception-handler-factory>
+	</factory>
+</faces-config>

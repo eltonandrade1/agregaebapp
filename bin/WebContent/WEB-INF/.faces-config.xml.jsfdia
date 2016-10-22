@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#paginas#login.xhtml"
+  PATH="/paginas/login.xhtml" SHAPE="32,129,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#paginas#login.xhtml:0" NAME="item"
+   PATH="/paginas/login.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="pag_principal::#templates#home.xhtml"
+    NAME="output" PATH="/templates/home.xhtml"
+    TARGET="rules:#templates#home.xhtml" TITLE="pag_principal" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#templates#home.xhtml"
+  PATH="/templates/home.xhtml" SHAPE="32,224,50,57" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*" PATH="*" SHAPE="32,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:0" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="cadastro_profissional::#paginas#profissional#Profissional.xhtml"
+    NAME="output" PATH="/paginas/profissional/Profissional.xhtml"
+    TARGET="rules:#paginas#profissional#Profissional.xhtml"
+    TITLE="cadastro_profissional" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:1" PATH="*" SHAPE="32,577,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:1" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="editar_profissional::#paginas#profissional#Profissional.xhtml"
+    NAME="output" PATH="/paginas/profissional/Profissional.xhtml"
+    TARGET="rules:#paginas#profissional#Profissional.xhtml"
+    TITLE="editar_profissional" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:2" PATH="*" SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:2" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="consultar_profissional::#paginas#profissional#ConsultarProfissional.xhtml"
+    NAME="output"
+    PATH="/paginas/profissional/ConsultarProfissional.xhtml"
+    TARGET="rules:#paginas#profissional#ConsultarProfissional.xhtml"
+    TITLE="consultar_profissional" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:3" PATH="*" SHAPE="48,465,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:3" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="home::#templates#home.xhtml" NAME="output"
+    PATH="/templates/home.xhtml" TARGET="rules:#templates#home.xhtml"
+    TITLE="home" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:4" PATH="*" SHAPE="32,1025,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:4" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="cadastro_cliente::#paginas#cliente#Cliente.xhtml" NAME="output"
+    PATH="/paginas/cliente/Cliente.xhtml"
+    TARGET="rules:#paginas#cliente#Cliente.xhtml"
+    TITLE="cadastro_cliente" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:5" PATH="*" SHAPE="32,801,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:5" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="editar_cliente::#paginas#cliente#Cliente.xhtml" NAME="output"
+    PATH="/paginas/cliente/Cliente.xhtml"
+    TARGET="rules:#paginas#cliente#Cliente.xhtml" TITLE="editar_cliente" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:6" PATH="*" SHAPE="32,913,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:6" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="consultar_cliente::#paginas#cliente#ConsultarCliente.xhtml"
+    NAME="output" PATH="/paginas/cliente/ConsultarCliente.xhtml"
+    TARGET="rules:#paginas#cliente#ConsultarCliente.xhtml"
+    TITLE="consultar_cliente" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#paginas#profissional#Profissional.xhtml"
+  PATH="/paginas/profissional/Profissional.xhtml" SHAPE="256,593,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM
+  NAME="rules:#paginas#profissional#ConsultarProfissional.xhtml"
+  PATH="/paginas/profissional/ConsultarProfissional.xhtml"
+  SHAPE="240,705,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#paginas#cliente#Cliente.xhtml"
+  PATH="/paginas/cliente/Cliente.xhtml" SHAPE="256,1041,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#paginas#cliente#ConsultarCliente.xhtml"
+  PATH="/paginas/cliente/ConsultarCliente.xhtml" SHAPE="240,1153,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:7" PATH="*" SHAPE="32,1137,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:7" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="cadastro_proposta::#paginas#proposta#Proposta.xhtml"
+    NAME="output" PATH="/paginas/proposta/Proposta.xhtml"
+    TARGET="rules:#paginas#proposta#Proposta.xhtml"
+    TITLE="cadastro_proposta" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:8" PATH="*" SHAPE="32,1249,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:8" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="editar_proposta::#paginas#proposta#Proposta.xhtml" NAME="output"
+    PATH="/paginas/proposta/Proposta.xhtml"
+    TARGET="rules:#paginas#proposta#Proposta.xhtml"
+    TITLE="editar_proposta" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:9" PATH="*" SHAPE="32,1361,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:9" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="consultar_proposta::#paginas#proposta#ConsultarProposta.xhtml"
+    NAME="output" PATH="/paginas/proposta/ConsultarProposta.xhtml"
+    TARGET="rules:#paginas#proposta#ConsultarProposta.xhtml"
+    TITLE="consultar_proposta" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#paginas#proposta#Proposta.xhtml"
+  PATH="/paginas/proposta/Proposta.xhtml" SHAPE="240,1489,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#paginas#proposta#ConsultarProposta.xhtml"
+  PATH="/paginas/proposta/ConsultarProposta.xhtml" SHAPE="240,1601,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:10" PATH="*" SHAPE="32,1585,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:10" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="historico_proposta::#paginas#proposta#HistoricoProposta.xhtml"
+    NAME="output" PATH="/paginas/proposta/HistoricoProposta.xhtml"
+    TARGET="rules:#paginas#proposta#HistoricoProposta.xhtml"
+    TITLE="historico_proposta" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#paginas#proposta#HistoricoProposta.xhtml"
+  PATH="/paginas/proposta/HistoricoProposta.xhtml" SHAPE="240,1713,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:*:11" PATH="*" SHAPE="32,1473,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:11" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="cadastro_contrato::#paginas#contrato#Contrato.xhtml"
+    NAME="output" PATH="/paginas/contrato/Contrato.xhtml"
+    TARGET="rules:#paginas#contrato#Contrato.xhtml"
+    TITLE="cadastro_contrato" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:12" PATH="*" SHAPE="32,1809,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:12" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="editar_contrato::#paginas#contrato#Contrato.xhtml" NAME="output"
+    PATH="/paginas/contrato/Contrato.xhtml"
+    TARGET="rules:#paginas#contrato#Contrato.xhtml"
+    TITLE="editar_contrato" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:*:13" PATH="*" SHAPE="32,1697,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:*:13" NAME="item" PATH="*" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="consultar_contrato::#paginas#contrato#ConsultarContrato.xhtml"
+    NAME="output" PATH="/paginas/contrato/ConsultarContrato.xhtml"
+    TARGET="rules:#paginas#contrato#ConsultarContrato.xhtml"
+    TITLE="consultar_contrato" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#paginas#contrato#Contrato.xhtml"
+  PATH="/paginas/contrato/Contrato.xhtml" SHAPE="240,1825,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#paginas#contrato#ConsultarContrato.xhtml"
+  PATH="/paginas/contrato/ConsultarContrato.xhtml" SHAPE="240,1937,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>
