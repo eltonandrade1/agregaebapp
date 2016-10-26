@@ -40,6 +40,19 @@ public class MenuBean implements Serializable {
 		FacesUtil.addParamSession(TipoPagina.CONSULTA_CLIENTE);
 		return "consultar_cliente";
 	}
+	
+	public String novoFornecedor() {
+		FacesUtil.addParamSession(TipoPagina.NOVO_FORNEC);
+		return "cadastro_fornecedor";
+
+	}
+	
+	public String consultarFornecedor() {
+
+		// Set parametro na sessão
+		FacesUtil.addParamSession(TipoPagina.CONSULTA_FORNEC);
+		return "consultar_fornecedor";
+	}
 
 	public String novaProposta() {
 		FacesUtil.addParamSession(TipoPagina.NOVA_PROPOSTA);

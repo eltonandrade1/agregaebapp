@@ -81,6 +81,35 @@
 	</navigation-rule>
 	<!-- ### Fim das telas de cliente ### -->
 	
+		<!-- Inicio das telas de fornecedor -->
+	<!-- Cadastro fornecedor -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>cadastro_fornecedor</from-outcome>
+			<to-view-id>/paginas/fornecedor/Fornecedor.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Editar Fornecedor -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>editar_fornecedor</from-outcome>
+			<to-view-id>/paginas/fornecedor/Fornecedor.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<!-- Consultar Fornecedor -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consultar_fornecedor</from-outcome>
+			<to-view-id>/paginas/fornecedor/ConsultarFornecedor.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<!-- Fim das telas de fornecedor -->
+	
 	<!-- ### Inicio das telas de proposta ### -->
 	<!-- Cadastro Proposta -->
 	<navigation-rule>

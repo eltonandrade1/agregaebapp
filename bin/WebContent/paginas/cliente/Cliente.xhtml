@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jb="http://xmlns.jcp.org/jsf/html"
+	xmlns:o="http://omnifaces.org/ui">
+
+<ui:composition template="/templates/master.xhtml">
+
+	<f:metadata>
+		<o:viewParam name="cliente"
+			value="#{clienteBean.cliente}" />
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<p:panel id="idPanelCliente" style="border: none;">
+
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Cadastrar Cliente" rendered="#{clienteBean.isNewCliente()}" />
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Atualizar Cliente" rendered="#{clienteBean.isEditCliente()}" />
+			<p:outputLabel style="margin-top: 0" align="left"
+				value="Visualizar Cliente" rendered="#{clienteBean.viewCliente}" />
+			<p:separator />
+
+			<p:messages id="messagesCadastro" showDetail="true" autoUpdate="true"
+				closable="true" escape="false" />
+
+			<p:tabView id="idTabViewCliente" style="margin-top: 20px">
+
+				<p:tab id="idTabDadosCadastrais" title="Dados Cadastrais">
+
+					<h:panelGrid columns="4" style="margin-bottom:10px" cellspacing="5">
+
+						<p:outputLabel value="Nome:" />
+						<p:inputText id="nomeCliente" style="width:400px;"
+							disabled="#{clienteBean.viewCliente}"
+							value="#{clienteBean.cliente.nome}" />
+
+						<p:outputLabel value="CNPJ:" />
+						<p:inputMask mask="99.999.999/9999-99" style="width:160px;"
+							disabled="#{clienteBean.viewCliente}"
+							value="#{clienteBean.cliente.cnpj}" />
+
+						<p:outputLabel value="CNAE:" />
+						<p:inputText id="cnae" style="width:100px;"
+							disabled="#{clienteBean.viewCliente}"
+							value="#{clienteBean.cliente.cnae}" />
+
+						<p:outputLabel value="Seguimento:" />
+						<p:selectOneMenu id="tipoSeguimento" style="width:120px;"
+							value="#{clienteBean.cliente.seguimento}"
+							disabled="#{clienteBean.viewCliente}">
+
+							<f:selectItems value="#{clienteBean.seguimentos}"
+								var="seguimento" itemLabel="#{seguimento}"
+								itemValue="#{seguimento}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Tamanho:" />
+						<p:selectOneMenu id="tipoTamanho" style="width:120px;"
+							value="#{clienteBean.cliente.tamanho}"
+							disabled="#{clienteBean.viewCliente}">
+
+							<f:selectItems value="#{clienteBean.tamanhos}" var="tamanho"
+								itemLabel="#{tamanho}" itemValue="#{tamanho}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Tipo de Cliente:" />
+						<p:selectOneMenu id="tipoCliente" style="width:120px;"
+							value="#{clienteBean.cliente.tipoCliente}"
+							disabled="#{clienteBean.viewCliente}">
+
+							<f:selectItems value="#{clienteBean.tiposClientes}"
+								var="tipoCliente" itemLabel="#{tipoCliente}"
+								itemValue="#{tipoCliente}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Situação:" />
+						<p:selectOneMenu id="tipoSituacao" style="width:120px;"
+							value="#{clienteBean.cliente.situacao}"
+							disabled="#{clienteBean.viewCliente}">
+
+							<f:selectItems value="#{clienteBean.situacoes}" var="situacao"
+								itemLabel="#{situacao}" itemValue="#{situacao}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Pendências Ambientais:" />
+						<p:selectOneButton id="idSelectPendencias"
+							disabled="#{clienteBean.viewCliente}"
+							value="#{clienteBean.cliente.pendenciaAmbiental}">
+							<f:selectItem itemLabel="Sim" itemValue="S" />
+							<f:selectItem itemLabel="Não" itemValue="N" />
+						</p:selectOneButton>
+
+						<p:outputLabel value="IE:" />
+						<p:inputText id="ie" style="width:200px;"
+							disabled="#{clienteBean.viewCliente}"
+							value="#{clienteBean.cliente.ie}" />
+
+
+						<p:outputLabel value="Contato:" />
+						<p:inputText id="contato" style="width:200px;"
+							disabled="#{clienteBean.viewCliente}"
+							value="#{clienteBean.cliente.contato}" />
+
+						<p:outputLabel value="Cargo/Dep:" />
+						<p:inputText id="cargo" style="width:200px;"
+							disabled="#{clienteBean.viewCliente}"
+							value="#{clienteBean.cliente.funcaoDep}" />
+
+						<p:outputLabel value="Processo:" />
+						<p:inputText id="processo" style="width:200px;"
+							disabled="#{clienteBean.viewCliente}"
+							value="#{clienteBean.cliente.processo}" />
+
+						<p:outputLabel value="Pendência:" />
+						<p:inputText id="pendencia" style="width:200px;"
+							disabled="#{clienteBean.viewCliente}"
+							value="#{clienteBean.cliente.pendencia}" />
+
+
+						<p:outputLabel value="Telefone:" />
+						<p:inputMask mask="(99) 9999-9999"
+							value="#{clienteBean.cliente.telefone}"
+							disabled="#{clienteBean.viewCliente}" />
+
+						<p:outputLabel value="Fax:" />
+						<p:inputMask mask="(99) 9999-9999"
+							value="#{clienteBean.cliente.fax}"
+							disabled="#{clienteBean.viewCliente}" />
+
+						<p:outputLabel value="Celular:" />
+						<p:inputMask mask="(99) 99999-9999"
+							value="#{clienteBean.cliente.celular}"
+							disabled="#{clienteBean.viewCliente}" />
+
+						<p:outputLabel value="Email:" />
+						<p:inputText style="width:300px;"
+							value="#{clienteBean.cliente.email}"
+							disabled="#{clienteBean.viewCliente}" />
+
+					</h:panelGrid>
+
+				</p:tab>
+
+				<p:tab id="idTabEndereco" title="Endereço">
+					<h:panelGrid id="idPanelGridEndereco" columns="4"
+						style="margin-bottom:10px" cellspacing="5">
+
+						<p:outputLabel for="idEstados" value="Estado:" />
+						<p:selectOneMenu id="idEstados" style="width:160px;"
+							disabled="#{clienteBean.viewCliente}" panelStyle="width:180px;"
+							value="#{clienteBean.cliente.endereco.estado}" effect="fade"
+							filter="true" filterMatchMode="startsWith">
+
+							<f:selectItems value="#{clienteBean.estados}" var="estado"
+								itemLabel="#{estado.uf}" itemValue="#{estado}" />
+							<p:ajax event="change"
+								listener="#{clienteBean.carregarCidadesPorEstado}"
+								update="idCidades"  />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="idCidades" value="Cidade:" />
+						<p:selectOneMenu id="idCidades" style="width:120px;"
+							disabled="#{clienteBean.disableCity}" panelStyle="width:180px;"
+							effect="fade" filter="true" filterMatchMode="startsWith"
+							value="#{clienteBean.cliente.endereco.cidade}">
+
+							<f:selectItem
+								itemLabel="#{clienteBean.cliente.endereco.cidade.nome}"
+								itemValue="" />
+							<f:selectItems value="#{clienteBean.cidades}" var="cidade"
+								itemLabel="#{cidade.nome}" itemValue="#{cidade}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Rua:" />
+						<p:inputText style="width:200px;"
+							value="#{clienteBean.cliente.endereco.rua}"
+							disabled="#{clienteBean.viewCliente}" />
+
+						<p:outputLabel value="Bairro:" />
+						<p:inputText style="width:200px;"
+							value="#{clienteBean.cliente.endereco.bairro}"
+							disabled="#{clienteBean.viewCliente}" />
+
+						<p:outputLabel value="CEP:" />
+						<p:inputMask mask="99999-999"
+							value="#{clienteBean.cliente.endereco.cep}"
+							disabled="#{clienteBean.viewCliente}" />
+
+						<p:outputLabel value="Número:" />
+						<p:inputText style="width:40px;"
+							value="#{clienteBean.cliente.endereco.numeroRua}"
+							disabled="#{clienteBean.viewCliente}" />
+
+						<p:outputLabel value="Complemento:" />
+						<p:inputText style="width:200px;"
+							value="#{clienteBean.cliente.endereco.infoComplementar}"
+							disabled="#{clienteBean.viewCliente}" />
+
+					</h:panelGrid>
+
+					<p:blockUI block="idPanelGridEndereco" trigger="idEstados">
+						<p:graphicImage name="images/ajaxloadingbar.gif" />
+					</p:blockUI>
+
+				</p:tab>
+
+			</p:tabView>
+
+			<br />
+			<p:separator />
+			<p:commandButton id="btSalvar" value="Salvar"
+				action="#{clienteBean.salvarCliente()}" icon="fa fa-fw fa-save"
+				update="idPanelCliente" rendered="#{clienteBean.isNewCliente()}" />
+
+			<p:commandButton id="btAtualizar" value="Atualizar"
+				action="#{clienteBean.atualizarCliente()}"
+				icon="fa fa-fw fa-refresh" update="idPanelCliente"
+				rendered="#{clienteBean.isEditCliente()}" />
+
+			<p:blockUI block="idPanelCliente" trigger="btSalvar btAtualizar">
+				<p:graphicImage name="images/ajaxloadingbar.gif" />
+			</p:blockUI>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>

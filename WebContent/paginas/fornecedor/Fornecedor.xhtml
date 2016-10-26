@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jb="http://xmlns.jcp.org/jsf/html"
+	xmlns:o="http://omnifaces.org/ui">
+
+<ui:composition template="/templates/master.xhtml">
+
+	<f:metadata>
+		<o:viewParam name="fornecedor"
+			value="#{fornecedorBean.fornecedor}"/>
+	</f:metadata>
+
+	<ui:define name="corpo">
+		<p:panel id="idPanelFornecedor" style="border: none;">
+
+			<p:outputLabel style="margin-top: 0" align="left" value="Cadastrar Fornecedor" rendered="#{fornecedorBean.isNewFornecedor()}"/>
+			<p:outputLabel style="margin-top: 0" align="left" value="Atualizar Fornecedor" rendered="#{fornecedorBean.isEditFornecedor()}"/>
+			<p:outputLabel style="margin-top: 0" align="left" value="Visualizar Fornecedor" rendered="#{fornecedorBean.viewFornecedor}"/>
+			<p:separator />
+			
+			<p:messages id="messagesCadastro" showDetail="true" autoUpdate="true" closable="true" escape="false" />
+        
+			<p:tabView id="idTabViewFornecedor" style="margin-top: 20px">
+				
+				<p:tab id="idTabFornecedor" title="Dados Fornecedor">
+
+					<h:panelGrid columns="4" style="margin-bottom:10px" cellspacing="5">
+
+						<p:outputLabel value="Nome Fantasia:" />
+						<p:inputText id="nomeFantasia" style="width:400px;" disabled="#{fornecedorBean.viewFornecedor}"
+							value="#{fornecedorBean.fornecedor.nomeFantasia}" />
+
+						<p:outputLabel value="CNPJ:" />
+						<p:inputMask mask="99.999.999/9999-99" style="width:160px;" disabled="#{fornecedorBean.viewFornecedor}"
+							value="#{fornecedorBean.fornecedor.cnpj}"  />
+
+						<p:outputLabel value="Razão Social:" />
+						<p:inputText id="razaoSocial" style="width:400px;" disabled="#{fornecedorBean.viewFornecedor}"
+							value="#{fornecedorBean.fornecedor.razaoSocial}" />
+						
+						<p:outputLabel value="Inscrição Estadual:" />
+						<p:inputMask mask="9999999999-99" style="width:160px;" disabled="#{fornecedorBean.viewFornecedor}"
+							value="#{fornecedorBean.fornecedor.iscricaoEstadual}"  />
+						
+						<p:outputLabel value="Ramo de Atividade:" />
+						<p:inputText style="width:300px;"
+							value="#{fornecedorBean.fornecedor.ramoAtividade}" disabled="#{fornecedorBean.viewFornecedor}"/>
+						
+						<p:outputLabel value="Inscrição Municipal:" />
+						<p:inputMask mask="9999999999-99" style="width:160px;" disabled="#{fornecedorBean.viewFornecedor}"
+							value="#{fornecedorBean.fornecedor.iscricaoMunicipal}"  />
+						
+						<p:outputLabel value="Data de Cadastro:" />
+						<p:calendar pattern="dd/MM/yyyy" mask="true" style="width:50px;" disabled="#{fornecedorBean.viewFornecedor}"
+							value="#{fornecedorBean.fornecedor.dataCadastro}" />
+
+						<p:outputLabel value="Pessoa de Contato:" />
+						<p:inputText style="width:300px;" disabled="#{fornecedorBean.viewFornecedor}"
+							value="#{fornecedorBean.fornecedor.pessoaContato}" />
+
+						<p:outputLabel value="Telefone:" />
+						<p:inputMask mask="(99) 9999-9999"
+							value="#{fornecedorBean.fornecedor.telefone}" disabled="#{fornecedorBean.viewFornecedor}"/>
+
+						<p:outputLabel value="Celular:" />
+						<p:inputMask mask="(99) 99999-9999"
+							value="#{fornecedorBean.fornecedor.celular}" disabled="#{fornecedorBean.viewFornecedor}"/>
+
+						<p:outputLabel value="Email:" />
+						<p:inputText style="width:300px;"
+							value="#{fornecedorBean.fornecedor.email}" disabled="#{fornecedorBean.viewFornecedor}"/>
+
+					</h:panelGrid>
+
+				</p:tab>
+
+				<p:tab id="idTabEndereco" title="Endereço">
+					<h:panelGrid id="idPanelGridEndereco" columns="4"
+						style="margin-bottom:10px" cellspacing="5">
+
+						<p:outputLabel for="idEstados" value="Estado:" />
+						<p:selectOneMenu id="idEstados" style="width:160px;" disabled="#{fornecedorBean.viewFornecedor}"
+							panelStyle="width:180px;"
+							value="#{fornecedorBean.fornecedor.endereco.estado}"
+							effect="fade" filter="true" filterMatchMode="startsWith">
+
+							<f:selectItems value="#{fornecedorBean.estados}" var="estado"
+								itemLabel="#{estado.uf}" itemValue="#{estado}" />
+							<p:ajax event="change"
+								listener="#{fornecedorBean.carregarCidadesPorEstado}"
+								update="idCidades" global="false" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="idCidades" value="Cidade:" />
+						<p:selectOneMenu id="idCidades" style="width:120px;" 
+							disabled="#{fornecedorBean.disableCity}"
+							panelStyle="width:180px;" effect="fade" filter="true"
+							filterMatchMode="startsWith"
+							value="#{fornecedorBean.fornecedor.endereco.cidade}" >
+							
+							<f:selectItem itemLabel="#{fornecedorBean.fornecedor.endereco.cidade.nome}" itemValue="" />
+							<f:selectItems value="#{fornecedorBean.cidades}" var="cidade"
+								itemLabel="#{cidade.nome}" itemValue="#{cidade}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="Rua:" />
+						<p:inputText style="width:200px;" value="#{fornecedorBean.fornecedor.endereco.rua}" disabled="#{fornecedorBean.viewFornecedor}"/>
+
+						<p:outputLabel value="Bairro:" />
+						<p:inputText style="width:200px;" value="#{fornecedorBean.fornecedor.endereco.bairro}" disabled="#{fornecedorBean.viewFornecedor}"/>
+
+						<p:outputLabel value="CEP:" />
+						<p:inputMask mask="99999-999" value="#{fornecedorBean.fornecedor.endereco.cep}" disabled="#{fornecedorBean.viewFornecedor}"/>
+
+						<p:outputLabel value="Número:" />
+						<p:inputText style="width:40px;" value="#{fornecedorBean.fornecedor.endereco.numeroRua}" disabled="#{fornecedorBean.viewFornecedor}"/>
+
+						<p:outputLabel value="Complemento:" />
+						<p:inputText style="width:200px;" value="#{fornecedorBean.fornecedor.endereco.infoComplementar}" disabled="#{fornecedorBean.viewFornecedor}"/>
+
+					</h:panelGrid>
+
+					<p:blockUI block="idPanelGridEndereco" trigger="idEstados">
+						<p:graphicImage name="images/ajaxloadingbar.gif" />
+					</p:blockUI>
+
+				</p:tab>
+
+				<p:tab id="idTabDadosBancarios" title="Dados Bancários">
+
+					<h:panelGrid columns="4" cellspacing="5">
+
+						<p:outputLabel for="agencia" value="Nº Agência:" />
+						<p:inputText id="agencia" style="width:80px;"
+							value="#{fornecedorBean.fornecedor.dadosBancarios.nrAgencia}" disabled="#{fornecedorBean.viewFornecedor}"/>
+
+						<p:outputLabel value="Nº Conta:" />
+						<p:inputText style="width:80px;"
+							value="#{fornecedorBean.fornecedor.dadosBancarios.nrConta}" disabled="#{fornecedorBean.viewFornecedor}"/>
+
+						<p:outputLabel for="tipo" value="Tipo:" />
+						<p:selectOneMenu id="tipo" style="width:120px;"
+							value="#{fornecedorBean.fornecedor.dadosBancarios.tipoConta}" disabled="#{fornecedorBean.viewFornecedor}">
+							
+							<f:selectItems value="#{fornecedorBean.tiposConta}" var="tipos"
+								itemLabel="#{tipos}" itemValue="#{tipos}" />
+						</p:selectOneMenu>
+
+
+						<p:outputLabel for="banco" value="Banco:" />
+						<p:selectOneMenu id="banco" style="width:120px;" disabled="#{fornecedorBean.viewFornecedor}"
+							panelStyle="width:180px;" effect="fade" filter="true"
+							filterMatchMode="startsWith"
+							value="#{fornecedorBean.fornecedor.dadosBancarios.idBanco}">
+
+							<f:selectItem itemLabel="- Selecione -" itemValue="" itemDisabled="#{fornecedorBean.isEditFornecedor()}"/>
+							<f:selectItems value="#{fornecedorBean.bancos}" var="banco"
+								itemLabel="#{banco.nome}" itemValue="#{banco}" />
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+
+				</p:tab>
+
+			</p:tabView>
+
+			<br />
+			<p:separator />
+			<p:commandButton id="btSalvar" value="Salvar" 
+				action="#{fornecedorBean.salvarFornecedor()}"
+				icon="fa fa-fw fa-save" update="idPanelFornecedor"
+				rendered="#{fornecedorBean.isNewFornecedor()}" />
+
+			<p:commandButton id="btAtualizar" value="Atualizar"
+				action="#{fornecedorBean.atualizarFornecedor()}"
+				icon="fa fa-fw fa-refresh" update="idPanelFornecedor"
+				rendered="#{fornecedorBean.isEditFornecedor()}" />
+				
+			<p:blockUI block="idPanelFornecedor" trigger="btSalvar btAtualizar">
+				<p:graphicImage name="images/ajaxloadingbar.gif" />
+			</p:blockUI>
+
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>
